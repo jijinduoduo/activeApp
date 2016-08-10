@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+		<!--下拉刷新上拉加载-->
+
+		<style>
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			.mui-segmented-control-juhuang {
+				border: 1px solid #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item {
+				color: #FF5500;
+				border-color: inherit;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item.mui-active {
+				color: #FFFFFF;
+				background-color: #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #FF5500;
+				border-bottom: 2px solid #FF5500;
+				background: none;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted~ .mui-slider-progress-bar {
+				background-color: #FF5500;
+			}
+			/*列表获取*/
+			
+			.botton-visit {
+				padding: 8px;
+				background: #F0EFF5;
+			}
+			
+			.botton-visit a {
+				height: 240px;
+				overflow: hidden;
+				display: block;
+			}
+			
+			.botton-visit a .img_t {
+				width: 160px;
+				height: 160px;
+				background: url(../images/yhhd/bg.png);
+				background-size: 180px 160px;
+				display: block;
+				padding: 0 100px;
+			}
+			
+			.botton-visit a .con_right {
+				width: 100%;
+				display: block;
+				height: 80px;
+				background: #FFFFFF;
+				padding: 8px;
+			}
+			
+			.botton-visit a .con_right .title {
+				width: 100%;
+				font-size: 16px;
+				display: inline-block;
+				float: left;
+				color: #343434;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-o-text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.botton-visit a .con_right .start_time {
+				width: 100%;
+				font-size: 12px;
+				display: inline-block;
+				float: left;
+				color: #CCCCCC;
+				margin-top: 4px;
+			}
+			
+			.botton-visit a .con_right .address {
+				width: 100%;
+				font-size: 12px;
+				display: inline-block;
+				float: left;
+				color: #CCCCCC;
+			}
+			/*下拉框*/
+			/*设置主题背景*/
+		</style>
+		<!--deom-->
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			.mui-segmented-control-juhuang {
+				border: 1px solid #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item {
+				color: #FF5500;
+				border-color: inherit;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item.mui-active {
+				color: #FFFFFF;
+				background-color: #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #FF5500;
+				border-bottom: 2px solid #FF5500;
+				background: none;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted~ .mui-slider-progress-bar {
+				background-color: #FF5500;
+			}
+			
+			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
+				width: 33%;
+				padding: none;
+			}
+			
+			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+				width: 100%;
+				height: 40px;
+				white-space: nowrap;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav" style="background: #ff5500;">
+			<a id="search" class="mui-icon mui-icon-search mui-pull-right app_icon" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">用户活动</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-juhuang">
+					<div class="mui-scroll">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							即将开始
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							正在进行
+						</a>
+						<a class="mui-control-item" href="#item3mobile">
+							历史活动
+						</a>
+					</div>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div class="mui-scroll-wrapper" id="scroll1">
+
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="1">
+
+								</ul>
+
+							</div>
+						</div>
+					</div>
+					<!--第二页-->
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="2">
+
+								</ul>
+							</div>
+						</div>
+
+					</div>
+					<!--第三页-->
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="3">
+
+								</ul>
+							</div>
+
+							<!--end-->
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<!--页码-->
+		<input type="hidden" id="page1" value="0">
+		<input type="hidden" id="page2" value="0">
+		<input type="hidden" id="page3" value="0">
+		<!--时间-->
+		<input type="hidden" id="ftime" value="1">
+		<script src="../js/ajax2.js"></script>
+		<script src="../js/globalVariables.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>
+		<script>
+			mui.init();
+			(function($) {
+
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					createFragment(0);
+					createFragment(1);
+					createFragment(2);
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.mui-table-view');
+										//										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
+										ul.innerHTML = "";
+										var id_num = index + 1;
+										var pageid = 'page' + id_num;
+										gid(pageid).value = 0;
+
+										createFragment(index);
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							},
+							up: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										//										var ul = self.element.querySelector('.mui-table-view');
+										createFragment(index);
+										//										ul.appendChild(createFragment(ul, index, 5));
+										self.endPullUpToRefresh();
+									}, 1000);
+								}
+							}
+						});
+					});
+
+					// 创建新div函数
+					function createFragment(index) {
+						var id_num = index + 1;
+						var li;
+						// 构造要传递的json数据
+						var pageid = 'page' + id_num;
+						var data = {
+							"page": gid(pageid).value,
+							"ftime": id_num
+						};
+						//         mui.alert(gid('page').value, "标题", "OK", null);
+						postData(GV['URL']['AJAX'] + 'user_list.php', //服务端的URL 
+							data, // json 数据
+							function(data) {
+								if(data == null || data == "") {
+									mui.toast("没有了", "亲", "知道了", null);
+								} else {
+									//	mui.alert('1234', "标题", "OK", null);
+									var j = data.length;
+									var b = gid(pageid).value;
+									gid(pageid).value = 1 + Number(b);
+									var table = gid(id_num);
+									for(var i = 0; i < j; i++) {
+										//								mui.alert(data[i]['title'], "标题", "OK", null);
+										var li = document.createElement('li');
+										li.className = 'botton-visit';
+										li.setAttribute("title", data[i]['title']);
+										li.setAttribute("url", data[i]['hid']);
+										li.innerHTML = '<a class=""><img class="img_t" src=" ' + GV['URL']['PIC'] + data[i]['titlepage'] + '"><div class="con_right"><span class="title">  ' + data[i]['title'] + '<span><span class="start_time">时间：' + data[i]['sta'] + '~' + data[i]['stp'] + '</span><span class="address">地点：  ' + data[i]['place'] + '</span><span class="plist_img"></span></div></a>';
+										table.appendChild(li);
+									}
+
+								}
+							}
+						);
+
+					};
+				});
+			})(mui);
+		</script>
+		<script>
+			//			搜索按钮
+			document.getElementById('search').addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'user_search',
+					url: 'user_search.html',
+					styles: {
+						top: '0',
+						bottom: '0px',
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						hardwareAccelerated: true, //开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+						decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						errorPage: 'ajax/error.html', //窗口加载错误时跳转的页面地址
+						scrollIndicator: 'none', //窗口是否显示滚动条									
+					}
+				});
+			});
+		</script>
+		<!--点击列表处理-->
+		<script>
+			var subWebview = null,
+				template = null;
+			//处理点击事件-列表；
+			mui(".mui-table-view").on('tap', 'li', function() {
+				//获取id	
+				var title = this.getAttribute("title");
+				//获取id
+				var urlinfo = this.getAttribute("url");
+				mui.openWindow({
+					url: 'user_active_cont.html',
+					id: 'user_active_cont.html',
+					extras: {
+						title: title,
+						urlinfo: urlinfo
+
+					},
+					styles: {
+						top: '0',
+						bottom: '0px',
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+						decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						errorPage: 'ajax/error.html', //窗口加载错误时跳转的页面地址
+						scrollIndicator: 'none', //窗口是否显示滚动条										
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

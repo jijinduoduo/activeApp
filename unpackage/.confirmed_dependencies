@@ -1,0 +1,555 @@
+{
+  "ajax/login.html": {
+    "resources": [
+      "images/wd/wdsc.png",
+      "images/wd/aqzx.png",
+      "images/wd/wdjf.png",
+      "images/wd/tx.png",
+      "images/wd/tczh.png",
+      "images/wd/fbhd.png",
+      "images/wd/wdpl.png",
+      "js/globalVariables.js",
+      "js/ajax2.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/wd/wdfb.png",
+      "index.html"
+    ],
+    "refer": [
+      "setting.html",
+      "ajax/user_head.html",
+      "ajax/guodu.html",
+      "ajax/denglu.html",
+      "ajax/user_data.html",
+      "ajax/my_order.html",
+      "ajax/fabu.html",
+      "ajax/my_love.html",
+      "ajax/my_comment.html",
+      "ajax/my_fabu.html",
+      "index.html",
+      "ajax/user_data_bf.html"
+    ]
+  },
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/app.css",
+      "ajax/plist.html",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "ajax/login.html",
+      "images/qixi.png",
+      "js/globalVariables.js",
+      "js/ajax2.js",
+      "js/shortcut.js"
+    ],
+    "refer": [
+      "ajax/login.html",
+      "ajax/user_active.html",
+      "examples/template.html",
+      "ajax/plist.html",
+      "ajax/fenlei.html",
+      "examples/guide.html",
+      "examples/guanggao.html"
+    ]
+  },
+  "ajax/plist.html": {
+    "resources": [
+      "images/sy/xjqy.png",
+      "images/sy/qchd.png",
+      "images/sy/rmtj.png",
+      "images/sy/gyhb.png",
+      "images/sy/fcjj.png",
+      "js/globalVariables.js",
+      "css/style.css",
+      "images/sy/yyyc.png",
+      "images/sy/fb.png",
+      "js/ajax2.js",
+      "images/sy/hwly.png",
+      "images/sy/ljck.png",
+      "images/sy/sousuo.png",
+      "images/sy/sshd.png",
+      "images/sy/dyhd.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/qixi.png"
+    ],
+    "refer": [
+      "examples/user_active.html",
+      "ajax/sahuan_guodu.html",
+      "ajax/search.html",
+      "ajax/fabu.html",
+      "ajax/denglu.html",
+      "ajax/pay.html",
+      "ajax/fenlei.html",
+      "ajax/fenlei8.html",
+      "ajax/sahuan_guodu3.html",
+      "ajax/up_head/index.html",
+      "ajax/web.html"
+    ]
+  },
+  "ajax/fenlei.html": {
+    "resources": [
+      "images/fl/sjxz.png",
+      "js/globalVariables.js",
+      "css/style.css",
+      "js/ajax2.js",
+      "images/fl_sjxz/shujian.png",
+      "images/fl_sjxz/fenlei.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/fl_sjxz/duigou.png",
+      "images/fl_sjxz/shijian1.png",
+      "images/fl_sjxz/fenlei1.png",
+      "images/sy/ljck.png"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html"
+    ]
+  },
+  "examples/user_active.html": {
+    "resources": [
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "ajax/user_active.html": {
+    "resources": [
+      "js/mui.pullToRefresh.js",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.material.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/globalVariables.js",
+      "js/ajax2.js",
+      "images/yhhd/bg.jpg",
+      "images/yhhd_xq/bg.jpg",
+      "images/yhhd/bg.png"
+    ],
+    "refer": [
+      "ajax/search.html",
+      "ajax/sahuan_guodu.html",
+      "ajax/user_active_cont.html",
+      "ajax/user_search.html"
+    ]
+  },
+  "ajax/search.html": {
+    "resources": [
+      "js/html5.history.js",
+      "js/ajax.js",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/sy/rmtj.png"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html"
+    ]
+  },
+  "ajax/sahuan_guodu.html": {
+    "resources": [
+      "js/mui.min.js",
+      "images/hdxq/ljbm.png",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/loading/tphc2.png",
+      "images/hdxq/sc1.png",
+      "js/ajax2.js",
+      "images/hdxq/sc.png"
+    ],
+    "refer": [
+      "ajax/addpinglun.html",
+      "ajax/join.html",
+      "ajax/denglu.html"
+    ]
+  },
+  "examples/guide.html": {
+    "resources": [
+      "images/2.jpg",
+      "images/1.jpg",
+      "images/3.jpg",
+      "images/4.jpg",
+      "images/2.png",
+      "images/3.png",
+      "images/1.png",
+      "images/4.png",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "setting.html": {
+    "resources": [
+      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+      "js/html5.history.js",
+      "js/ajax.js",
+      "libs/easymob-webim-sdk/json2.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "js/mui.locker.js",
+      "js/feedback.js",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+      "js/mui.view.js",
+      "js/app.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/wd_sz/gywm.png",
+      "images/wd_sz/kfdh.png",
+      "images/wd_sz/qlhc.png",
+      "images/wd_sz/jcgx.png",
+      "images/wd_sz/yjfk.png",
+      "images/iconfont-tianjia.png"
+    ],
+    "refer": [
+      "ajax/about.html",
+      "ajax/login.html"
+    ]
+  },
+  "ajax/guodu.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "ajax/denglu.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js",
+      "images/wd_zc/yh.png",
+      "images/wd_zc/mm.png",
+      "js/app.js"
+    ],
+    "refer": [
+      "ajax/forget_password.html",
+      "ajax/reg.html"
+    ]
+  },
+  "ajax/user_head.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/globalVariables.js"
+    ],
+    "refer": []
+  },
+  "ajax/fabu.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/globalVariables.js",
+      "js/ajax2.js",
+      "images/sy_fb/sczx.png",
+      "images/sy_fb/fb.png",
+      "images/fb/fb_bg.png",
+      "ajax/up_head/images/tip_close.png",
+      "ajax/up_head/js/mobile-uploadCompresserImg.js",
+      "ajax/up_head/css/mobile-uploadImg.css",
+      "ajax/up_head/images/upload_licensebg.png",
+      "ajax/up_head/js/jquery-1.9.0.js",
+      "ajax/up_head/images/upload_carbg.png",
+      "ajax/up_head/js/mobile-uploadImg.js",
+      "ajax/up_head/images/mbupload_sprBg.png",
+      "ajax/up_head/images/mbupload_push.png"
+    ],
+    "refer": []
+  },
+  "ajax/forget_password.html": {
+    "resources": [
+      "css/style.css",
+      "js/app.js",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js"
+    ],
+    "refer": []
+  },
+  "ajax/user_data.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "images/wd/tx.png",
+      "js/globalVariables.js",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/user_head.html",
+      "ajax/denglu.html"
+    ]
+  },
+  "ajax/reg.html": {
+    "resources": [
+      "css/style.css",
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/globalVariables.js",
+      "js/ajax2.js"
+    ],
+    "refer": []
+  },
+  "ajax/user_active_cont.html": {
+    "resources": [
+      "images/loading/tphc2.png",
+      "images/hdxq/sc1.png",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js",
+      "images/hdxq/sc.png",
+      "images/yhhd_xq/bg.jpg"
+    ],
+    "refer": [
+      "ajax/addpinglun.html",
+      "ajax/denglu.html",
+      "ajax/addpinglun_user.html"
+    ]
+  },
+  "ajax/join.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/globalVariables.js",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/pay.html"
+    ]
+  },
+  "ajax/addpinglun.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html"
+    ]
+  },
+  "ajax/my_order.html": {
+    "resources": [
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js",
+      "images/sy/rmtj.png",
+      "images/sy/ljck.png",
+      "images/cbd.jpg",
+      "images/wd_dd/ren.png",
+      "images/wd_dd/ren2.png"
+    ],
+    "refer": [
+      "ajax/search.html",
+      "ajax/user_active_cont.html",
+      "ajax/sahuan_guodu.html",
+      "ajax/addpinglun.html",
+      "ajax/pay.html",
+      "ajax/order_info.html",
+      "ajax/denglu.html"
+    ]
+  },
+  "ajax/user_search.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "js/html5.history.js",
+      "css/mui.min.css",
+      "js/ajax.js",
+      "css/style.css"
+    ],
+    "refer": [
+      "ajax/user_active_cont.html"
+    ]
+  },
+  "ajax/my_love.html": {
+    "resources": [
+      "images/sy/ljck.png",
+      "css/style.css",
+      "images/fl/sjxz.png",
+      "images/fl_sjxz/shujian.png",
+      "images/fl_sjxz/fenlei.png",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "css/mui.min.css",
+      "js/ajax2.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html"
+    ]
+  },
+  "ajax/my_comment.html": {
+    "resources": [
+      "images/sy/ljck.png",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html"
+    ]
+  },
+  "ajax/my_fabu.html": {
+    "resources": [
+      "images/sy/ljck.png",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html",
+      "ajax/user_active_cont.html"
+    ]
+  },
+  "ajax/addpinglun_user.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/user_active_cont.html"
+    ]
+  },
+  "ajax/pay.html": {
+    "resources": [
+      "js/beecloud.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/globalVariables.js",
+      "js/ajax2.js"
+    ],
+    "refer": []
+  },
+  "ajax/fenlei8.html": {
+    "resources": [
+      "images/sy/ljck.png",
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/ajax2.js",
+      "images/fl/sjxz.png",
+      "images/fl_sjxz/shujian.png",
+      "images/fl_sjxz/fenlei.png",
+      "images/fl_sjxz/shijian1.png",
+      "images/fl_sjxz/fenlei1.png",
+      "images/fl_sjxz/duigou.png"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html"
+    ]
+  },
+  "ajax/order_info.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/globalVariables.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/sahuan_guodu.html"
+    ]
+  },
+  "ajax/sahuan_guodu3.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "ajax/up_head/index.html": {
+    "resources": [
+      "ajax/up_head/js/mobile-uploadCompresserImg.js",
+      "ajax/up_head/css/mobile-uploadImg.css",
+      "ajax/up_head/images/upload_licensebg.png",
+      "ajax/up_head/js/jquery-1.9.0.js",
+      "ajax/up_head/images/upload_carbg.png",
+      "ajax/up_head/js/mobile-uploadImg.js",
+      "ajax/up_head/images/mbupload_sprBg.png",
+      "ajax/up_head/images/defaultImg.png",
+      "ajax/up_head/images/mbupload_push.png"
+    ],
+    "refer": []
+  },
+  "ajax/web.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "examples/guanggao.html": {
+    "resources": [
+      "images/2.jpg",
+      "images/1.jpg",
+      "images/3.jpg",
+      "images/4.jpg",
+      "images/qixi.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "images/qixi.jpg",
+      "js/globalVariables.js",
+      "js/ajax2.js"
+    ],
+    "refer": [
+      "ajax/web.html"
+    ]
+  },
+  "ajax/about.html": {
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "ajax/about.html",
+      "ajax/baidu/alog.mobile.min.js",
+      "ajax/baidu/dp.mobile.min.js",
+      "ajax/baidu/base_6144881.css",
+      "ajax/baidu/share.js",
+      "ajax/baidu/floatShare_c847016.css"
+    ],
+    "refer": []
+  }
+}

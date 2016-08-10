@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			.mui-input-group {
+				margin-top: 6px;
+				margin-bottom: 6px;
+				border-left: 1px solid #CCCCCC;
+				border-right: 1px solid #CCCCCC;
+			}
+			
+			.mui-input-group label {
+				width: 30%;
+				font-size: 16px;
+				color: #999999;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 70%;
+				font-size: 16px;
+			}
+			/*发布*/
+			
+			.fabu {
+				background: url(../images/sy_fb/fb.png) no-repeat center center;
+				background-size: 42px 25px;
+				width: 45px;
+				float: right;
+				line-height: 45px;
+			}
+			/*日期选择*/
+			
+			#start_time,
+			#end_time {
+				width: 25%;
+				font-size: 14px;
+				margin-top: 3px;
+			}
+			
+			#contents {
+				height: 240px;
+				font-size: 16px;
+			}
+			/*图片*/
+			
+			.image-list {
+				width: 100%;
+				height: 270px;
+				text-align: center;
+				background: url(../images/fb/fb_bg.png) center center no-repeat;
+				background-size: 100%;
+			}
+			
+			.image-list img {
+				width: 50%;
+				height: 260px;
+				text-align: center;
+				margin-top: 5px;
+			}
+		</style>
+
+		<title></title>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav ">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ff5400;	"></a>
+			<h1 class="mui-title" id="title">发布活动</h1>
+			<a class="fabu" id="fabus">&nbsp;</a>
+		</header>
+
+		<div class="mui-content">
+			<div id='image-list' class="row image-list">
+				<!--<img src="../images/sy_fb/sczx.png">-->
+			</div>
+			<form class="mui-input-group">
+
+				<div class="mui-input-row">
+					<label>文章标题</label>
+					<input id='wzbt' type="text" class="mui-input-clear  contact" placeholder="" />
+				</div>
+				<div class="mui-input-row">
+					<label>所属分类</label>
+					<select class="" name="select_f" id="syfl">
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>活动时间</label>
+					<button id='start_time' type="button" class="">选择日期</button>
+					<button id='end_time' type="button" class="">选择日期</button>
+				</div>
+				<div class="mui-input-row">
+					<label>活动地点</label>
+					<input id='hddd' type="text" class="mui-input-clear  contact" placeholder="" />
+				</div>
+				<div class="mui-input-row">
+					<label>手机号码</label>
+					<input id='sjhm' type="text" class="mui-input-clear  contact" placeholder="" />
+				</div>
+				<div class="mui-input-row">
+					<label>Q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q</label>
+					<input id='qq' type="text" class="mui-input-clear  contact" placeholder="" />
+				</div>
+
+				<textarea id='contents' class="mui-input-clear question" placeholder="发布活动内容"></textarea>
+			</form>
+		</div>
+		<input type="text" value="" id="fenmian" style="display: none;" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/ajax2.js"></script>
+		<script src="../js/globalVariables.js"></script>
+		<script>
+		</script>
+		<script type="text/javascript">
+			//			  // 调用ajax//自动加载分类
+			function class_name() {
+				// 构造要传递的json数据
+				var data = {
+					"page": 0
+				};
+				//     mui.alert(gid('page').value, "标题", "OK", null);
+				postData(GV['URL']['AJAX'] + 'fabu_list.php', //服务端的URL
+					data, // json 数据
+					function(data) {
+						var j = data.length;
+						for(var i = 0; i < j; i++) {
+							//	mui.alert(data[i]['title'], "标题", "OK", null);
+							var li = document.createElement('option');
+							li.className = 'syfl_list';
+							li.setAttribute("value", data[i]['hid']);
+							li.innerHTML = data[i]['title'];
+							gid('syfl').appendChild(li);
+						}
+					}
+				);
+			}
+			mui.plusReady(function() {
+				class_name();
+				//请求数据，刷新数据
+				//      refreshInfo();
+				//变量初始化
+				main = plus.android.runtimeMainActivity();
+				Intent = plus.android.importClass("android.content.Intent");
+				MediaStore = plus.android.importClass("android.provider.MediaStore");
+				File = plus.android.importClass("java.io.File");
+				Uri = plus.android.importClass("android.net.Uri");
+				plus.webview.currentWebview().show();
+			});
+
+			//		日期
+			//			var info = document.getElementById("pickDateBtn");
+			//选择日期
+			document.getElementById("start_time").addEventListener('tap', function() {
+				var dDate = new Date();
+				dDate.setFullYear(2016, 7, 16);
+				var minDate = new Date();
+				minDate.setFullYear(2010, 0, 1);
+				var maxDate = new Date();
+				maxDate.setFullYear(2017, 11, 31);
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					document.getElementById("start_time").innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+				}, function(e) {
+					//					info.innerText = "您没有选择日期";
+				}, {
+					title: "请选择日期",
+					date: dDate,
+					minDate: minDate,
+					maxDate: maxDate
+				});
+			})
+			document.getElementById("end_time").addEventListener('tap', function() {
+					var dDate = new Date();
+					dDate.setFullYear(2016, 7, 16);
+					var minDate = new Date();
+					minDate.setFullYear(2010, 0, 1);
+					var maxDate = new Date();
+					maxDate.setFullYear(2017, 11, 31);
+					plus.nativeUI.pickDate(function(e) {
+						var d = e.date;
+						document.getElementById("end_time").innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					}, function(e) {
+						//					info.innerText = "您没有选择日期";
+					}, {
+						title: "请选择日期",
+						date: dDate,
+						minDate: minDate,
+						maxDate: maxDate
+					});
+				})
+				//			发布处理
+			document.getElementById("fabus").addEventListener('tap', function() {
+				var st_time = document.getElementById("end_time").innerText;
+				var ed_time = document.getElementById("start_time").innerText;
+				if(st_time == '选择日期' || ed_time == '选择日期') {
+					mui.toast("日期不能有空");
+					return false;
+				}
+				if(st_time < ed_time) {
+					mui.toast("开始日期不能小于结束日期");
+					return false;
+				}
+				var wd = plus.nativeUI.showWaiting(); //等待框  
+				if(gid('fenmian').value) {
+					//		               	if(gid('wzbt').value=='' || gid('hddd').value==''  || gid('sjhm').value==''  || gid('qq').value=='' || gid('content').value=='' ){
+					//		               	   plus.nativeUI.toast('不可为空哦');	               		
+					//		               		return;
+					//		               	}
+					var data = {
+						'uid': localStorage.getItem("uid"),
+						'title': gid('wzbt').value,
+						'cid': gid('syfl').value,
+						'sta': gid('start_time').innerHTML,
+						'stp': gid('end_time').innerHTML,
+						'place': gid('hddd').value,
+						'tel': gid('sjhm').value,
+						'qq': gid('qq').value,
+						'content': gid('contents').value,
+						"url": gid('fenmian').value
+					}
+
+					// 调用ajax
+					postData(GV['URL']['AJAX'] + 'user_add_hd.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							wd.close(); // 调用成功，先关闭等待的对话框
+							if(data == null || data == "") {
+								mui.alert("发布失败", "登录错误", "关闭", null);
+							} else {
+								if(data[0]['tishi'] == 1) {
+									//									plus.nativeUI.toast('发布成功');
+									//									mui.back();
+									mui.alert("发布成功,请在用户活动中查看", "你好", "懂了", mui.back());
+								} else {
+									mui.alert(data[0]['tishi'], "提示", "关闭", null);
+								}
+							}
+						}
+					);
+				} else {
+					plus.nativeUI.toast('请上传图片');
+					wd.close(); // 调用成功，先关闭等待的对话框
+				}
+			});
+		</script>
+
+		<script>
+			/*点击头像触发*/
+			document.getElementById('image-list').addEventListener('tap', function() {
+				if(mui.os.plus) {
+					var a = [{
+						title: "拍照"
+					}, {
+						title: "从手机相册选择"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "上传图片",
+						cancel: "取消",
+						buttons: a
+					}, function(b) { /*actionSheet 按钮点击事件*/
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage(); /*拍照*/
+								break;
+							case 2:
+								galleryImg(); /*打开相册*/
+								break;
+							default:
+								break;
+						}
+					})
+				}
+			}, false);
+			//拍照
+			function getImage() {
+				var c = plus.camera.getCamera();
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						uploadHead(s); /*上传图片*/
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					});
+				}, function(s) {
+					console.log("error" + s);
+				}, {
+					filename: "_doc/head.png"
+				})
+			}
+			//本地相册选择
+			function galleryImg() {
+				plus.gallery.pick(function(a) {
+					plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+							root.getFile("head.png", {}, function(file) {
+								//文件已存在
+								file.remove(function() {
+									console.log("file remove success");
+									entry.copyTo(root, 'head.png', function(e) {
+											var e = e.fullPath + "?version=" + new Date().getTime();
+											uploadHead(e); /*上传图片*/
+											//变更大图预览的src
+											//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+										},
+										function(e) {
+											console.log('copy image fail:' + e.message);
+										});
+								}, function() {
+									console.log("delete image fail:" + e.message);
+								});
+							}, function() {
+								//文件不存在
+								entry.copyTo(root, 'head.png', function(e) {
+										var path = e.fullPath + "?version=" + new Date().getTime();
+										uploadHead(path); /*上传图片*/
+									},
+									function(e) {
+										console.log('copy image fail:' + e.message);
+									});
+							});
+						}, function(e) {
+							console.log("get _www folder fail");
+						})
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					});
+				}, function(a) {}, {
+					filter: "image"
+				})
+			};
+
+			//上传头像图片
+			function uploadHead(imgPath) {
+				document.getElementById('image-list').innerHTML = '<img src="' + imgPath + '">';
+
+				//			console.log("imgPath = " + imgPath);
+				//			mainImage.src = imgPath;
+				//			mainImage.style.width = "60px";
+				//			mainImage.style.height = "60px";
+
+				var image = new Image();
+				image.src = imgPath;
+				image.onload = function() {
+					var imgData = getBase64Image(image);
+					//				    alert(imgData);
+					/*在这里调用上传接口*/
+
+					// 调用ajax/获取数据
+					//			function head() {
+					//	var wd = plus.nativeUI.showWaiting();
+					// 构造要传递的json数据
+					var data = {
+						'upload': imgData,
+						'fabu_image': 1
+					};
+					postData(GV['URL']['AJAX'] + 'user_ios_upload.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							gid('fenmian').value = data;
+							//                            var b=  data['upload'];
+							console.log(data);
+						}
+					);
+					//			}
+				}
+			}
+			//将图片压缩转成base64
+			function getBase64Image(img) {
+
+				var canvas = document.createElement("canvas");
+				var width = img.width;
+				var height = img.height;
+				// calculate the width and height, constraining the proportions
+				if(width > height) {
+					if(width > 160) {
+						height = Math.round(height *= 160 / width);
+						width = 160;
+					}
+				} else {
+					if(height > 220) {
+						width = Math.round(width *= 220 / height);
+						height = 220;
+					}
+				}
+				canvas.width = width; /*设置新的图片的宽度*/
+				canvas.height = height; /*设置新的图片的长度*/
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+				var dataURL = canvas.toDataURL("image/png", 0.8);
+				return dataURL.replace("data:image/png;base64,", "");
+			}
+		</script>
+	</body>
+
+</html>

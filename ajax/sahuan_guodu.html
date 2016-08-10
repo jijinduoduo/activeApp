@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+
+		<style type="text/css">
+			/*活动列表*/
+			
+			.table_box {
+				height: 150px;
+			}
+			
+			.button-visit {
+				overflow: hidden;
+				padding: 11px 15px;
+				background-color: #ffffff;
+				border-bottom: 1px solid #D9D9D9;
+				height: 180px;
+				border-bottom: 8px solid #E9E9E9;
+			}
+			
+			.button-visit a {
+				display: block;
+			}
+			
+			.button-visit a img {
+				width: 36%;
+				display: block;
+				float: left;
+				height: 150px;
+			}
+			
+			.button-visit a .con_right {
+				float: right;
+				width: 61%;
+			}
+			
+			.button-visit a .con_right .title #title2 {
+				color: #343434;
+				font-size: 16px;
+				float: left;
+				display: block;
+				width: 100%;
+				font-family: "黑体";
+				overflow: hidden;
+				height: 38px;
+			}
+			
+			.button-visit a .con_right .description {
+				color: #666666;
+				font-size: 12px;
+				float: left;
+				overflow: hidden;
+			}
+			
+			.button-visit a .con_right .start_time {
+				color: #464646;
+				font-size: 14px;
+				float: left;
+				display: inline-block;
+				width: 100%;
+				margin-top: 10px;
+			}
+			
+			.button-visit a .con_right .price {
+				color: #464646;
+				font-size: 14px;
+				float: left;
+				display: inline-block;
+				width: 100%;
+				margin-top: 5px;
+				color: #FF0000;
+			}
+			
+			.button-visit a .con_right .plist_img {
+				width: 100%;
+				height: 60px;
+				display: inline-block;
+				float: left;
+				background: url(../images/hdxq/ljbm.png) no-repeat left center;
+				background-size: 80px 30px;
+			}
+			/**/
+			
+			html,
+			body {
+				background-color: #FFFFFF;
+			}
+			/*/活动地点//*/
+			
+			.hddd {
+				background: #FFFFFF;
+				height: 120px;
+				padding: 14px;
+				border-bottom: 10px solid #F0EFF5;
+			}
+			
+			.hddd .hddd_t {
+				height: 34px;
+				border-bottom: 1px solid #ebebeb;
+			}
+			
+			.hddd .hddd_t .hddd_t_l {
+				font-size: 20px;
+				color: #FF5500;
+				margin-right: 10px;
+			}
+			
+			.hddd .hddd_t .hddd_t_r {
+				color: #363636;
+				font-size: 20px;
+			}
+			
+			.hddd .hd_d {
+				padding-top: 10px;
+				padding-left: 20px;
+			}
+			
+			.hddd .hd_d .hd_d_1 {
+				color: #454545;
+				font-size: 18px;
+				height: 26px;
+			}
+			
+			.hddd .hd_d .hd_d_2 {
+				color: #8b8b8b;
+				font-size: 15px;
+				height: 20px;
+			}
+			/*/活动详情//*/
+			
+			.hdxq {
+				background: #FFFFFF;
+				display: block;
+				padding: 14px;
+				border-bottom: 10px solid #F0EFF5;
+			}
+			
+			.hdxq .hddd_t {
+				height: 34px;
+				border-bottom: 1px solid #ebebeb;
+			}
+			
+			.hdxq .hddd_t .hddd_t_l {
+				font-size: 20px;
+				color: #FF5500;
+				margin-right: 10px;
+			}
+			
+			.hdxq .hddd_t .hddd_t_r {
+				color: #363636;
+				font-size: 20px;
+			}
+			
+			.hdxq .hdxq_con {
+				width: 100%;
+				overflow: hidden;
+			}
+			
+			.hdxq .hdxq_con * {
+				pointer-events: none;
+			}
+			
+			.hdxq .hdxq_con * img {
+				width: 100%;
+			}
+			/*活动评论*/
+			
+			.hdpl {
+				background: #FFFFFF;
+				display: block;
+				padding: 14px;
+			}
+			
+			.hdpl .hddd_t {
+				height: 34px;
+				border-bottom: 1px solid #ebebeb;
+			}
+			
+			.hdpl .hddd_t .hddd_t_l {
+				font-size: 20px;
+				color: #FF5500;
+				margin-right: 10px;
+			}
+			
+			.hdpl .hddd_t .hddd_t_r {
+				color: #363636;
+				font-size: 20px;
+			}
+			
+			.hdpl .wypl {
+				float: right;
+				border: 1px solid #FF5500;
+				border-radius: 4px;
+				font-size: 12px;
+				text-align: right;
+				color: #FF5500;
+				padding: 1px 4px;
+			}
+			/*活动评论用户*/
+			
+			.hdpl .hdpl_con {
+				padding: 10px;
+			}
+			
+			.hdpl .hdpl_con .pl_head {
+				display: block;
+				height: 30px;
+				width: 30px;
+				float: left;
+			}
+			
+			.hdpl .hdpl_con .pl_name {
+				display: block;
+				color: #8c8c8c;
+				float: left;
+				line-height: 30px;
+				margin-left: 10px;
+			}
+			
+			.hdpl .hdpl_con .pl_con {
+				display: block;
+				color: #444444;
+				float: left;
+				padding-left: 40px;
+				width: 100%;
+				overflow: hidden;
+			}
+			
+			.hdpl .hdpl_con .pl_time {
+				display: block;
+				color: #c9c9c9;
+				float: left;
+				line-height: 30px;
+				padding-left: 40px;
+				width: 100%;
+				font-size: 14px;
+				border-bottom: 1px solid #F0EFF5;
+				margin-bottom: 4px;
+			}
+			/*//获取的活动内容*/
+			/*喜欢*/
+			
+			#love {
+				color: #ff5400;
+				display: block;
+				font-size: 16px;
+				line-height: 30px;
+				height: 45px;
+				background: url(../images/hdxq/sc1.png) no-repeat center center;
+				background-size: 16px 16px;
+				margin-right: 0px;
+			}
+			
+			header {
+				opacity: 0.9;
+				position: absolute;
+			}
+		</style>
+		<link rel="stylesheet" href="../css/mui.min.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav " style="background: #FF5500;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF"></a>
+
+			<a class=" mui-icon  mui-pull-right" id="love"> &nbsp;</a>
+			<h1 class="mui-title" id="title" style="color: #FFFFFF"></h1>
+		</header>
+		<div class="mui-content" id="comments">
+			<div class="button-visit" title="" url="" id="hd_tou">
+				<a>
+					<img class="" src="../images/loading/tphc2.png" id="hd_pic">
+					<div class="con_right">
+
+						<span class="title" id="title_c">	<span id="title2" ></span><span>
+	        <span class="start_time" id="start_time"></span>
+						<span class="price" id="price"></span>
+						<span class="plist_img" style="display: none;" id="join"></span>
+					</div>
+				</a>
+			</div>
+			<div class="hddd">
+				<div class="hddd_t"> <span class="hddd_t_l">|</span><span class="hddd_t_r">活动地点</span> </div>
+				<div class="hd_d">
+					<div class="hd_d_1" id="hd_d_1"></div>
+					<div class="hd_d_2" id="hd_d_2"></div>
+				</div>
+			</div>
+			<div class="hdxq">
+				<div class="hddd_t"> <span class="hddd_t_l">|</span><span class="hddd_t_r">活动详情</span> </div>
+				<div class="hdxq_con" id="hdxq_con"></div>
+			</div>
+			<!--活动评论-->
+			<div class="hdpl">
+				<div class="hddd_t"> <span class="hddd_t_l">|</span><span class="hddd_t_r">活动评论</span> <span class="wypl" id="wypl">我要评论</span></div>
+				<div id="hdpl"></div>
+				<!--<div class="hdpl_con">
+				<img src="../images/fcjj1.png" class="pl_head" /><span class="pl_name">东东</span>
+				<div class="pl_con">你分开了就是垃圾分类数据分离开收据了；拉开距离看见了反复反复</div>
+				<div class="pl_time"> 2016 -22-22 22:22:22</div>
+			</div>-->
+			</div>
+		</div>
+		<input type="" name="jiage" id="jiage" value="" style="display: none;" />
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/ajax2.js"></script>
+		<script src="../js/globalVariables.js"></script>
+		<script>
+			var ilove = 0; //收藏默认值
+			mui.init({
+				//敲点击返回时，内容区回到顶部
+				beforeback: function() {
+					window.scroll(0, 0);
+					return true;
+				}
+			});
+			var urlinfo;
+			var h1title = document.getElementById("title");
+			var comments = document.getElementById("comments");
+
+			var jiage;
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var title = self.title;
+				urlinfo = self.urlinfo;
+				h1title.innerHTML = title;
+				//				alert(urlinfo)
+				//	活动详情
+				huodongxiangqing();
+				var hid;
+				//	活动详情			
+				function huodongxiangqing() {
+
+					// 构造要传递的json数据
+					var data = {
+						"hid": urlinfo,
+						//					"ftime": gid('ftime').value,
+						//					"classid": gid('class_id').value			
+					};
+					//         mui.alert(gid('page').value, "标题", "OK", null);
+					postData(GV['URL']['AJAX'] + 'xiangqing.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							if(data == null || data == "") {
+								//　gid('new').innerHTML  = '';　　
+								mui.alert("没有了", "亲", "知道了", null);
+							} else {
+								var hd_tou = gid('hd_tou');
+								hd_tou.setAttribute("title", data[0]['title']);
+								hid = data[0]['hid'];
+								//							hd_tou.setAttribute("url", 'http://active.bjxxw.com/app/xiangqing.php?&hid=' +data[0]['hid']);
+								if(data[0]['baoming'] == 1) {
+									gid('join').style.display = 'block';
+								}
+								jiage = data[0]['price'];
+								gid('jiage').value = jiage;
+								//        mui.toast(jiage);
+								if(jiage == '0.00') {
+									jiage = '免费';
+								}
+
+								gid('hd_pic').src = GV['URL']['PIC'] + data[0]['path'];
+								gid('title2').innerHTML = data[0]['title'];
+								gid('start_time').innerHTML = '时间：' + data[0]['st'] + '~' + data[0]['de'];
+								gid('price').innerHTML = '价格： ' + jiage;
+								gid('hd_d_1').innerHTML = '地点： ' + data[0]['area'];
+								gid('hd_d_2').innerHTML = '地址： ' + data[0]['place'];
+								//							gid('hdxq_con').innerHTML=data[0]['content'];
+								var cont = data[0]['content'];
+								cont = cont.replace(/\/Uploads\/Editor\//g, 'http://active.bjxxw.com/Uploads/Editor/');
+								gid('hdxq_con').innerHTML = cont;
+
+							}
+
+						}
+					);
+				}
+				//		点击事件 参加
+				var join = document.getElementById("join");
+				//监听点击事件
+				join.addEventListener("tap", function() {
+
+					//////////////////////////
+					if(localStorage.getItem("uid")) { //查看本地储存										
+						//获取id
+						var title1 = '报名：' + title;
+						//获取id
+						//	mui.alert(url, "标题", "OK", null);
+						mui.openWindow({
+							url: 'join.html',
+							id: 'join.html',
+							extras: {
+								title1: title1,
+								title: title,
+								urlinfo: urlinfo,
+								jiage: jiage
+							}
+						});
+					} else {
+						mui.toast('请先登录');
+						mui.openWindow({
+							url: 'denglu.html',
+							id: 'denglu',
+							styles: {
+								//bounce: 'all', //窗口遇到边框是否有反弹效果
+								//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+								render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+								//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+								background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+							}
+						});
+					}
+					/////////////////////
+				});
+
+				//		点击事件 评论
+				var join = document.getElementById("wypl");
+				//监听点击事件
+				join.addEventListener("tap", function() {
+
+					//////////////////////////
+					if(localStorage.getItem("uid")) { //查看本地储存										
+						//获取id
+						var title1 = '评论：' + title;
+						//获取id
+						//	mui.alert(url, "标题", "OK", null);
+						mui.openWindow({
+							url: 'addpinglun.html',
+							id: 'addpinglun.html',
+							extras: {
+								title1: title1,
+								urlinfo: urlinfo,
+								hid: hid
+							}
+						});
+					} else {
+						mui.toast('请先登录');
+						mui.openWindow({
+							url: 'denglu.html',
+							id: 'denglu',
+							styles: {
+								//bounce: 'all', //窗口遇到边框是否有反弹效果
+								//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+								render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+								//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+								background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+							}
+						});
+					}
+					/////////////////////
+				});
+
+				//		点击事件喜欢
+
+				//监听收藏事件	
+
+				gid('love').addEventListener("tap", function() {
+
+					//////////////////////////
+					if(localStorage.getItem("uid")) { //查看本地储存										
+						if(ilove != 1) {
+							this.style.background = 'url(../images/hdxq/sc.png) no-repeat center center';
+							ilove = 1;
+							loves();
+							//											mui.toast('已经收藏');
+						} else {
+							ilove = 2;
+							loves();
+							this.style.background = 'url(../images/hdxq/sc1.png) no-repeat center center';
+							//								             mui.toast('取消了收藏');
+						}
+					} else {
+						mui.toast('请先登录');
+						mui.openWindow({
+							url: 'denglu.html',
+							id: 'denglu',
+							styles: {
+								//bounce: 'all', //窗口遇到边框是否有反弹效果
+								//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+								render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+								//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+								background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+							}
+						});
+					}
+					/////////////////////
+				});
+
+				//	喜欢收藏		
+				function loves() {
+					// 构造要传递的json数据
+					var data = {
+						"sid": ilove,
+						"uid": localStorage.getItem("uid"),
+						"pic": gid('jiage').value,
+						"hid": urlinfo
+					};
+
+					postData(GV['URL']['AJAX'] + 'addcollect.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							if(data == null || data == "") {
+								//　gid('new').innerHTML  = '';　　
+								mui.alert("没有了", "亲", "知道了", null);
+							} else {
+								var b = data[0]['tishi']; //
+								//									alert(b+'uid:'+ localStorage.getItem("uid")+'hid:'+urlinfo);
+								mui.toast(b);
+							}
+
+						}
+					);
+				}
+				pinglun(); //评论列表
+				if_loves(); //	 是否收藏
+				//	 是否收藏
+				function if_loves() {
+					// 构造要传递的json数据
+					var data = {
+						"uid": localStorage.getItem("uid"),
+						"hid": urlinfo
+					};
+					//         mui.alert(gid('page').value, "标题", "OK", null);
+					postData(GV['URL']['AJAX'] + 'if_collect.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							if(data == null || data == "") {
+								//　gid('new').innerHTML  = '';　　
+								mui.alert("没有了", "亲", "知道了", null);
+							} else {
+
+								ilove = data[0]['tishi']; //返回1收藏;2没收藏
+								//									 alert(ilove)
+								if(ilove == 1) {
+									gid('love').style.background = 'url(../images/hdxq/sc.png) no-repeat center center';
+									ilove = 1;
+									//											loves();
+									//									mui.toast('已经收藏');
+								} else {
+									ilove = 2;
+									//								             loves();
+									gid('love').style.background = 'url(../images/hdxq/sc1.png) no-repeat center center';
+									//							         mui.toast('没收藏');
+								}
+							}
+
+						}
+					);
+				}
+
+				//自定义事件活动评论更新			
+				window.addEventListener('update_hd', function(event) {
+					gid('hdpl').innerHTML = '';
+					pinglun();
+				});
+				//	活动评论			
+				function pinglun() {
+					// 构造要传递的json数据
+					var data = {
+						"hid": urlinfo
+					};
+					//         mui.alert(gid('page').value, "标题", "OK", null);
+					postData(GV['URL']['AJAX'] + 'comment.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							if(data == null || data == "") {
+								//　gid('new').innerHTML  = '';　　
+								//								mui.alert("没有o", "亲", "知道了", null);
+							} else {
+								var j = data.length;
+								var table = gid('hdpl');
+								for(var i = 0; i < j; i++) {
+									//	mui.alert(data[i]['title'], "标题", "OK", null);
+									var li = document.createElement('div');
+									li.className = 'hdpl_con';
+									li.setAttribute("cid", data[i]['cid']);
+									li.innerHTML = '<img src="' + GV['URL']['PIC'] + data[i]['face'] + '" class="pl_head"/><span class="pl_name">' + data[i]['nickname'] + '</span><div class="pl_con">' + data[i]['content'] + '</div><div class="pl_time">' + data[i]['cr'] + '</div>';
+									table.appendChild(li);
+								}
+
+							}
+
+						}
+					);
+				}
+
+				//							  //注意：若为ajax请求，则需将如下代码放在处理完ajax响应数据之后；
+				//
+				//  //关闭等待框
+				//  plus.nativeUI.closeWaiting();
+				//  //显示当前页面
+				//  mui.currentWebview.show();
+
+			});
+		</script>
+	</body>
+
+</html>

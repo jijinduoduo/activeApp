@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>北京信息网</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/style.css">
+		<style type="text/css">
+			.wdpl_box {
+				background: #FFFFFF;
+				display: block;
+				width: 100%;
+				height: 180px;
+			}
+			
+			.wdpl_title {
+				display: block;
+				border-bottom: 1px solid #CCCCCC;
+				line-height: 40px;
+				height: 40px;
+				margin: 0px 10px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-o-text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.wdpl_con_all {
+				float: left;
+				border-bottom: 10px solid #E9E9E9;
+				width: 100%;
+				padding: 10px;
+				display: block;
+				height: 140px;
+			}
+			
+			.wdpl_logo {
+				display: block;
+				float: left;
+				width: 60px;
+				height: 60px;
+				margin-right: 10px;
+				border-radius: 45px;
+			}
+			
+			.wdpl_content {
+				border: 1px solid #CCCCCC;
+				display: block;
+				float: left;
+				padding: 6px;
+				padding-right: 0px;
+				width: -moz-calc(100% - 70px);
+				width: -webkit-calc(100% - 70px);
+				width: calc(100% - 70px);
+				height: 110px;
+			}
+			
+			.fb_time {
+				float: left;
+				font-size: 12px;
+				width: 80%;
+			}
+			
+			.fb_sc {
+				font-size: 12px;
+				float: right;
+				width: 20%;
+			}
+			
+			.wdpl_font {
+				width: 100%;
+				display: block;
+				float: left;
+				overflow-y: scroll;
+				height: 70px;
+				margin-bottom: 6px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style=" background: #ff5d0c;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;	"></a>
+			<!--<a id="search" class="mui-icon mui-icon-search mui-pull-right app_icon" style="color: #FFFFFF;"></a>-->
+			<h1 class="mui-title" style="color: #FFFFFF;">我的评论</h1>
+		</header>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<!--<div id="wdpl_box">
+	<div class="wdpl_title">
+		' + data[i]['title'] + '
+	</div>
+<div class="wdpl_con_all">
+	<img class="wdpl_logo" src=" ' + GV['URL']['PIC'] + data[i]['face'] + '"/>
+	<p class="wdpl_content">
+		<span class="wdpl_font">
+	' + data[i]['content'] + '
+		</span>
+		<span class="fb_time" >发布时间 ：' + data[i]['st'] + '</span>
+		<span class="fb_sc" id="fb_sc">删除</span>
+	</p>
+	
+</div>
+	
+</div>-->
+			<div class="mui-scroll">
+
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron" id='new'>
+
+				</ul>
+			</div>
+		</div>
+		<!--时间-->
+		<input type="hidden" id="ftime" value="">
+		<!--分类-->
+		<input type="hidden" id="class_id" value="">
+		<!--页码-->
+		<input type="hidden" id="page" value="0">
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/ajax2.js"></script>
+		<script src="../js/globalVariables.js"></script>
+
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					//					down: {
+					//						callback: pulldownRefresh
+					//					},
+					up: {
+						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: pullupRefresh
+					}
+				}
+			});
+			//敲击顶部导航，内容区回到顶部
+			document.querySelector('header').addEventListener('tap', function() {
+				window.scroll(0, 0);
+			});
+			mui.plusReady(function() {
+
+			});
+			var ws = null;
+			//
+
+			//mui.plusReady(function(){
+			//});
+
+			// 调用ajax//下拉刷新
+			// function ajax_plist_down(){
+			// 	gid('page').value=1;
+			////var b='分类'+gid('class_id').value+'时间'+gid('ftime').value+'页码'+gid('page').value;
+			//// 		alert(b); 
+			//
+			// 				  // 构造要传递的json数据
+			// 				  	mui('#pullrefresh').pullRefresh().refresh(true);//上拉加载重置
+			////		 var wd = plus.nativeUI.showWaiting();  
+			// 				var data = {
+			//					"page": gid('page').value,
+			//					"ftime": gid('ftime').value,
+			//					"classid": gid('class_id').value				
+			//				};
+			//               //     mui.alert(gid('page').value, "标题", "OK", null);
+			//				postData(GV['URL']['AJAX'] + 'fenlei_all.php', //服务端的URL 
+			//                 data,// json 数据
+			//                 function(data) {
+			////                 	wd.close();
+			//                 		if (data == null || data == "") {		      
+			//						mui.alert("没有哦", "亲", "知道了", null);
+			//			} else {
+			//
+			//                 var j=data.length;
+			//                 if(j<5){
+			//                 	gid('new').style.height="600px";
+			//                 }else{
+			//               	gid('new').style.height="";
+			//                 }
+			//                 var z=gid('page').value;
+			//                 gid('page').value=1;
+			//                 document.getElementById("new").innerHTML="";
+			//  		var table = document.body.querySelector('.mui-table-view');
+			//					var cells = document.body.querySelectorAll('.fenlei-visit');
+			//  				for (var i =0; i < j; i++) {
+			//				//	mui.alert(data[i]['title'], "标题", "OK", null);
+			//				var li = document.createElement('div');
+			//								li.className = 'button-visit';
+			//								li.setAttribute("title", data[i]['title']);
+			//								li.setAttribute("url", data[i]['hid']);
+			//								li.innerHTML = ' <a class=""><img class="" src=" ' + GV['URL']['PIC'] + data[i]['path'] + '"><div class="con_right"><span class="title">  ' + data[i]['title'] + '<span><span class="start_time">时间：' + data[i]['st'] + '~' + data[i]['de'] + '</span><span class="address">地点：  ' + data[i]['area'] + '</span><span class="plist_img"></span></div></a>';
+			//								   table.insertBefore(li, table.firstChild);
+			//					}
+			//  					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); 
+			//         }
+			//			}
+			//   );
+			//}
+			//上拉加载
+			var count = 0;
+
+			function ajax_plist_up() {
+				//				 var b='分类'+gid('class_id').value+'时间'+gid('ftime').value+'页码'+gid('page').value;
+				// 		alert(b); 
+				// 构造要传递的json数据
+				var data = {
+					"uid": localStorage.getItem("uid"),
+					"page": gid('page').value
+
+				};
+				//		gid('wdpl_box').innerHTML='';
+				//	         mui.alert(localStorage.getItem("uid"), "标题", "OK", null); 
+				postData(GV['URL']['AJAX'] + 'mycomment.php', //服务端的URL 
+					data, // json 数据
+					function(data) {
+						if(data == null || data == "") {
+							//　gid('new').innerHTML  = '';　　
+							mui.alert("没有了", "亲", "知道了", null);
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((true)); //参数为true代表没有更多数据了。
+						} else {
+							//	mui.alert('1234', "标题", "OK", null);
+							var j = data.length;
+							var z = gid('page').value;
+							gid('page').value = 1 + Number(z);
+							var table = document.body.querySelector('.mui-table-view');
+							var cells = document.body.querySelectorAll('.fenlei-visit');
+							for(var i = 0; i < j; i++) {
+								//	mui.alert(data[i]['title'], "标题", "OK", null);
+								var li = document.createElement('div');
+								li.className = 'wdpl_box';
+								li.setAttribute("title", data[i]['title']);
+								li.setAttribute("name", data[i]['hid']);
+								li.innerHTML = '<div class="wdpl_title" name="' + data[i]['hid'] + '">' + data[i]['title'] + '</div><div class="wdpl_con_all"><img class="wdpl_logo"src=" ' + GV['URL']['PIC'] + data[i]['face'] + '"/><p class="wdpl_content"><span class="wdpl_font">' + data[i]['content'] + '</span><span class="fb_time">发布时间：' + data[i]['st'] + '</span><span class="fb_sc" id="fb_sc"  hid="' + data[i]['hid'] + '">删除</span></p></div>';
+								table.appendChild(li);
+							}
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 30)); //参数为true代表没有更多数据了。
+						}
+					}
+				);
+			}
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				//				setTimeout(function() {				
+				//				//	for (var i = cells.length, len = i + 3; i < len; i++) {
+				//				//	ajax_plist_down();
+				//						//下拉刷新，新纪录插到最前面；						
+				//				//	}
+				//				//refresh completed
+				//				}, 1000);
+			}
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					ajax_plist_up();
+				}, 10);
+			}
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 500);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+		</script>
+	</body>
+
+	<!--点击列表处理-->
+	<script>
+		var subWebview = null,
+			template = null;
+		//处理点击事件-列表；
+		mui(".mui-table-view").on('tap', '.wdpl_title', function() {
+			//获取id
+			var title = this.innerHTML;
+			//获取id
+			var urlinfo = this.getAttribute("name");
+			//			alert(urlinfo);
+			mui.openWindow({
+				url: 'sahuan_guodu.html',
+				id: 'sahuan_guodu.html',
+				extras: {
+					title: title,
+					urlinfo: urlinfo
+
+				},
+				styles: {
+					top: '0',
+					bottom: '0px',
+					//bounce: 'all', //窗口遇到边框是否有反弹效果
+					hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+					render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+					decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+					errorPage: 'ajax/error.html', //窗口加载错误时跳转的页面地址
+					scrollIndicator: 'none', //窗口是否显示滚动条										
+				}
+			});
+		});
+		//处理点击事件-删除
+		mui(".mui-table-view").on('tap', ".fb_sc", function() {
+			//获取id
+			var hid = this.getAttribute("hid");
+
+			// 构造要传递的json数据
+			var data = {
+				"uid": localStorage.getItem("uid"),
+				"hid": hid
+			};
+			postData(GV['URL']['AJAX'] + 'mycomment_del.php', //服务端的URL 
+				data, // json 数据
+				function(data) {
+					mui.toast(data['0']['tishi']);
+
+				}
+			);
+			this.parentNode.parentNode.parentNode.style.display = 'none';
+
+		});
+	</script>
+
+</html>

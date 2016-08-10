@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+		<!--下拉刷新上拉加载-->
+
+		<style>
+			/*列表获取*/
+			/*下拉框*/
+			/*设置主题背景*/
+			/*热门推荐*/
+			
+			#remen {
+				display: block;
+				background: #e9e9e9;
+				float: left;
+				margin-top: 6px;
+				width: 100%;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			.remen_f {
+				margin-left: 10px;
+				color: #fb6820;
+			}
+			/*/订单详情//*/
+			
+			.ddxq {
+				background: #FFFFFF;
+				display: block;
+				padding: 14px;
+				border-bottom: 10px solid #F0EFF5;
+			}
+			
+			.ddxq .ddxq_t {
+				height: 34px;
+				border-bottom: 1px solid #d2d2d2;
+			}
+			
+			.ddxq .ddxq_t .ddxq_t_l {
+				font-size: 20px;
+				color: #FF5500;
+				margin-right: 10px;
+			}
+			
+			.ddxq .ddxq_t .ddxq_t_r {
+				color: #363636;
+				font-size: 18px;
+			}
+			
+			.ddxq .ddxq_t .ddxq_t_rr {
+				float: right;
+				color: #ff5500;
+			}
+			
+			.ddxq .ddxq_bott {
+				height: 30px;
+				width: 100%;
+				/*background: #CCCCCC;*/
+				line-height: 26px;
+				border-top: 1px solid #d2d2d2;
+			}
+			
+			.ddxq .ddxq_bott .ddxq_bott_r1 {
+				display: block;
+				float: right;
+				width: 80px;
+				height: 26px;
+				border: 1px solid #A9A9A9;
+				border-radius: 4px;
+				text-align: center;
+				line-height: 26px;
+				color: #A9A9A9;
+				margin: 6px;
+			}
+			
+			.ddxq .ddxq_bott .ddxq_bott_r2 {
+				display: block;
+				float: right;
+				width: 50px;
+				height: 26px;
+				border-radius: 4px;
+				background: #FF5500;
+				text-align: center;
+				line-height: 26px;
+				color: #FFFFFF;
+				margin: 6px;
+			}
+			/*订单列表*/
+			/*活动列表*/
+			
+			.button-visit {
+				overflow: hidden;
+				padding: 11px 15px;
+				background-color: #ffffff;
+				display: block;
+			}
+			
+			.button-visit a {
+				display: block;
+				height: 100px;
+				overflow: hidden;
+			}
+			
+			#ddxq_con a .img_logo {
+				width: 30%;
+				display: block;
+				float: left;
+				height: 120px;
+				margin-top: -10px;
+			}
+			
+			.button-visit a .con_right {
+				float: right;
+				width: 67%;
+			}
+			
+			.button-visit a .con_right .title {
+				color: #343434;
+				font-size: 16px;
+				float: left;
+				display: block;
+				width: 100%;
+				font-family: "黑体";
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-o-text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.button-visit a .con_right .description {
+				color: #666666;
+				font-size: 12px;
+				float: left;
+				overflow: hidden;
+			}
+			
+			.button-visit a .con_right .start_time {
+				color: #464646;
+				font-size: 14px;
+				float: left;
+				display: inline-block;
+				width: 100%;
+				margin-top: 10px;
+			}
+			
+			.button-visit a .con_right .address {
+				color: #464646;
+				font-size: 14px;
+				float: left;
+				display: inline-block;
+				width: 100%;
+				margin-top: 5px;
+			}
+			
+			.button-visit a .con_right .jiage {
+				color: #464646;
+				font-size: 14px;
+				float: left;
+				display: inline-block;
+				width: 100%;
+				margin-top: 5px;
+				color: #FF0000;
+			}
+			/*没有订单背景图片*/
+			
+			.myddl {
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 19991;
+				background: #FFFFFF;
+				height: 700px;
+			}
+		</style>
+		<!--deom-->
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			.mui-segmented-control-juhuang {
+				border: 1px solid #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item {
+				color: #FF5500;
+				border-color: inherit;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item.mui-active {
+				color: #FFFFFF;
+				background-color: #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #FF5500;
+				border-bottom: 2px solid #FF5500;
+				background: none;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted~ .mui-slider-progress-bar {
+				background-color: #FF5500;
+			}
+			
+			.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+				width: 100%;
+				height: 40px;
+				white-space: nowrap;
+			}
+			
+			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
+				width: 33%;
+				padding: none;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav" style="background: #ff5500;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #FFFFFF;	"></a>
+
+			<!--<a id="search" class="mui-icon mui-icon-search mui-pull-right app_icon" style="color: #FFFFFF;"></a>-->
+			<h1 class="mui-title" style="color: #FFFFFF;">我的报名</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-juhuang">
+					<div class="mui-scroll">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							全部
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							未完成
+						</a>
+						<a class="mui-control-item" href="#item3mobile">
+							已完成
+						</a>
+					</div>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div class="mui-scroll-wrapper" id="scroll1">
+
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="1">
+									<!--<li>
+										<div class="ddxq">
+											<div class="ddxq_t"> <span class="ddxq_t_l">|</span><span class="ddxq_t_r">北京信息网</span> <span class="ddxq_t_rr">已完成</span></div>
+											<div class="button-visit" id="ddxq_con">
+												<a class="a_all">
+										
+													<img  src=" ' + GV['URL']['PIC'] + data[i]['path'] + '"  class="img_logo"/>
+													<div class="con_right"  hid=" ' + data[i]['hid'] + '	" order_code=" ' + data[i]['order_code'] + '">
+														<span class="title"> ' + data[i]['title'] + '																								
+															   <span class="jiage" id="jiage">￥ ' + data[i]['price'] + '	</span>													
+														</span>
+													</div>
+												</a>
+											</div>
+											<div class="ddxq_bott" id="ddxq_bott">
+												<span class="ddxq_bott_r2 pinglun" hid=" ' + data[i]['hid'] + '	" title="' + data[i]['title'] + '">评论</span>
+												<span class="ddxq_bott_r1 shanchu"  hid=" ' + data[i]['hid'] + '	" order_code=" ' + data[i]['order_code'] + '" >删除订单</span>
+											</div>
+										</div>
+									</li>-->
+									<!--fffffff-->
+									<!--<li >
+										<div class="ddxq">
+											<div class="ddxq_t"> <span class="ddxq_t_l">|</span><span class="ddxq_t_r">北京信息网</span> <span class="ddxq_t_rr">待付款</span></div>
+											<div class="button-visit" id="ddxq_con">
+												<a class="a_all">
+													<img src=" ' + GV['URL']['PIC'] + data[i]['path'] + '"  class="img_logo"/>
+													<div class="con_right"  hid=" ' + data[i]['hid'] + '	" order_code=" ' + data[i]['order_code'] + '">
+														<span class="title"> ' + data[i]['title'] + '																								
+															   <span class="jiage" id="jiage">￥ ' + data[i]['price'] + '</span>													
+														</span>
+													</div>
+												</a>
+											</div>
+											<div class="ddxq_bott" id="ddxq_bott">
+												<span class="ddxq_bott_r2 fukuan"  hid=" ' + data[i]['hid'] + '	"  title="' + data[i]['title'] + '"  order_code=" ' + data[i]['order_code'] + '"  jiage=" ' + data[i]['price'] + '" >付款</span> 
+												<span class="ddxq_bott_r1 quxiao"  hid=" ' + data[i]['hid'] + '	"  order_code=" ' + data[i]['order_code'] + '">取消订单</span>
+											</div>
+										</div>
+									</li>-->
+								</ul>
+
+							</div>
+						</div>
+					</div>
+					<!--第二页-->
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="2">
+
+								</ul>
+							</div>
+						</div>
+
+					</div>
+					<!--第三页-->
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="3">
+
+								</ul>
+							</div>
+
+							<!--end-->
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<!--页码-->
+		<input type="hidden" id="page1" value="0">
+		<input type="hidden" id="page2" value="0">
+		<input type="hidden" id="page3" value="0">
+		<!--时间-->
+		<input type="hidden" id="code_id" value="1">
+		<script src="../js/ajax2.js"></script>
+		<script src="../js/globalVariables.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>
+		<!--全部传1 待付款2 已完成3-->
+		<script>
+			mui.init();
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					createFragment(0);
+					createFragment(1);
+					createFragment(2);
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.mui-table-view');
+										//										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
+										ul.innerHTML = "";
+										//										页面本页刷新
+										var id_num = index + 1;
+										var pageid = 'page' + id_num;
+										gid(pageid).value = 0;
+
+										createFragment(index);
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							},
+							up: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										//										var ul = self.element.querySelector('.mui-table-view');
+										createFragment(index);
+										//										ul.appendChild(createFragment(ul, index, 5));
+										self.endPullUpToRefresh();
+									}, 1000);
+								}
+							}
+						});
+					});
+
+					// 创建新div函数
+					function createFragment(index) {
+						var id_num = index + 1;
+						var li;
+						// 构造要传递的json数据
+						var pageid = 'page' + id_num;
+						//					alert(gid(pageid).value);
+						var data = {
+							"page": gid(pageid).value,
+							"code_id": id_num,
+							"uid": localStorage.getItem("uid")
+
+						};
+						//				     mui.alert(gid(pageid).value, "标题", "OK", null);
+						postData(GV['URL']['AJAX'] + 'my_order.php', //服务端的URL 
+							data, // json 数据
+							function(data) {
+								if(data == null || data == "") {
+
+									var table = gid(id_num);
+
+									//								alert(gid(pageid).value);
+									if(gid(pageid).value != 0) {
+										mui.toast("没有数据了", "亲", "知道了", null);
+									} else {
+										table.innerHTML = '';
+										var li = document.createElement('li');
+										li.className = 'myddl';
+										li.innerHTML = '<img src="../images/wd_dd/ren2.png">';
+										table.appendChild(li);
+									}
+									//												
+								} else {
+									//	mui.alert('1234', "标题", "OK", null);
+									var j = data.length;
+									var b = gid(pageid).value;
+									gid(pageid).value = 1 + Number(b);
+									var table = gid(id_num);
+									for(var i = 0; i < j; i++) {
+										//										alert(data[i]['if_baoming']); 
+										if(data[i]['if_baoming'] == 1) { //已完成
+											//											alert('已完成');
+											var li = document.createElement('li');
+											li.className = 'botton-visit';
+											li.setAttribute("title", data[i]['title']);
+											li.setAttribute("url", data[i]['hid']);
+											li.innerHTML = '<li><div class="ddxq"><div class="ddxq_t"><span class="ddxq_t_l">|</span><span class="ddxq_t_r">北京信息网</span><span class="ddxq_t_rr">已完成</span></div><div class="button-visit"id="ddxq_con"><a class="a_all"><img src=" ' + GV['URL']['PIC'] + data[i]['path'] + '"class="img_logo"/><div class="con_right "  title="' + data[i]['title'] + '"  hid=" ' + data[i]['hid'] + '	" order_code=" ' + data[i]['order_code'] + '"><span class="title">' + data[i]['title'] + '<span class="jiage"id="jiage">￥' + data[i]['price'] + '</span></span></div></a></div><div class="ddxq_bott"id="ddxq_bott"><span class="ddxq_bott_r2 pinglun"hid=" ' + data[i]['hid'] + '	"title="' + data[i]['title'] + '">评论</span><span class="ddxq_bott_r1 shanchu"hid=" ' + data[i]['hid'] + '	"order_code=" ' + data[i]['order_code'] + '">删除订单</span></div></div></li>';
+											table.appendChild(li);
+										} else if(data[i]['if_baoming'] == 0) { //未完成
+											//															alert('未完成');
+											var li = document.createElement('li');
+											li.className = 'botton-visit';
+											li.setAttribute("title", data[i]['title']);
+											li.setAttribute("url", data[i]['hid']);
+											li.innerHTML = '<li><div class="ddxq"><div class="ddxq_t"><span class="ddxq_t_l">|</span><span class="ddxq_t_r">北京信息网</span><span class="ddxq_t_rr">待付款</span></div><div class="button-visit"id="ddxq_con"><a class="a_all"><img src=" ' + GV['URL']['PIC'] + data[i]['path'] + '"class="img_logo"/><div class="con_right" title="' + data[i]['title'] + '"  hid=" ' + data[i]['hid'] + '	" order_code=" ' + data[i]['order_code'] + '"><span class="title">' + data[i]['title'] + '<span class="jiage"id="jiage">￥' + data[i]['price'] + '</span></span></div></a></div><div class="ddxq_bott"id="ddxq_bott"><span class="ddxq_bott_r2 fukuan"hid=" ' + data[i]['hid'] + '	"title="' + data[i]['title'] + '"order_code=" ' + data[i]['order_code'] + '"jiage=" ' + data[i]['price'] + '">付款</span><span class="ddxq_bott_r1 quxiao"hid=" ' + data[i]['hid'] + '	"order_code=" ' + data[i]['order_code'] + '">取消订单</span></div></div></li>';
+											table.appendChild(li);
+										}
+
+									}
+								}
+							}
+						);
+					};
+				});
+			})(mui);
+		</script>
+		<!--点击列表处理-->
+		<script>
+			//		点击事件 评论
+			mui(".mui-table-view").on('tap', '.pinglun', function() {
+				//////////////////////////
+				if(localStorage.getItem("uid")) { //查看本地储存										
+					var title1 = this.getAttribute("title");
+					var hid = this.getAttribute("hid");
+					//获取id
+					//	mui.alert(url, "标题", "OK", null);
+					mui.openWindow({
+						url: 'addpinglun.html',
+						id: 'addpinglun.html',
+						extras: {
+							title1: title1,
+							hid: hid
+						},
+						styles: {
+							top: '0',
+							bottom: '0px',
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+							decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							errorPage: 'ajax/error.html', //窗口加载错误时跳转的页面地址
+							scrollIndicator: 'none', //窗口是否显示滚动条										
+						}
+					});
+				} else {
+					mui.toast('请先登录');
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu',
+						styles: {
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+							//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+						}
+					});
+				}
+				/////////////////////
+			});
+			//		点击事件 删除订单
+			mui(".mui-table-view").on('tap', '.shanchu', function() {
+				this.parentNode.parentNode.parentNode.style.display = 'none';
+				if(localStorage.getItem("uid")) { //查看本地储存										
+					var order_code = this.getAttribute("order_code");
+					var hid = this.getAttribute("hid"); // 构造要传递的json数据
+					var data = {
+						"uid": localStorage.getItem("uid"),
+						"order_code": order_code,
+						"hid": hid
+					};
+					postData(GV['URL']['AJAX'] + 'order_del.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							if(data == null || data == "") {
+								//									mui.alert("出错了，请联系客服", "亲", "知道了", null);
+							} else {
+								if(data[0]['tishi'] == 1) {
+									mui.toast('删除成功 ');
+								} else {
+									mui.toast('删除失败');
+								}
+							}
+						});
+
+				} else {
+					mui.toast('请先登录');
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu',
+						styles: {
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+							//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+						}
+					});
+				}
+
+			});
+			//		点击事件 付款
+			mui(".mui-table-view").on('tap', '.fukuan', function() {
+
+				if(localStorage.getItem("uid")) { //查看本地储存										
+					var order_code = this.getAttribute("order_code");
+					var hid = this.getAttribute("hid");
+					var jiage = this.getAttribute("jiage"); // 构造要传递的json数据
+					var title = this.getAttribute("title");
+					mui.openWindow({
+						url: 'pay.html',
+						id: 'pay.html',
+						extras: {
+							jiage: jiage,
+							order_code: order_code,
+							hid: hid,
+							title: title
+						},
+						styles: {
+							top: '0',
+							bottom: '0px',
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+							decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							errorPage: 'ajax/error.html', //窗口加载错误时跳转的页面地址
+							scrollIndicator: 'none', //窗口是否显示滚动条										
+						}
+					});
+
+				} else {
+					mui.toast('请先登录');
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu',
+						styles: {
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+							//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+						}
+					});
+				}
+
+			});
+			//		点击事件 取消订单
+			mui(".mui-table-view").on('tap', '.quxiao', function() {
+				this.parentNode.parentNode.parentNode.style.display = 'none';
+				if(localStorage.getItem("uid")) { //查看本地储存										
+					var order_code = this.getAttribute("order_code");
+					var hid = this.getAttribute("hid"); // 构造要传递的json数据
+					var data = {
+						"uid": localStorage.getItem("uid"),
+						"order_code": order_code,
+						"hid": hid
+					};
+					postData(GV['URL']['AJAX'] + 'order_cancel.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							if(data == null || data == "") {
+								//									mui.alert("出错了，请联系客服", "亲", "知道了", null);
+							} else {
+								if(data[0]['tishi'] == 1) {
+									mui.toast('取消成功 ');
+
+								} else {
+									mui.toast('取消失败');
+
+								}
+							}
+						});
+
+				} else {
+					mui.toast('请先登录');
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu',
+						styles: {
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+							//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+						}
+					});
+				}
+
+			});
+			//		点击事件 标题块订单详情
+			mui(".mui-table-view").on('tap', '.con_right', function() {
+				if(localStorage.getItem("uid")) { //查看本地储存										
+					var order_code = this.getAttribute("order_code");
+					var hid = this.getAttribute("hid"); // 构造要传递的json数据
+					var title = this.getAttribute("title");
+					mui.openWindow({
+						url: 'order_info.html', //订单详情页
+						id: 'order_info.html',
+						styles: {
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+							//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+						},
+						extras: {
+							order_code: order_code,
+							hid: hid,
+							title: title
+						}
+					});
+
+				} else {
+					mui.toast('请先登录');
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu',
+						styles: {
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+							//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+						}
+					});
+				}
+
+			});
+		</script>
+	</body>
+
+</html>

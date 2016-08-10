@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>北京信息网提醒</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" type="text/css" href="./css/feedback-page.css" />
+		<link rel="stylesheet" href="./css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-views,
+			.mui-view,
+			.mui-pages,
+			.mui-page,
+			.mui-page-content {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #efeff4;
+			}
+			
+			.mui-pages {
+				top: 46px;
+				height: auto;
+			}
+			
+			.mui-scroll-wrapper,
+			.mui-scroll {
+				background-color: #efeff4;
+			}
+			
+			.mui-page.mui-transitioning {
+				-webkit-transition: -webkit-transform 200ms ease;
+				transition: transform 200ms ease;
+			}
+			
+			.mui-page-left {
+				-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+			}
+			
+			.mui-ios .mui-page-left {
+				-webkit-transform: translate3d(-20%, 0, 0);
+				transform: translate3d(-20%, 0, 0);
+			}
+			
+			.mui-navbar {
+				position: fixed;
+				right: 0;
+				left: 0;
+				z-index: 10;
+				height: 44px;
+				background-color: #f7f7f8;
+			}
+			
+			.mui-navbar .mui-bar {
+				position: absolute;
+				background: transparent;
+				text-align: center;
+			}
+			
+			.mui-android .mui-navbar-inner.mui-navbar-left {
+				opacity: 0;
+			}
+			
+			.mui-ios .mui-navbar-left .mui-left,
+			.mui-ios .mui-navbar-left .mui-center,
+			.mui-ios .mui-navbar-left .mui-right {
+				opacity: 0;
+			}
+			
+			.mui-navbar .mui-btn-nav {
+				-webkit-transition: none;
+				transition: none;
+				-webkit-transition-duration: .0s;
+				transition-duration: .0s;
+			}
+			
+			.mui-navbar .mui-bar .mui-title {
+				display: inline-block;
+				position: static;
+				width: auto;
+			}
+			
+			.mui-page-shadow {
+				position: absolute;
+				right: 100%;
+				top: 0;
+				width: 16px;
+				height: 100%;
+				z-index: -1;
+				content: '';
+			}
+			
+			.mui-page-shadow {
+				background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+				background: linear-gradient(to right, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+			}
+			
+			.mui-navbar-inner.mui-transitioning,
+			.mui-navbar-inner .mui-transitioning {
+				-webkit-transition: opacity 200ms ease, -webkit-transform 200ms ease;
+				transition: opacity 200ms ease, transform 200ms ease;
+			}
+			
+			.mui-page {
+				display: none;
+			}
+			
+			.mui-pages .mui-page {
+				display: block;
+			}
+			
+			.mui-page .mui-table-view:first-child {
+				margin-top: 15px;
+			}
+			
+			.mui-page .mui-table-view:last-child {
+				margin-bottom: 30px;
+			}
+			
+			.mui-table-view {
+				margin-top: 20px;
+			}
+			
+			.mui-table-view:after {
+				height: 0;
+			}
+			
+			.mui-table-view span.mui-pull-right {
+				color: #999;
+			}
+			
+			.mui-table-view-divider {
+				background-color: #efeff4;
+				font-size: 14px;
+			}
+			
+			.mui-table-view-divider:before,
+			.mui-table-view-divider:after {
+				height: 0;
+			}
+			
+			.mui-content-padded {
+				margin: 10px 0px;
+			}
+			
+			.mui-locker {
+				margin: 35px auto;
+				display: none;
+			}
+			/*每个列表小图标*/
+			
+			.mui-table-view .mui-table-view-cell a img {
+				width: 18px;
+				height: 18px;
+				margin-left: 8px;
+				margin-right: 12px;
+				float: left;
+				display: inline-block;
+				display: block;
+			}
+			/*硬件加速*/
+			
+			#yjjs_box,
+			#exit_box {
+				/*display: none;*/
+			}
+			
+			#yjjs .mui-active {
+				background: #FF5500;
+				border: 2px solid #FF0000;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<!--页面主结构开始-->
+		<div id="app" class="mui-views">
+			<div class="mui-view">
+				<div class="mui-navbar">
+				</div>
+				<div class="mui-pages">
+				</div>
+			</div>
+		</div>
+		<!--页面主结构结束-->
+		<!--单页面开始-->
+		<div id="setting" class="mui-page">
+			<!--页面标题栏开始-->
+			<div class="mui-navbar-inner mui-bar mui-bar-nav" style="	">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ff5400;	"></a>
+				<h1 class="mui-center mui-title">设置</h1>
+			</div>
+			<!--页面标题栏结束-->
+			<!--页面主内容区开始-->
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view mui-table-view-chevron">
+							<!--<li class="mui-table-view-cell">
+								<a id="rate" class="mui-navigate-right">评分鼓励</a>
+							</li>-->
+							<!--<li class="mui-table-view-cell">
+								<a id="share" class="mui-navigate-right">分享推荐</a>
+							</li>-->
+							<li class="mui-table-view-cell">
+								<a id="tel" class="mui-navigate-right"><img src="images/wd_sz/kfdh.png">客服电话</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a id="feedback-btn" href="#feedback" class="mui-navigate-right"><img src="images/wd_sz/yjfk.png">意见反馈</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a id="chick_update" href="#" class="mui-navigate-right"><img src="images/wd_sz/jcgx.png">检查更新</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a id="clearCookie" href="#" class="mui-navigate-right"><img src="images/wd_sz/qlhc.png">清除缓存</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a id="about" class="mui-navigate-right"> <img src="images/wd_sz/gywm.png"> 关于我们</a>
+								<!--<a id="" href="#about" class="mui-navigate-right">	<img src="images/wd_sz/gywm.png" >	关于我们</a>-->
+							</li>
+
+						</ul>
+						<form class="mui-input-group" id="yjjs_box">
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell" id="yjjs">
+									<p>当APP运行不流畅时,切换</p>
+									<div id="yingjianjiasu" class="mui-switch mui-active">
+										<div class="mui-switch-handle"></div>
+									</div>
+								</li>
+							</ul>
+						</form>
+						<!--<ul class="mui-table-view">
+							<li class="mui-table-view-cell ">
+								<a class="mui-navigate-right" href="examples/kefu.html">
+									智能客服
+								</a>
+							</li>
+						</ul>-->
+						<ul class="mui-table-view" id="exit_box">
+							<li class="mui-table-view-cell" style="text-align: center;">
+								<a id='exit'>退出软件</a>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+			<!--页面主内容区结束-->
+		</div>
+		<div id="notifications_disturb" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>新消息通知
+				</button>
+				<h1 class="mui-center mui-title">功能消息免打扰</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view mui-table-view-radio">
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">开启</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">只在夜间开启</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">关闭</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="feedback" class="mui-page feedback">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">问题反馈</h1>
+			</div>
+			<div class="mui-page-content">
+				<p>问题和意见</p>
+				<div class="row mui-input-row">
+					<textarea id='question' class="mui-input-clear question" placeholder="请详细描述你的问题和意见..."></textarea>
+				</div>
+				<p>图片(选填,提供问题截图)</p>
+				<div id='image-list' class="row image-list">
+				</div>
+				<p>QQ/邮箱</p>
+				<div class="mui-input-row">
+					<input id='contact' type="text" class="mui-input-clear  contact" placeholder="(选填,方便我们联系你 )" />
+				</div>
+				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
+			</div>
+			<!--<p>此示例基于环信 “WebIM SDK” + 环信 “移动客服” 实现，在环信 “移动客服面板” 能够查阅反馈信息。</p>-->
+		</div>
+
+		<div id="about" class="mui-page ">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">关于我们</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="b_box_about">
+
+					<div class="h1_jj">北京信息网简介</div>
+
+					<p class="ft_t"> 2005年7月18日北京信息网（www.bjxxw.com）成立，2012年1月15日北京信息网即将全新改版上线，7年盛放、影响北京。一个承载信息人理想的网站，一个以诚信为己任、以责任为灵魂的网站，一个致力于服务北京市民、记录信息时代步伐的网站，一个进步的、美好的网站每天都在变。</p>
+
+					<p class="ft_t0">北京信息网立足北京、服务北京大众、方便你我他，北京信息网是面向2000多万北京市民用户及全国用户，免费为北京企业、公司、个人信息提供网络交易平台，北京信息网以促进首都信息交流，提高社会效率为己任。同时专为企业提供社区精确定位营销和口碑传播的推广平台。良好的口碑效应，已使北京信息网成为北京居民使用率最频繁的网站。</p>
+
+					<p class="ft_t0">
+
+						2009年通过依托北京信息网强大的品牌优势及北京市民政局和北京市社区服务中心的大力支持，北京信息网与北京市社区服务中心联合推出96156北京市社区服务宣传栏，广告牌直接按在每个社区的大门口，锁定目标人群，覆盖北京16区县2766个社区，北京信息网和6000块96156信息导引牌，使商家宣传在网络和社区互动更有效果，更直接，目标更准确。北京信息网立足服务于社区百姓，更加便民，走到社区，让北京百姓真正的体会到网络服务的便捷。让我们一起共同营造诚信网络的发展环境，共同开拓信息网络安全的成长空间，让网络真正服务人民。</p>
+
+					<p class="ft_t0">
+
+						北京信息网的用户群体以18-50岁社会高知主流人群，这个群体的特征是高消费、高学历、高感度（指信息的整合能力和对新事物的接受能力强）。他们不仅是众多产品和服务所瞄准的目标消费群体，还是诸多新产品、新服务的早期消费者，在消费的传播链条中具有相当的影响力。这个群体是消费和媒体使用的风向标，他们所表现出来的消费或媒体使用特征往往预示着大众即将跟进的潮流。北京信息网的主要访问群体的职业以公务员，企事业单位和外企职员、私营业主等为主，他们关心的话题以城市活动，房产，汽车，家居装修，婚嫁，亲子，生活信息等几大类组成。</p>
+
+					<p class="ft_t0">北京信息网在不断提高服务能力的同时，也进一步改善我们的产品和技术，给北京市民提供良好的信息网络环境，普及有价值的网络安全信息应用。我们将不断吸引更多优秀的人才，脚踏实地为打造中国最具影响力和最具实用价值的北京社区信息门户网站坚持不懈的去努力！</p>
+
+				</div>
+				<input type="hidden" id="ver" />
+	</body>
+	<script src="./js/mui.min.js "></script>
+	<script src="./js/mui.view.js "></script>
+	<script src='./libs/easymob-webim-sdk/jquery-1.11.1.js'></script>
+	<script src='./libs/easymob-webim-sdk/strophe-custom-2.0.0.js'></script>
+	<script src='./libs/easymob-webim-sdk/json2.js'></script>
+	<script src="./libs/easymob-webim-sdk/easemob.im-1.0.5.js"></script>
+	<script src='./js/feedback.js'></script>
+	<script src="./js/feedback-page.js"></script>
+	<script src="./js/mui.locker.js"></script>
+	<script src="./js/app.js"></script>
+	<script src="./js/ajax.js"></script>
+	<script src="./js/html5.history.js"></script>
+	<script type="text/javascript" src="js/globalVariables.js"></script>
+	<script>
+		var ver = '';
+		mui.plusReady(function() {
+
+			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+				gid('ver').value = inf.version;
+
+			});
+		});
+		//	检查更新
+		//点击事件
+		document.getElementById("chick_update").addEventListener('tap', function(e) {
+			chick_update();
+			// 获取本地应用资源版本号
+		});
+
+		function chick_update() {
+			// 构造要传递的json数据
+			var wd = plus.nativeUI.showWaiting();
+			ver = gid('ver').value;
+			ver = ver.replace(".", "");
+			lo_ver = ver.replace(".", "");
+
+			var data = {
+				"ver": ver
+			};
+			postData(GV['URL']['AJAX'] + 'update.php', //服务端的URL
+				data, // json 数据
+				function(data) {
+					wd.close(); // 调用成功，先关闭等待的对话框  
+					if(data['up_id'] > lo_ver) { 
+						if(confirm("有新版本，去更新"))      {              //如果是true ，那么就把页面				 
+							var aurl = data['up_aurl'];
+							var iurl = data['up_iurl'];
+							if(mui.os.ios) {
+								plus.runtime.openURL(iurl);
+							} else {
+								plus.runtime.openURL(aurl);
+							}     
+						}     
+						else      { 
+							//	      alert("你按了取消，那就是返回false");		 
+							    }
+					} else {
+						ht = '';
+						mui.alert('已是最新版本，不用更新', "亲", "好的", null);
+					}
+				}
+			);
+		}
+		var his = new History_Html5('1'); // 参数为键值
+		// 清除应用的缓存
+		document.getElementById("clearCookie").addEventListener('tap', function(e) {
+			clearCookie();
+		});
+
+		function clearCookie() {
+			var wd = plus.nativeUI.showWaiting();
+			plus.navigator.removeAllCookie();
+			localStorage.clear(); //移除本地储存
+			his.clearHistory();
+			var wobj = plus.webview.getWebviewById("ajax/login.html");
+			wobj.reload(true);
+			setTimeout(function() {
+				wd.close(); // 调用成功，先关闭等待的对话框  
+				mui.alert("已清理", "亲", "好的", null);
+			}, 450);
+		}
+		mui.init();
+		//初始化单页view
+		var viewApi = mui('#app').view({
+			defaultPage: '#setting'
+		});
+		//初始化单页的区域滚动
+		mui('.mui-scroll-wrapper').scroll();
+
+		function shareMessage(share, ex) {
+			var msg = {
+				extra: {
+					scene: ex
+				}
+			};
+			msg.href = "http://www.dcloud.io/hellomui/";
+			msg.title = "最接近原生APP体验的高性能前端框架";
+			msg.content = "我正在体验HelloMUI，果然很流畅，基本看不出和原生App的差距";
+			if(~share.id.indexOf('weibo')) {
+				msg.content += "；体验地址：http://www.dcloud.io/hellomui/";
+			}
+			msg.thumbs = ["_www/images/logo.png"];
+			share.send(msg, function() {
+				console.log("分享到\"" + share.description + "\"成功！ ");
+			}, function(e) {
+				console.log("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
+			});
+		}
+		//		去评分
+		//				document.getElementById("rate").addEventListener('tap', function() {
+		//					if (mui.os.ios) {
+		//						location.href = 'https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=682211190&pageNumber=0&sortOrdering=2&type=&mt=8';
+		//					} else if (mui.os.android) {
+		//						plus.runtime.openURL("market://details?id=io.dcloud.HelloMUI", function(e) {
+		//							plus.runtime.openURL("market://details?id=io.dcloud.HelloMUI", function(e) {
+		//								mui.alert("360手机助手和应用宝，你一个都没装，暂时无法评分，感谢支持");
+		//							}, "com.qihoo.appstore");
+		//						}, "com.tencent.android.qqdownloader");
+		//					}
+		//				});
+		//客服电话
+		document.getElementById("tel").addEventListener('tap', function() {
+			plus.device.dial("4000098987");
+		});
+		//********************
+		var view = viewApi.view;
+		(function($) {
+			//处理view的后退与webview后退
+			var oldBack = $.back;
+			$.back = function() {
+				if(viewApi.canBack()) { //如果view可以后退，则执行view的后退
+					viewApi.back();
+				} else { //执行webview后退
+					oldBack();
+				}
+			};
+			//监听页面切换事件方案1,通过view元素监听所有页面切换事件，目前提供pageBeforeShow|pageShow|pageBeforeBack|pageBack四种事件(before事件为动画开始前触发)
+			//第一个参数为事件名称，第二个参数为事件回调，其中e.detail.page为当前页面的html对象
+			view.addEventListener('pageBeforeShow', function(e) {
+				//				console.log(e.detail.page.id + ' beforeShow');
+			});
+			view.addEventListener('pageShow', function(e) {
+				//				console.log(e.detail.page.id + ' show');
+			});
+			view.addEventListener('pageBeforeBack', function(e) {
+				//				console.log(e.detail.page.id + ' beforeBack');
+			});
+			view.addEventListener('pageBack', function(e) {
+				//				console.log(e.detail.page.id + ' back');
+			});
+		})(mui);
+		//退出操作******************
+		document.getElementById('exit').addEventListener('tap', function() {
+			var btnArray = [{
+				title: "确定"
+			}];
+			plus.nativeUI.actionSheet({
+				cancel: "取消",
+				buttons: btnArray
+			}, function(event) {
+				var index = event.index;
+				switch(index) {
+					case 1:
+						plus.runtime.quit();
+						break;
+				}
+			});
+		}, false);
+		//关于我们******************
+		document.getElementById('about').addEventListener('tap', function() {
+			//显示
+			mui.openWindow({
+				id: 'about',
+				url: 'ajax/about.html',
+				styles: {
+					//							//bounce: 'all',//窗口遇到边框是否有反弹效果
+					hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+					//							render: "onscreen",//窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+					decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+					scrollIndicator: 'none', //窗口是否显示滚动条background:'transparent'// (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+				},
+				show: {
+					autoShow: false
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+					options: {
+						//  width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
+						//    height:waiting-dialog-height,//等待框背景区域高度，默认根据内容自动计算合适高度
+						//						        ......
+					}
+				}
+			});
+		}, false);
+		//document.getElementById("yingjianjiasu").addEventListener("toggle",function(event){
+		//
+		//})	
+		(function($, doc) {
+
+			$.plusReady(function() {
+				if(mui.os.ios) { //苹果						
+					document.getElementById("exit_box").style.display = "none";
+					document.getElementById("yjjs_box").style.display = "none";
+
+				} else { //安卓
+
+					//share('分享APP到...','北京信息网活动APP快来下载哦：http://active.bjxxw.com/Appdown/active.apk');
+
+				}
+				//调用
+
+				plus.screen.lockOrientation("portrait-primary");
+				var settings = app.getSettings();
+				var state = app.getState();
+				var yingjianjiasu = document.getElementById('yingjianjiasu');
+				//					yingjianjiasu.classList[settings.yingjianjiasu ? 'add' : 'remove']('mui-active');
+				if('true' == localStorage.getItem("yjjs")) {
+
+					//			yingjianjiasu.classList[settings.yingjianjiasu ? 'add' : 'remove']('mui-active');
+					yingjianjiasu.className = 'mui-active mui-switch';
+				} else {
+
+					yingjianjiasu.className = 'mui-switch';
+				}
+				yingjianjiasu.addEventListener('toggle', function(event) {
+					if(event.detail.isActive) {
+						localStorage.setItem('yjjs', true); //设置硬件加速本地储存
+						console.log("你启动了开关" + localStorage.getItem("yjjs"));
+					} else {
+						localStorage.setItem('yjjs', false); //设置硬件加速本地储存
+						console.log("你关闭了开关" + localStorage.getItem("yjjs"));
+					}
+					//						setTimeout(function() {
+					//							var isActive = event.detail.isActive;
+					//							settings.yingjianjiasu = isActive;
+					//							app.setSettings(settings);
+					//						}, 5);
+				}, false);
+			});
+		}(mui, document));
+
+		//分享原生
+		function share(shareTip, shareText) {
+			//导入Java类对象
+			var Context = plus.android.importClass("android.content.Intent");
+			//获取应用主Activity
+			var Main = plus.android.runtimeMainActivity();
+			//将类Context的这个行为(Action)ACTION_SEND，赋给shareIntent
+			var shareIntent = new Context(Context.ACTION_SEND);
+			//***以下两种写法是一样的
+			//plus.android.invoke(shareIntent,"setType","text/plain");
+			//plus.android.invoke(shareIntent,"putExtra",Context.EXTRA_TEXT,shareText);
+			//设置分享类型
+			shareIntent.setType("text/plain");
+			//设置分享文本
+			shareIntent.putExtra(Context.EXTRA_TEXT, shareText);
+			//***以上两种写法是一样的
+			//指定分享的包名
+			//shareIntent.setPackage('com.tencent.mm',);
+			Main.startActivity(Context.createChooser(shareIntent, shareTip));
+		}
+	</script>
+
+</html>

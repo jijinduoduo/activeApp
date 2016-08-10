@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			.mui-btn-outlined {
+				display: block;
+				margin: 0 auto;
+				background: none;
+				color: #ff5400;
+				border: 1px solid #ff5400;
+				height: 32px;
+				width: 110px;
+				margin-top: 10px;
+			}
+			
+			.button-visit {
+				overflow: hidden;
+				padding: 11px 15px;
+				background-color: #EFEFEF;
+				border-bottom: 1px solid #D9D9D9;
+				width: 100%;
+			}
+			
+			.button-visit a .con_right .title {
+				color: #343434;
+				font-size: 16px;
+				float: left;
+				display: inline-block;
+				width: 100%;
+				font-family: "黑体";
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-o-text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.button-visit a img {
+				width: 20%;
+				height: 60px;
+				display: block;
+				float: left;
+			}
+			
+			.button-visit a .con_right {
+				width: 76%;
+				float: right;
+			}
+			
+			.button-visit a .address {
+				font-size: 12px;
+				color: #A9A9A9;
+			}
+			
+			.button-visit a .start_time {
+				font-size: 12px;
+				color: #A9A9A9;
+			}
+			
+			.button-visit a span {
+				display: block;
+				width: 100%;
+			}
+			
+			.div_foot {
+				padding-bottom: 10px;
+			}
+			/*历史记录*/
+			
+			.history_list {
+				height: 50px;
+				line-height: 50px;
+				border-bottom: 1px solid #CCCCCC;
+				/*margin-bottom: 10px;*/
+				padding-left: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class="mui-content-padded" style="margin: 5px;width: 82%; display: inline-block;float: left;">
+				<div class="mui-input-row mui-search">
+					<input id="search" type="search" oninput="ajax_search()" class="mui-input-speech mui-input-clear" placeholder="">
+				</div>
+			</div>
+
+			<a class="mui-action-back  " style="width: 14%; font-size: 18px; line-height: 50px;	color: #ff5400;">&nbsp;取消</a>
+
+		</header>
+
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+
+			<!--	<buttong onclick="getCookie()">Get Cookie</buttong>-->
+			<div class="mui-scroll">
+
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron" id='new'>
+
+				</ul>
+			</div>
+		</div>
+		<!--页码-->
+		<input type="hidden" id="page" value="0">
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/ajax.js"></script>
+		<script src="../js/time.js"></script>
+		<script src="../js/cookie.js"></script>
+		<script src="../js/html5.history.js"></script>
+		<script src="../js/globalVariables.js"></script>
+
+		<script>
+			var his = new History_Html5('1'); // 参数为键值
+
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					//					down: {
+					//						callback: pulldownRefresh
+					//					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			//mui.plusReady(function(){
+			//});
+			//  mui.alert(gid('page').value, "标题", "OK", null);
+			// 调用ajax//搜索
+			function trim(str) { //删除左右两端的空格
+				　　
+				return str.replace(/(^\s*)|(\s*$)/g, "");
+			}
+			var cookie_num = 7; //历史记录最多显示数目
+			function ajax_search() {
+				// 显示一个等待的对话框  
+				// var wd = plus.nativeUI.showWaiting(
+				// 	'加载中',{width:'20%',padding:'10px'}
+				// );
+				// 构造要传递的json数据		 
+
+				mui('#pullrefresh').pullRefresh().refresh(true); //上拉加载重置
+				var search_trim = trim(gid('search').value);
+				var data = {
+					"page": 0,
+					"result": search_trim
+				};
+				// mui.alert(plus.navigator.getCookie('history'), "标题", "OK", null);
+				postData(GV['URL']['AJAX'] + 'business_search.php', //服务端的URL
+					data, // json 数据
+					function(data) {
+						//	 wd.close(); // 调用成功，先关闭等待的对话框  
+						//mui.alert(cookie_num, "标题", "OK", null);
+						if(data == null || data == "") {
+							var str = search_trim;
+							//				   	var newstr=str.substring(0,str.length-1);
+							//				     	gid('search').value='';			 
+							//	                     mui.alert("没有搜到:"+str, "亲爱的", "那好吧", null);
+							document.getElementById("new").innerHTML = "";
+							document.getElementById("new").innerHTML = "<p class='search_active_null'>没有关于" + str + "的哦</p>";
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh((true)); //参数为true代表没有更多数据了。
+						} else {
+							if(search_trim != '') {
+								cookie_num--;
+								if(cookie_num < 1) {
+									cookie_num = 7; //历史记录显示数目
+								}
+								//	plus.navigator.setCookie("history", cookie_num + "=" + search_trim + "; expires=" + tdate + " GMT; path=/"); //设置cookie历史记录
+								//    setCookie(cookie_num,search_trim,"d20");   //设置cookie历史记录
+
+								his.add("1", search_trim, cookie_num);
+
+							}
+
+							var j = data.length;
+							var z = gid('page').value;
+							gid('page').value = 1;
+							document.getElementById("new").innerHTML = "";
+							var table = document.body.querySelector('.mui-table-view');
+							var cells = document.body.querySelectorAll('.button-visit');
+							for(var i = 0; i < j; i++) {
+								//	mui.alert(data[i]['title'], "标题", "OK", null);
+								var li = document.createElement('div');
+								li.className = 'button-visit';
+								li.setAttribute("title", data[i]['title']);
+								li.setAttribute("url", data[i]['hid']);
+								li.innerHTML = ' <a class="a_all"><img class="img_logo" src=" ' + GV['URL']['PIC'] + data[i]['path'] + '"><div class="con_right"><span class="title">  ' + data[i]['title'] + '<span><span class="start_time">时间：' + data[i]['st'] + '~' + data[i]['de'] + '</span><span class="address">地点：  ' + data[i]['area'] + '</span></div></a>';
+								//			
+								table.insertBefore(li, table.firstChild);
+							}
+							//	mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); 
+						}
+					}
+				);
+
+			}
+
+			//数组去重复?
+			function unique(arr) {
+				var result = [],
+					hash = {};
+				for(var i = 0, elem;
+					(elem = arr[i]) != null; i++) {
+					if(!hash[elem]) {
+						result.push(elem);
+						hash[elem] = true;
+					}
+				}
+				return result;
+				//http://www.cnblogs.com/sosoft/
+			}
+
+			//mui.alert(tdate, "标题", "OK", null);	 
+			///////////////////////////////
+			//上拉加载
+			function ajax_plist_up() {
+				if(gid('search').value == "") {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((true)); //参数为true代表没有更多数据了。
+				} else {
+
+					var count = 0;
+					// 构造要传递的json数据
+					var data = {
+						"page": gid('page').value,
+						"result": gid('search').value
+					};
+					//     mui.alert(gid('page').value, "标题", "OK", null);
+					postData(GV['URL']['AJAX'] + 'business_search.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							if(data == null || data == "") {
+
+								//				var parent = gid('new');　　　 //添加 div
+								//				　　　　
+								//				var div1 = document.createElement("div");　　　　 //设置 div 属性，如 id
+								//				　　　　
+								//				div1.innerHTML = "<p class='search_active_null'>没有了哦，上拉加载最新的活动</p>";　　　　
+								//				parent.appendChild(div1);
+								//				gid('search').value  = '';
+
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh((true)); //参数为true代表没有更多数据了。
+							} else {
+								//    	 mui.alert(gid('page').value, "标题", "OK", null);
+								//		mui.alert(data[3], "标题", "OK", null);
+								var j = data.length;
+								var z = gid('page').value;
+								gid('page').value = 1 + Number(z);
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 30)); //参数为true代表没有更多数据了。
+								var table = document.body.querySelector('.mui-table-view');
+								var cells = document.body.querySelectorAll('.button-visit');
+								for(var i = 0; i < j; i++) {
+									//	mui.alert(data[i]['title'], "标题", "OK", null);
+									var li = document.createElement('div');
+									li.className = 'button-visit';
+									li.setAttribute("title", data[i]['title']);
+									li.setAttribute("url", data[i]['hid']);
+									li.innerHTML = ' <a class="a_all"><img class="img_logo" src=" ' + GV['URL']['PIC'] + data[i]['path'] + '"><div class="con_right"><span class="title">  ' + data[i]['title'] + '<span><span class="start_time">时间：' + data[i]['st'] + '~' + data[i]['de'] + '</span><span class="address">地点：  ' + data[i]['area'] + '</span></div></a>';
+									//					
+									table.appendChild(li);
+								}
+							}
+						}
+					);
+				}
+			}
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			//			function pulldownRefresh() {
+			//				setTimeout(function() {				
+			//				//	for (var i = cells.length, len = i + 3; i < len; i++) {
+			//					ajax_plist_down();
+			//						//下拉刷新，新纪录插到最前面；						
+			//				//	}
+			//				//refresh completed
+			//				}, 1500);
+			//			}
+
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					ajax_plist_up();
+
+				}, 1500);
+			}
+			//			历史记录
+
+			function history_s() {
+
+				var history_rep = []; //定义一数组 JS对数组循环赋值
+				var j1024 = 0; //0
+				var data1 = his.getList(); //接收历史
+				//通过eval() 函数可以将JSON字符串转化为对象 
+
+				var myobj = eval(data1);
+				if(myobj == "" || myobj == null) {
+					return;
+				} else {
+					for(var i = 0; i < myobj.length; i++) {
+						//alert(myobj[i].link);  
+						history_rep[j1024] = myobj[i].link; //定义一数组 JS对数组循环赋值
+						j1024++;
+					}
+					//var description='';
+					//	for(j=1;j<8;j++){
+					//		  history_rep[j1024] = getCookie(j);//定义一数组 JS对数组循环赋值
+					//         j1024++;     
+					//   var property= getCookie(j);
+					//      description+=j+" = "+property+"\n";  
+					//	}
+					//alert(description);
+					if(history_rep) {
+						//document.write(strs[i]+"<br/>"); //分割后的字符输出
+
+						//去重复赋值历史记录
+						var table = document.body.querySelector('.mui-table-view');
+						history_rep = unique(history_rep); //去重复
+
+						for(var i = 0;
+							(e = history_rep[i]); i++) {
+
+							var li = document.createElement('div');
+							li.className = 'history_list';
+							li.setAttribute("val", e);
+							li.innerHTML = "<p>" + e + "</p>";
+							table.appendChild(li);
+						}
+						var div_foot = document.createElement('div');
+						div_foot.className = 'div_foot';
+						div_foot.innerHTML = '	 <button type="button" class="mui-btn mui-btn-outlined" id="recookie">删除历史记录</button>';
+
+						table.appendChild(div_foot);
+						//		gid('new').innerHTML = his;
+					}
+				}
+			}
+			// 删除应用的Cookie
+			function removeCookie() {
+				his.clearHistory();
+				setTimeout(function() {
+					gid('new').innerHTML = "";
+				}, 150);
+			}
+			///////////
+			if(mui.os.plus) {
+				mui.plusReady(function() {
+					//					setTimeout(function() {
+					//					//	mui('#pullrefresh').pullRefresh().pullupLoading();
+					//					}, 1000);
+					history_s(); //cookie值
+				});
+			} else {
+				mui.ready(function() {
+					//	mui('#pullrefresh').pullRefresh().pullupLoading();
+					history_s(); //cookie值
+				});
+			}
+		</script>
+	</body>
+
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		//语音识别完成事件
+		document.getElementById("search").addEventListener('recognized', function(e) {
+			console.log(e.detail.value);
+		});
+	</script>
+	<!--点击列表处理-->
+	<script>
+		var subWebview = null,
+			template = null;
+		//处理点击事件活动列表；
+		mui(".mui-table-view").on('tap', '.button-visit', function() {
+			//获取id
+			var title = this.getAttribute("title");
+			var urlinfo = this.getAttribute("url");
+			mui.openWindow({
+				url: 'sahuan_guodu.html',
+				id: 'sahuan_guodu.html',
+				styles: {
+					//bounce: 'all', //窗口遇到边框是否有反弹效果
+					hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+					render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+					decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+					scrollIndicator: 'none', //窗口是否显示滚动条background:'transparent'// (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+				},
+				extras: {
+					title: title,
+					urlinfo: urlinfo
+				}
+			});
+
+		});
+		//处理点击事件历史记录列表；
+		mui(".mui-table-view").on('tap', '.history_list', function() {
+			//		mui.alert(val, "标题", "OK", null);
+			//获取id
+			var val = this.getAttribute("val");
+			gid('search').setAttribute("placeholder", "");
+			gid('search').value = val;
+
+			ajax_search();
+		});
+		//处理点击事件历史记录列表；
+
+		mui("body").on('tap', '#recookie', function() {
+			removeCookie();
+			document.getElementById("recookie").style.display = 'none';
+		});
+	</script>
+
+</html>

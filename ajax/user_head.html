@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+
+		<style>
+			.image-list {
+				margin: 50px auto;
+				display: block;
+				width: 100px;
+				height: 100px;
+				line-height: 100px;
+			}
+			
+			.image-list img {
+				width: 100px;
+				height: 100px;
+			}
+			
+			#submit {
+				width: 50%;
+				text-align: center;
+				margin: 20px auto;
+				display: block;
+				background: #ff5400;
+				border: none;
+			}
+		</style>
+		<title></title>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav ">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ff5400;	"></a>
+			<h1 class="mui-title" id="title">更改头像</h1>
+
+		</header>
+		<div class="mui-page-content" style="margin-top: 50px;">
+
+			<div id='image-list' class="row image-list">
+
+			</div>
+
+			<button id='submit' type="button" class="mui-btn mui-btn-green">上传</button>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/globalVariables.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {
+					var wobj = plus.webview.getWebviewById("ajax/login.html");
+					//触发列表界面的自定义事件（refresh）,从而进行数据刷新
+					mui.fire(wobj, 'update_header');
+					//	wobj.reload(true);	
+					//返回true，继续页面关闭逻辑
+					return true;
+				}
+			});
+			var IMAGE_UNSPECIFIED = "image/*";
+			var PHOTOZOOM = 2; // 获取完图片返回key
+			var PHOTOLAT = 1; // 剪裁完毕后返回key
+			var main;
+			var Intent;
+			var MediaStore;
+			var File;
+			var Uri;
+			var wt;
+			var task;
+			var user_logo = document.getElementById("image-list");
+			user_logo.innerHTML = '<img src="' + GV['URL']['PIC'] + localStorage.getItem("user_logo") + '">';
+			mui.plusReady(function() {
+				//请求数据，刷新数据
+				//      refreshInfo();
+				//变量初始化
+				main = plus.android.runtimeMainActivity();
+				Intent = plus.android.importClass("android.content.Intent");
+				MediaStore = plus.android.importClass("android.provider.MediaStore");
+				File = plus.android.importClass("java.io.File");
+				Uri = plus.android.importClass("android.net.Uri");
+
+				plus.webview.currentWebview().show();
+			});
+
+			//临时的服务区位置
+			// 上传文件
+			function upload(fullurl) {
+				document.getElementById('image-list').innerHTML = '<img src="' + fullurl + '">';
+				wt = plus.nativeUI.showWaiting();
+				task = plus.uploader.createUpload(conf.restUrl + conf.version + "/" + "member/uploadAvatar", {
+						method: "POST"
+					},
+					function(t, status) { //上传完成
+						if(status == 200) {
+							//到时候把t.responseText解析成json就好
+							var dt = JSON.parse(t.responseText);
+							if(dt.error == 0) {
+								sdk.obj('authorimg').src = dt.data.avatar;
+								mui.fire(plus.webview.getWebviewById('person/index.html'), 'selfCallBack', null);
+							}
+							wt.close();
+							plus.nativeUI.toast('上传成功');
+						} else {
+							plus.nativeUI.toast('上传成功');
+							wt.close();
+						}
+					}
+				);
+				task.addFile(fullurl, {
+					key: 'avatar'
+				});
+				task.addData("token", global.getStorage('token'));
+				task.start();
+			}
+
+			// 从相册中选择图片，并裁剪
+			function galleryImg() {
+				var intent = new Intent(Intent.ACTION_PICK, null);
+				intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
+				console.log(intent);
+				main.startActivityForResult(intent, PHOTOZOOM);
+				//          
+				var outPutPath;
+				main.onActivityResult = function(requestCode, resultCode, data) {
+					if(PHOTOZOOM == requestCode) {
+						//输出的文件目录
+						outPutPath = plus.io.convertLocalFileSystemURL("_www/images/5566.jpg");
+						var file = new File(outPutPath);
+						// 输出目录uri
+						var outPutUri = Uri.fromFile(file);
+						plus.android.importClass(data);
+						var uri = data.getData();
+						console.log("uri:" + uri);
+						var cropIntent = new Intent("com.android.camera.action.CROP");
+						cropIntent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+						// 截图完毕后 输出目录
+						cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
+						cropIntent.putExtra("crop", "true");
+						// aspectX aspectY 是宽高的比例
+						cropIntent.putExtra("aspectX", 40);
+						cropIntent.putExtra("aspectY", 40);
+						// outputX outputY 是裁剪图片宽高
+						cropIntent.putExtra("outputX", 100);
+						cropIntent.putExtra("outputY", 100);
+						cropIntent.putExtra("return-data", true);
+						main.startActivityForResult(cropIntent, PHOTOLAT);
+					} else if(requestCode == PHOTOLAT) {
+						// 判断 剪裁完后的图片输出是否存在
+						//                  var _file = new File(outPutPath);
+						//                  sdk.obj('authorimg').src=outPutPath;
+						//    console.log(outPutPath);
+						//这里是否存在的判断还是需要的
+						//                  var a = _file.exists();
+						//                  alert(a);
+
+						//查看本地是否有缓存图片 进行删除
+						//                  _file.remove( function ( entry ) {
+						//                          plus.console.log( "Remove succeeded" );
+						//                      }, function ( e ) {
+						//                          alert( e.message );
+						//                  });
+
+						//压缩图片
+						//                  plus.zip.compressImage({
+						//                          src:outPutPath,
+						//                          dst:"_doc/header.jpg",
+						//                          quality:20
+						//                      },
+						//                      function() {
+						//                          alert("Compress success!");
+						//                      },function(error) {
+						//                          alert("Compress error!");
+						//                  });
+						//上传头像->然后进行处理，上传完毕之后 需要删除头像图片
+
+						upload(outPutPath);
+					}
+				};
+			}
+
+			//拍照获取
+			function getImage() {
+				//开始拍照
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage(function(p) {
+					//拍照成功调用的函数
+					plus.io.resolveLocalFileSystemURL(p, function(entry) {
+						//                  upload(entry.toLocalURL());
+						//                  plus.zip.compressImage({
+						//                          src:entry.toLocalURL(),
+						//                          dst:"_doc/a.jpg",
+						//                          clip:{top:"25%",left:"25%",width:"50%",height:"50%"}        // 裁剪图片中心区域
+						//                      },
+						//                      function() {
+						//                          alert("Compress success!");
+						//                      },function(error) {
+						//                          alert("Compress error!");
+						//                  });
+
+						//裁剪
+						var outPutPath = plus.io.convertLocalFileSystemURL("_www/images/5566.jpg");
+						var file = new File(outPutPath);
+						// 输出目录uri
+						var outPutUri = Uri.fromFile(file);
+
+						//拍照回来的绝对路径
+						var path = entry.toLocalURL();
+						//去掉\\或者file://
+						path = path.replace("\\", "");
+						path = path.replace("file://", "");
+
+						var _file = new File(path);
+						var a = _file.exists();
+						//alert(a);
+
+						//绝对路径转uri
+						var curCropUri = Uri.fromFile(new File(path));
+						console.log("uri:" + curCropUri);
+						//裁切
+						var cropIntent = new Intent("com.android.camera.action.CROP");
+						cropIntent.setDataAndType(curCropUri, IMAGE_UNSPECIFIED);
+						// 截图完毕后 输出目录
+						cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
+						cropIntent.putExtra("crop", "true");
+						// aspectX aspectY 是宽高的比例
+						cropIntent.putExtra("aspectX", 40);
+						cropIntent.putExtra("aspectY", 40);
+						// outputX outputY 是裁剪图片宽高
+						cropIntent.putExtra("outputX", 64);
+						cropIntent.putExtra("outputY", 64);
+						cropIntent.putExtra("return-data", true);
+						main.startActivityForResult(cropIntent, 1);
+
+						main.onActivityResult = function(requestCode, resultCode, data) {
+							//裁剪成功图片上传
+							upload(outPutPath);
+
+						};
+						//上传
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					});
+				}, function(e) {
+					console.log("失败：" + e.message);
+				}, {
+					filename: "_doc/camera/",
+					index: 1
+				});
+			}
+
+			//头像处理
+			function showActionSheet() {
+				var bts = [{
+					title: "本地相册",
+					style: "destructive"
+				}, {
+					title: "拍照"
+				}]; //暂时不支持{title:"拍照"}
+				plus.nativeUI.actionSheet({
+						cancel: "取消",
+						buttons: bts
+					},
+					function(e) {
+						if(e.index == 1) {
+							//1 本地相册,包括裁剪
+							galleryImg();
+						} else if(e.index == 2) {
+							//2 拍照
+							getImage();
+						} else {
+							//3 取消
+						}
+					}
+				);
+			}
+			document.getElementById("submit").addEventListener('tap', function() {
+				showActionSheet();
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-radio {
+				width: 86px;
+				float: left;
+				display: block;
+			}
+			
+			#note {
+				height: 100px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ff5400;	"></a>
+			<h1 class="mui-title" id="title">评论</h1>
+
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+
+				<input id='uid' type="hidden" class="mui-input" readonly>
+
+				<div class="row ">
+
+					<textarea id='note' class="mui-input-clear " placeholder="评论内容"></textarea>
+				</div>
+
+			</form>
+			<div class="mui-content-padded">
+				<button id='pinglun' class="mui-btn mui-btn-block mui-btn-primary" style="background: #ff5500;border: none;">评论</button>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/ajax2.js"></script>
+		<script type="text/javascript" src="../js/globalVariables.js"></script>
+		<script>
+			mui.init({
+
+			});
+			mui.plusReady(function() {
+
+				var self = plus.webview.currentWebview();
+				// 窗口是否显示滚动条
+				self.setStyle({
+					'scrollIndicator': 'none'
+				});
+				var title = self.title1;
+				var hid = self.hid;
+
+				gid('title').innerHTML = title;
+				var wd //点击发布
+				document.getElementById('pinglun').addEventListener('tap', function() {
+					wd = plus.nativeUI.showWaiting(); //等待框
+					pinglun();
+
+				});
+
+				//ajax 评论
+
+				function pinglun() {
+					var data = {
+						"uid": localStorage.getItem("uid"),
+						"content": gid('note').value,
+						"hid": hid
+					};
+					//	         alert(gid('note').value+hid+localStorage.getItem("uid"));
+					//         mui.alert(gid('page').value, "标题", "OK", null); 
+					postData(GV['URL']['AJAX'] + 'addcomment_user.php', //服务端的URL 
+						data, // json 数据
+						function(data) {
+							wd.close();
+							if(data == null || data == "") {
+								//　gid('new').innerHTML  = '';　　
+								mui.alert("没有了", "亲", "知道了", null);
+							} else {
+								mui.toast(data['0']['tishi']);
+								var wobj = plus.webview.getWebviewById("user_active_cont.html");
+								//触发列表界面的自定义事件（refresh）,从而进行数据刷新
+								mui.fire(wobj, 'update_hd');
+								mui.back();
+
+							}
+
+						});
+				}
+
+			});
+		</script>
+	</body>
+
+</html>

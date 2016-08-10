@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			#pickDateBtn {
+				border: none;
+				float: left;
+				line-height: 30px;
+			}
+			
+			#head-img {
+				height: 75px;
+				width: 75px;
+				line-height: 100px;
+				display: block;
+				background-image: url(../images/wd/tx.png);
+				background-size: 100%;
+				margin: 0 auto;
+				border-radius: 45px;
+			}
+			
+			#head_box {
+				background: #FFFFFF;
+				height: 100px;
+				width: 100%;
+				margin-top: 10px;
+				padding-top: 10px;
+			}
+		</style>
+	</head>
+	<title></title>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav ">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ff5400;	"></a>
+			<a class="mui-pull-right" id="save" style="width: 14%; font-size: 16px; line-height: 50px; text-align: right;	color: #ff5400;">保存</a>
+
+			<h1 class="mui-title" id="title">个人资料</h1>
+
+		</header>
+
+		<div class="mui-content">
+			<div id="head_box">
+				<img src="" id="head-img" />
+			</div>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>昵称</label>
+					<input id='nc' type="text" class="mui-input-clear mui-input" placeholder="">
+				</div>
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='xm' type="text" class=" mui-input" placeholder="不可更改" readonly>
+				</div>
+				<div class="mui-input-row">
+					<label>性别</label>
+					<!--<input id='xb' type="text" class="mui-input-clear mui-input" placeholder="">-->
+					<select class="" name="select_f" id="xb">
+						<option value="0">男</option>
+						<option value="1">女</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>生日</label>
+
+					<button id='pickDateBtn' type="button" class="">选择日期</button>
+				</div>
+
+			</form>
+			<input type="text" value="" id="uid" style="display: none;" />
+			<input type="text" value="" id="touxiang" style="display: none;" />
+
+		</div>
+		<script src="../js/ajax2.js"></script>
+		<script src="../js/globalVariables.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script>
+			var user_logo = document.getElementById("head-img");
+
+			user_logo.src = GV['URL']['PIC'] + localStorage.getItem("user_logo");
+			mui.init({
+				beforeback: function() {
+					var wobj = plus.webview.getWebviewById("ajax/login.html");
+					//触发列表界面的自定义事件（refresh）,从而进行数据刷新
+					mui.fire(wobj, 'update_header');
+					//	wobj.reload(true);	
+					//返回true，继续页面关闭逻辑
+					return true;
+				}
+			});
+			var info = document.getElementById("pickDateBtn");
+			//选择日期
+			document.getElementById("pickDateBtn").addEventListener('tap', function() {
+				var dDate = new Date();
+				dDate.setFullYear(1990, 7, 16);
+				var minDate = new Date();
+				minDate.setFullYear(1950, 0, 1);
+				var maxDate = new Date();
+				maxDate.setFullYear(2099, 11, 31);
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					info.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+				}, function(e) {
+					//					info.innerText = "您没有选择日期";
+				}, {
+					title: "请选择日期",
+					date: dDate,
+					minDate: minDate,
+					maxDate: maxDate
+				});
+			})
+
+			mui.plusReady(function() {
+				userdata_get();
+			});
+
+			// 调用ajax/获取数据
+			function userdata_get() {
+				//	var wd = plus.nativeUI.showWaiting();
+				// 构造要传递的json数据
+				var data = {
+					"uid": localStorage.getItem("uid")
+				};
+				postData(GV['URL']['AJAX'] + 'about_me.php', //服务端的URL
+					data, // json 数据
+					function(data) {
+						//						alert(  gid('xb').value=1);
+						gid('nc').value = data[0]['nickname'];
+						gid('xm').value = data[0]['username'];
+						//				              gid('xb').value=data[0]['sex'];
+						gid('xb').value = data[0]['sex'];
+						gid('pickDateBtn').innerHTML = data[0]['birthday'];
+						gid('head-img').src = GV['URL']['PIC'] + data[0]['face'];
+						gid('uid').value = data[0]['uid'];
+						//				              alert(gid('uid').value);
+						gid('touxiang').value = data[0]['face'];
+					}
+				);
+			}
+			var imgb;
+			//点击保存
+			document.getElementById('save').addEventListener('tap', function() {
+				//		alert( gid('touxiang').value);
+				if(localStorage.getItem("uid")) { //查看本地储存
+					//				   if( gid('touxiang').value){
+
+					// 构造要传递的json数据
+					var data = {
+						"uid": localStorage.getItem("uid"),
+						"nickname": gid('nc').value,
+						"username": gid('xm').value,
+						"sex": gid('xb').value,
+						"birthday": gid('pickDateBtn').innerHTML,
+						"face": gid('touxiang').value
+					};
+
+					//					alert( gid('touxiang').value);
+					postData(GV['URL']['AJAX'] + 'about_update.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							//						alert(  gid('xb').value=1);
+							if(data == null || data == "") {
+								mui.alert("失败", "错误", "关闭", null);
+							} else {
+								if(data[0]['tishi'] == 1) {
+									plus.nativeUI.toast('更新资料成功');
+									mui.back();
+								} else {
+									mui.alert(data[0]['tishi'], "提示", "关闭", null);
+								}
+							}
+
+						}
+					);
+					//					}
+					//				   else{
+					//				   		   plus.nativeUI.toast('请上传新的头像');
+					//				   }
+				} else {
+					mui.toast('请先登录');
+					mui.openWindow({
+						url: 'denglu.html',
+						id: 'denglu',
+						styles: {
+							//bounce: 'all', //窗口遇到边框是否有反弹效果
+							//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+							render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+							//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+							background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+						}
+					});
+				}
+
+			});
+		</script>
+		<script>
+			mui.init({
+				beforeback: function() {
+					var wobj = plus.webview.getWebviewById("ajax/login.html");
+					//触发列表界面的自定义事件（refresh）,从而进行数据刷新
+					mui.fire(wobj, 'update_header');
+					//	wobj.reload(true);	
+					//返回true，继续页面关闭逻辑
+					return true;
+				}
+			});
+			//      var IMAGE_UNSPECIFIED = "image/*";
+			//      var PHOTOZOOM = 2; // 获取完图片返回key
+			//      var PHOTOLAT = 1; // 剪裁完毕后返回key
+			//      var main;
+			//      var Intent;
+			//      var MediaStore;
+			//      var File;
+			//      var Uri;
+			//      var wt;
+			//      var task;
+			//         var outPutPath;
+			//      mui.plusReady(function(){
+			//          //请求数据，刷新数据
+			//    //      refreshInfo();
+			//    
+			//          //变量初始化
+			//          main = plus.android.runtimeMainActivity();
+			//          Intent = plus.android.importClass("android.content.Intent");
+			//          MediaStore = plus.android.importClass("android.provider.MediaStore");
+			//          File = plus.android.importClass("java.io.File");
+			//          Uri = plus.android.importClass("android.net.Uri");
+			//
+			//          plus.webview.currentWebview().show();
+			//      });
+			//
+			//      //临时的服务区位置
+			//      // 上传文件
+			//      function upload(fullurl){
+			//            document.getElementById('head-img').src=fullurl;
+			//          wt=plus.nativeUI.showWaiting();
+			//          task=plus.uploader.createUpload(GV['URL']['AJAX'] + 'user_head_up.php', //服务端的URL
+			//              {method:"POST"},
+			//              function(t,status){ //上传完成
+			//                  if(status==200){
+			//                      //到时候把t.responseText解析成json就好
+			//                      var dt=JSON.parse(t.responseText);
+			//                      if(dt.error==0)
+			//                      {
+			////                          sdk.obj('authorimg').src=dt.data.avatar;
+			////                          mui.fire(plus.webview.getWebviewById('person/index.html'),'selfCallBack',null);
+			//  						  wt.close();
+			//
+			// 						gid('touxiang').value='/app/'+dt.files;
+			//// 						alert(gid('touxiang').value);
+			//                      plus.nativeUI.toast('上传成功');
+			//                      }
+			//                
+			//                  }else{
+			//                      plus.nativeUI.toast('上传失败');
+			//                      wt.close();
+			//                  }
+			//              }
+			//          );
+			//          task.addFile(fullurl,{key:'avatar'});
+			////	         task.addData("user_logo",global.getStorage('user_logo'));
+			//          task.start();
+			//      }
+			//
+			//      // 从相册中选择图片，并裁剪
+			//      function galleryImg() {
+			//          var intent = new Intent(Intent.ACTION_PICK, null);
+			//          intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
+			//          console.log(intent);
+			//          main.startActivityForResult(intent, PHOTOZOOM);
+			////          
+			//       
+			//          main.onActivityResult = function(requestCode, resultCode, data) {
+			//              if (PHOTOZOOM == requestCode) {
+			//                      //输出的文件目录
+			//						outPutPath = plus.io.convertLocalFileSystemURL("_images/5"+parseInt(Math.random()*(99999-10000+1)+1000)+".jpg");
+			//                  var file = new File(outPutPath);
+			//                  // 输出目录uri
+			//                  var outPutUri = Uri.fromFile(file);
+			//                  plus.android.importClass(data);
+			//                  var uri = data.getData();
+			//                  console.log("uri:"+uri);
+			//                  var cropIntent = new Intent("com.android.camera.action.CROP");
+			//                  cropIntent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+			//                  // 截图完毕后 输出目录
+			//                  cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
+			//                  cropIntent.putExtra("crop", "true");
+			//                  // aspectX aspectY 是宽高的比例
+			//                  cropIntent.putExtra("aspectX", 40);
+			//                  cropIntent.putExtra("aspectY", 40);
+			//                  // outputX outputY 是裁剪图片宽高
+			//                  cropIntent.putExtra("outputX", 200);
+			//                  cropIntent.putExtra("outputY", 200);
+			//                  cropIntent.putExtra("return-data", true);
+			//                  main.startActivityForResult(cropIntent, PHOTOLAT);
+			//              } else if (requestCode == PHOTOLAT) {
+			//                  // 判断 剪裁完后的图片输出是否存在
+			////                  var _file = new File(outPutPath);
+			////                  sdk.obj('authorimg').src=outPutPath;
+			//              //    console.log(outPutPath);
+			//                  //这里是否存在的判断还是需要的
+			////                  var a = _file.exists();
+			////                  alert(a);
+			//
+			//                  //查看本地是否有缓存图片 进行删除
+			////                  _file.remove( function ( entry ) {
+			////                          plus.console.log( "Remove succeeded" );
+			////                      }, function ( e ) {
+			////                          alert( e.message );
+			////                  });
+			//
+			//                  //压缩图片
+			////                  plus.zip.compressImage({
+			////                          src:outPutPath,
+			////                          dst:"_doc/header.jpg",
+			////                          quality:20
+			////                      },
+			////                      function() {
+			////                          alert("Compress success!");
+			////                      },function(error) {
+			////                          alert("Compress error!");
+			////                  });
+			//                  //上传头像->然后进行处理，上传完毕之后 需要删除头像图片
+			//
+			//              				// 判断 剪裁完后的图片输出是否存在
+			//						            var _file = new File(outPutPath);
+			//						                 var a = _file.exists();
+			//						if(a){
+			//								upload(outPutPath);
+			//						}else{
+			//							mui.toast('上传失败')
+			//						}
+			//              }
+			//          };
+			//      }
+			//
+			//      //拍照获取
+			//      function getImage() {
+			//          //开始拍照
+			//          var cmr = plus.camera.getCamera();
+			//          cmr.captureImage( function ( p ) {
+			//              //拍照成功调用的函数
+			//              plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
+			////                  upload(entry.toLocalURL());
+			////                  plus.zip.compressImage({
+			////                          src:entry.toLocalURL(),
+			////                          dst:"_doc/a.jpg",
+			////                          clip:{top:"25%",left:"25%",width:"50%",height:"50%"}        // 裁剪图片中心区域
+			////                      },
+			////                      function() {
+			////                          alert("Compress success!");
+			////                      },function(error) {
+			////                          alert("Compress error!");
+			////                  });
+			//
+			//
+			//                  //裁剪
+			//						outPutPath = plus.io.convertLocalFileSystemURL("_images/5"+parseInt(Math.random()*(99999-10000+1)+1000)+".jpg");
+			//                  var file = new File(outPutPath);
+			//                  // 输出目录uri
+			//                  var outPutUri = Uri.fromFile(file);
+			//
+			//                  //拍照回来的绝对路径
+			//                  var path=entry.toLocalURL();
+			//                  //去掉\\或者file://
+			//                  path=path.replace("\\", "");
+			//                  path=path.replace("file://", "");
+			//
+			//                  var _file = new File(path);
+			//                  var a = _file.exists();
+			//                  //alert(a);
+			//
+			//                  //绝对路径转uri
+			//                  var curCropUri=Uri.fromFile(new File(path));
+			//                  console.log("uri:"+curCropUri);
+			//                  //裁切
+			//                  var cropIntent = new Intent("com.android.camera.action.CROP");
+			//                  cropIntent.setDataAndType(curCropUri, IMAGE_UNSPECIFIED);
+			//                  // 截图完毕后 输出目录
+			//                  cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
+			//                  cropIntent.putExtra("crop", "true");
+			//                  // aspectX aspectY 是宽高的比例
+			//                  cropIntent.putExtra("aspectX", 40);
+			//                  cropIntent.putExtra("aspectY", 40);
+			//                  // outputX outputY 是裁剪图片宽高
+			//                  cropIntent.putExtra("outputX", 200);
+			//                  cropIntent.putExtra("outputY", 200);
+			//                  cropIntent.putExtra("return-data", true);
+			//                  main.startActivityForResult(cropIntent,1);
+			//
+			//                  main.onActivityResult = function(requestCode, resultCode, data) {
+			//                      //裁剪成功图片上传
+			//                   										// 判断 剪裁完后的图片输出是否存在
+			//						       var _file2 = new File(outPutPath);
+			////						            console.log(outPutPath);
+			//						    	  var a2 = _file2.exists();
+			////						             		alert(a2);
+			//						if(a2){
+			//								upload(outPutPath);
+			//						}else{
+			//							mui.toast('上传失败')
+			//						}
+			//
+			//                  };
+			//                  //上传
+			//              }, function ( e ) {
+			//                  console.log("读取拍照文件错误："+e.message);
+			//              } );
+			//          }, function ( e ) {
+			//              console.log("失败："+e.message);
+			//          }, {filename:"_doc/camera/",index:1} );
+			//      }
+			//
+			//      //头像处理
+			//      function showActionSheet(){
+			//          var bts=[{title:"本地相册",style:"destructive"},{title:"拍照"}];    //暂时不支持{title:"拍照"}
+			//          plus.nativeUI.actionSheet({cancel:"取消",buttons:bts},
+			//              function(e){
+			//                  if(e.index==1) {
+			//                      //1 本地相册,包括裁剪
+			//                      galleryImg();
+			//                  } 
+			//                  else if(e.index==2) {
+			//                      //2 拍照
+			//                      getImage();
+			//                  }
+			//                  else {
+			//                      //3 取消
+			//                  }
+			//              }
+			//          );
+			//      }
+			//      	document.getElementById("head-img").addEventListener('tap', function() {
+			//			 showActionSheet();
+			//		});
+		</script>
+		<script>
+			/*点击头像触发*/
+			document.getElementById('head-img').addEventListener('tap', function() {
+				if(mui.os.plus) {
+					var a = [{
+						title: "拍照"
+					}, {
+						title: "从手机相册选择"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "修改用户头像",
+						cancel: "取消",
+						buttons: a
+					}, function(b) { /*actionSheet 按钮点击事件*/
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage(); /*拍照*/
+								break;
+							case 2:
+								galleryImg(); /*打开相册*/
+								break;
+							default:
+								break;
+						}
+					})
+				}
+			}, false);
+			//拍照
+			function getImage() {
+				var c = plus.camera.getCamera();
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						uploadHead(s); /*上传图片*/
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					});
+				}, function(s) {
+					console.log("error" + s);
+				}, {
+					filename: "_doc/head.png"
+				})
+			}
+			//本地相册选择
+			function galleryImg() {
+				plus.gallery.pick(function(a) {
+					plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+							root.getFile("head.png", {}, function(file) {
+								//文件已存在
+								file.remove(function() {
+									console.log("file remove success");
+									entry.copyTo(root, 'head.png', function(e) {
+											var e = e.fullPath + "?version=" + new Date().getTime();
+											uploadHead(e); /*上传图片*/
+											//变更大图预览的src
+											//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+										},
+										function(e) {
+											console.log('copy image fail:' + e.message);
+										});
+								}, function() {
+									console.log("delete image fail:" + e.message);
+								});
+							}, function() {
+								//文件不存在
+								entry.copyTo(root, 'head.png', function(e) {
+										var path = e.fullPath + "?version=" + new Date().getTime();
+										uploadHead(path); /*上传图片*/
+									},
+									function(e) {
+										console.log('copy image fail:' + e.message);
+									});
+							});
+						}, function(e) {
+							console.log("get _www folder fail");
+						})
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					});
+				}, function(a) {}, {
+					filter: "image"
+				})
+			};
+
+			//上传头像图片
+			function uploadHead(imgPath) {
+				document.getElementById('head-img').src = imgPath;
+
+				//			console.log("imgPath = " + imgPath);
+				//			mainImage.src = imgPath;
+				//			mainImage.style.width = "60px";
+				//			mainImage.style.height = "60px";
+
+				var image = new Image();
+				image.src = imgPath;
+				image.onload = function() {
+					var imgData = getBase64Image(image);
+					//				    alert(imgData);
+					/*在这里调用上传接口*/
+
+					// 调用ajax/获取数据
+					//			function head() {
+					//	var wd = plus.nativeUI.showWaiting();
+					// 构造要传递的json数据
+					var data = {
+						'upload': imgData
+					};
+					postData(GV['URL']['AJAX'] + 'user_ios_upload.php', //服务端的URL
+						data, // json 数据
+						function(data) {
+							gid('touxiang').value = data;
+							//                            var b=  data['upload'];
+							console.log(data);
+						}
+					);
+					//			}
+				}
+			}
+			//将图片压缩转成base64
+			function getBase64Image(img) {
+
+				var canvas = document.createElement("canvas");
+				var width = img.width;
+				var height = img.height;
+				// calculate the width and height, constraining the proportions
+				if(width > height) {
+					if(width > 100) {
+						height = Math.round(height *= 100 / width);
+						width = 100;
+					}
+				} else {
+					if(height > 100) {
+						width = Math.round(width *= 100 / height);
+						height = 100;
+					}
+				}
+				canvas.width = width; /*设置新的图片的宽度*/
+				canvas.height = height; /*设置新的图片的长度*/
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, width, height); /*绘图*/
+				var dataURL = canvas.toDataURL("image/png", 0.8);
+				return dataURL.replace("data:image/png;base64,", "");
+			}
+		</script>
+	</body>
+
+</html>

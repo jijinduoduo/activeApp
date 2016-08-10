@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				border: none;
+			}
+			
+			#close {
+				position: fixed;
+				right: 20px;
+				top: 20px;
+				background: #000000;
+				z-index: 9;
+				height: 30px;
+				width: 60px;
+				color: #FFFFFF;
+				opacity: 0.5;
+				line-height: 30px;
+				border-radius: 10px;
+				font-size: 14px;
+				text-align: center;
+			}
+			
+			img {
+				width: 100%;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id='close' class=""><span id="miao"></span>&nbsp;跳过</div>
+
+		<img src="" id="enter" />
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/ajax2.js"></script>
+		<script src="../js/globalVariables.js"></script>
+		<script>
+			var title;
+			var surl;
+			var i; //计时器-秒数
+			var intervalid; //计时器
+			mui.back = function() {};
+
+			mui.plusReady(function() {
+				// 调用ajax//轮播图			
+				function gg() {
+					//	var wd = plus.nativeUI.showWaiting();
+					// 构造要传递的json数据
+					var data = {
+						"page": 0
+					};
+					postData(GV['URL']['AJAX'] + 'guanggao.php', //服务端的URL  
+						data, // json 数据
+						function(data) {
+							if (data == null || data == "") { //广告没有
+								plus.webview.currentWebview().close(); //关闭本页	
+							} else {//有广告
+								title = data[0]['title'];
+								gid('enter').src = GV['URL']['PIC'] + data[0]['path'];
+								surl = data[0]['surl'];
+								i = data[0]['miao'];
+
+								intervalid = setInterval("fun()", 1000);
+							}
+
+					
+												setTimeout(function () {
+															plus.navigator.closeSplashscreen(); //关闭启动页
+									},1000);
+						}
+					);
+
+				}
+				gg();
+
+				if (mui.os.ios) {
+					plus.navigator.setFullscreen(true); //苹果全屏显示
+				}
+
+			});
+			//立即体验按钮点击事件
+			document.getElementById("close").addEventListener('tap', function(event) {
+				//				plus.navigator.setFullscreen(false);
+				plus.webview.currentWebview().close(); //关闭本页
+			}, false);
+
+			function fun() { //计时器方法调用
+				if (i == 0) {
+					plus.webview.currentWebview().close();
+				}
+				document.getElementById("miao").innerHTML = i;
+				i--;
+			}
+			document.getElementById("enter").addEventListener('tap', function(event) {
+				//获取id
+
+				//获取id
+
+				//mui.alert(urlinfo, "标题", "OK", null);
+				mui.openWindow({
+					url: '../ajax/web.html',
+					id: 'web.html',
+					extras: {
+						title: title,
+						urlinfo: surl,
+						ftop: '45'
+					},
+					styles: {
+						top: '0',
+						bottom: '0px',
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+					},
+					show: {
+						aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+						duration: '200' //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					}
+				});
+				//		setTimeout(	plus.webview.currentWebview().close(),5000);
+
+			});
+		</script>
+	</body>
+
+</html>

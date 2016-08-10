@@ -1,0 +1,757 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>北京信息网登陆</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="../css/mui.min.css">
+
+		<style>
+			/*.header_login a:nth-child(1) {
+				width: 85%;
+				height: 53px;
+				border: 1px solid;
+				display: block;
+				background-color: #FF5500;
+				color: #ffffff;
+				text-decoration: none;
+				font-size: 1.5em;
+				margin: auto;
+				text-align: center;
+				line-height: 53px;
+				margin-top: 80px;
+				border-radius: 10px;
+			}
+			
+			.header_login a:nth-child(2) {
+				width: 85%;
+				height: 53px;
+				border: 1px solid;
+				display: block;
+				color: #ff5500;
+				text-decoration: none;
+				font-size: 1.5em;
+				margin: auto;
+				text-align: center;
+				line-height: 53px;
+				margin-top: 30px;
+				border-radius: 10px;
+			}*/
+			
+			.img_logo {
+				width: 30%;
+				height: 100px;
+				display: block;
+				margin: 0 auto;
+				margin-top: 60px;
+			}
+			
+			.mui-table-view {
+				margin-top: 10px;
+			}
+			/*#qq_login img{
+			      width: 50px;
+			      height: 50px;	
+			}
+			#qq_login{
+				text-align: center;
+			}
+			#qq_login {
+				position: absolute;
+				bottom: 10px;
+					left:-moz-calc(50% - 25px);
+	left:-webkit-calc(50% - 25px);
+	left: calc(50% -25px);
+			}*/
+			
+			.head_bg {
+				height: 110px;
+				background: #FFFFFF;
+				background-size: 100%;
+				width: 100%;
+				padding: 20px 0;
+				margin-top: 45px;
+			}
+			
+			#my {
+				width: 100%;
+			}
+			
+			.login_button {
+				width: 100%;
+				color: #000000;
+				/*margin-top:-45px;*/
+				/*padding-left:110px;*/
+				font-size: 20px;
+				/*background: #F0AD4E;*/
+				z-index: 99;
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 156px;
+				line-height: 206px;
+				padding-left: 110px;
+			}
+			
+			#head-img {
+				height: 75px;
+				width: 75px;
+				line-height: 75px;
+				display: inline-block;
+				background-image: url(../images/wd/tx.png);
+				background-size: 100%;
+				margin-left: 20px;
+				border-radius: 45px;
+			}
+			
+			.mui-table-view .mui-table-view-cell a img {
+				width: 18px;
+				height: 18px;
+				margin-left: 8px;
+				margin-right: 12px;
+				float: left;
+				display: inline-block;
+				display: block;
+			}
+			
+			#uname_logined {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body style="background: #EFEFF4;">
+		<header class="mui-bar mui-bar-nav" style="background: #ff5500;">
+			<a id="gengduoshezhi" class="mui-icon mui-icon-gear mui-pull-right app_icon" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">我的</h1>
+		</header>
+		<div id="benye">
+			<!--<div id="header_login" class="mui-content">
+				<img src="../images/logo.png" class="img_logo">
+				<div class="header_login">
+					
+					<a rel="nofollow" id="login_button" title="登录" url="http://www.bjxxw.com/index.php?m=my&c=fresh">登录</a>
+					<a rel="nofollow" id="zhuce" title="注册" url="http://www.bjxxw.com/index.php?m=u&amp;c=register">注册</a>
+
+
+				</div>
+			</div>-->
+			<div class="mui-content" id="login_ed">
+				<!--页面主内容区开始-->
+				<div class="mui-page-content">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="head_bg">
+
+								<a class="" id="my">
+
+									<img class=" head-img" id="head-img" src="">
+									<div id="login_button" class="login_button">
+										登录/注册
+									</div>
+									<div id="uname_logined" class="login_button">
+										用户名
+									</div>
+								</a>
+
+							</ul>
+							<ul class="mui-table-view mui-table-view-chevron mys">
+
+								<li class="mui-table-view-cell" id="wddd" title="我的活动" url="http://www.bjxxw.com/index.php?m=my&c=article">
+									<a id="my_message" class="mui-navigate-right"><img src="../images/wd/wdjf.png"> 我的报名</a>
+								</li>
+								<li class="mui-table-view-cell" id="my_guanzhu" title="我的收藏" url="http://www.bjxxw.com/index.php?m=my&c=follow">
+									<a id="my_love" class="mui-navigate-right"><img src="../images/wd/wdsc.png"> 我的收藏</a>
+								</li>
+								<li class="mui-table-view-cell" id="my_guanzhu" title="我的评论" url="http://www.bjxxw.com/index.php?m=my&c=fans">
+									<a id="my_comment" class="mui-navigate-right"><img src="../images/wd/wdpl.png"> 我的评论</a>
+								</li>
+
+							</ul>
+							<ul class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell" id="fabu" title="发布活动" url="">
+									<a id="" class="mui-navigate-right" style="color: red;"><img src="../images/wd/fbhd.png"> 发布活动</a>
+								</li>
+								<li class="mui-table-view-cell" id="my_fabu" title="我的发布" url="http://www.bjxxw.com/index.php?m=my&c=fans">
+									<a id="my_comment" class="mui-navigate-right"><img src="../images/wd/wdfb.png"> 我的发布</a>
+								</li>
+							</ul>
+
+							<ul class="mui-table-view">
+								<!--<li class="mui-table-view-cell" id="my_guanzhu" title="我的积分" url="http://www.bjxxw.com/index.php?m=my&c=follow">
+										<a id="my_attention" class="mui-navigate-right"><img src="../images/wd/wdjf.png" > 我的积分</a>
+								</li>
+						<li class="mui-table-view-cell" id="my_guanzhu" title="安全中心" url="http://www.bjxxw.com/index.php?m=my&c=fans">
+										<a id="my_attention" class="mui-navigate-right"><img src="../images/wd/aqzx.png" >	安全中心</a>
+								</li>-->
+
+							</ul>
+
+							<ul class="mui-table-view">
+								<li class="mui-table-view-cell" id="user_out1">
+									<a href="#" class="mui-navigate-right"><img src="../images/wd/tczh.png"> 退出账号</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<input type="hidden" value="" id="uuid" />
+
+	</body>
+	<SCRIPT LANGUAGE="JavaScript">
+	</SCRIPT>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/ajax2.js"></script>
+	<script src="../js/globalVariables.js"></script>
+	<script type="text/javascript">
+		var uuid = document.getElementById("uuid");
+		var login_button = document.getElementById("login_button");
+		var login_ed = document.getElementById("uname_logined");
+		var user_logo = document.getElementById("head-img");
+
+		function localStorage_all() {
+			if(localStorage.getItem("uid")) { //查看本地储存
+				uuid.value = localStorage.getItem("uid");
+				//			alert( localStorage.getItem("uid")); 
+				login_button.style.display = "none";
+				login_ed.style.display = "block";
+				userdata_get();
+			} else {
+				login_button.style.display = "block";
+				login_ed.style.display = "none";
+				//			uuid.value = '';
+			}
+		}
+		// 调用ajax/获取数据
+		function userdata_get() {
+			var data = {
+				"uid": localStorage.getItem("uid")
+			};
+			postData(GV['URL']['AJAX'] + 'about_me.php', //服务端的URL
+				data, // json 数据
+				function(data) {
+					login_ed.innerHTML = data[0]['nickname'];
+					user_logo.src = GV['URL']['PIC'] + data[0]['face'];
+					localStorage.setItem('user_logo', data[0]['face']);
+				}
+			);
+		}
+		var uid = '';
+		var uname = '';
+		mui.plusReady(function() {
+			//plus.nativeUI.showWaiting("等待中....",{padlock: true});
+			//					var self = plus.webview.currentWebview();
+			// 窗口是否显示滚动条
+			//					self.setStyle({'scrollIndicator':'none'});	 
+			localStorage_all();
+		});
+		//自定义事件头像更新			
+		window.addEventListener('update_header', function(event) {
+			localStorage_all();
+		});
+		var timer1; //时间刷新器
+		// 获取Cookie
+		//		function getCookie() {
+		//			var all_cookie = plus.navigator.getCookie('http://www.bjxxw.com/');
+		//			if (all_cookie == "" || all_cookie == null) { //肯定没登陆				
+		//				login_ed.style.display = "none";
+		////				header_login.style.display = "block";
+		//			} else {
+		////			console.log(all_cookie);
+		//				var cookie_info = []; //定义一数组 JS对数组循环赋值
+		//				var j1024 = 0; //0
+		//				var str = all_cookie;
+		//				if (str) {
+		//					var strs = new Array(); //定义一数组 
+		//					strs = str.split(";"); //字符分割 
+		//					strs2 = strs.reverse();
+		//					for (i = 0; i < strs2.length; i++) {
+		//						var hist = strs2[i];
+		//						cookie_info[j1024] = hist; //定义一数组 JS对数组循环赋值
+		//						j1024++;
+		//					}
+		//					var nPos;
+		//					var vResult = [];
+		//					for (var i = 0;
+		//						(e = cookie_info[i]); i++) {			
+		//						var sTxt = e || '';
+		//					
+		//						nPos = find('passport=', sTxt);
+		//						
+		//						//qq登陆查cookie
+		////						qqlo = find('c6832_winduser', sTxt);
+		////						if (qqlo >= 0) {
+		////								plus.webview.close("default-main");	
+		////								timer1 = clearInterval(timer1); //定时器停止
+		////									login_ed.style.display = "block";
+		////				header_login.style.display = "none";
+		////							}
+		////							
+		//						//nPos=sTxt.indexOf(sFind);   
+		//							//alert(nPos);
+		//							//
+		//						if (nPos >= 0) { //如果登陆了
+		//							plus.webview.close("denglu");
+		//			
+		//							timer1 = clearInterval(timer1); //定时器停止
+		//							vResult[vResult.length] = sTxt;
+		//							var hists = new Array();
+		//							hists = sTxt.split("%09");
+		//							var uids = hists[0];
+		//							uid = new Array();
+		//							uid = uids.split("=");
+		//							uid = uid[1];
+		//					//alert(22222);
+		//							//uname = hists[1];
+		//							username_ajax();
+		//						} else { //未登录
+		//							//alert('未登录');
+		//						}
+		//					}
+		//				}
+		//			}
+		//			// 	 wd.close(); // 调用成功，先关闭等待的对话框  			
+		//		}
+		//写入本地缓存
+		//		function set_ltem() {
+		//			if (uid != '' && uname != '') {
+		//				//	alert('已登录');
+		//				localStorage.setItem("uid", uid); //设置本地储存
+		//				localStorage.setItem("uname", uname); //设置本地储存
+		//				uuid.value = uid;
+		//				var m1 = uuid.value.substring(0, 2);
+		//				var m2 = uuid.value.substring(2, 4);
+		//				head_img.src = 'http://www.bjxxw.com/windid/attachment/avatar/000/' + m1 + '/' + m2 + '/' + uuid.value + '_middle.jpg';
+		//				login_ed.style.display = "block";
+		////				header_login.style.display = "none";
+		//				//	alert(uid+'xxxx'+uname);
+		//				document.getElementById('uname').innerHTML = uname;
+		//				return;
+		//			} else {
+		//				//	alert('未登录');
+		//				localStorage.removeItem("uid"); //移除本地储存
+		//				localStorage.removeItem("uname"); //移除本地储存
+		//				uuid.value = '';
+		//				login_ed.style.display = "none";
+		////				header_login.style.display = "block";
+		//				//	startInterval();
+		//			}
+		//		}
+		//模糊查询 sfind是关键字，在sobj里查找
+		//		function find(sFind, sObj) {
+		//			var nSize = sFind.length;
+		//			var nLen = sObj.length;
+		//			var sCompare;
+		//			if (nSize <= nLen) {
+		//				for (var i = 0; i <= nLen - nSize + 1; i++) {
+		//					sCompare = sObj.substring(i, i + nSize);
+		//					if (sCompare == sFind) {
+		//						return i;
+		//					}
+		//				}
+		//			}
+		//			return -1;
+		//		}
+		// 清除应用的缓存
+		function user_out() {
+			var wd = plus.nativeUI.showWaiting();
+			plus.navigator.removeAllCookie();
+			localStorage.removeItem("uid"); //移除本地储存
+			localStorage.removeItem("uname"); //移除本地储存
+			localStorage.removeItem("user_logo"); //移除本地储存
+			uuid.value = '';
+			wd.close(); // 调用成功，先关闭等待的对话框  			
+			var wobj = plus.webview.getWebviewById("ajax/login.html");
+			wobj.reload(true);
+			window.location.reload(true);
+		}
+		//点击事件登陆
+		document.getElementById("login_button").addEventListener('tap', function(e) {
+			//获取id
+			var title = this.getAttribute("title");
+			//获取id
+			var urlinfo = this.getAttribute("url");
+			mui.openWindow({
+				url: 'denglu.html',
+				id: 'denglu',
+				styles: {
+					//bounce: 'all', //窗口遇到边框是否有反弹效果
+					//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+					render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+					//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+					background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+				}
+			});
+			//			timer1 = setInterval("getCookie()", 1000); //定时器启动
+		});
+		//		//点击事件注册
+		//		document.getElementById("zhuce").addEventListener('tap', function(e) {
+		//			//获取id
+		//			var title = this.getAttribute("title");
+		//			//获取id
+		//			var urlinfo = this.getAttribute("url");
+		//			mui.openWindow({
+		//				url: 'guodu.html',
+		//				id: 'guodu.html',
+		//								styles: {
+		//							//bounce: 'all',//窗口遇到边框是否有反弹效果
+		//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+		//							render: "onscreen",//窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+		//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+		//							background:'transparent'// (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+		//						},
+		//				extras: {
+		//					title: title,
+		//					urlinfo: urlinfo,
+		//					ftop: '-136'
+		//				}
+		//			});
+		//		});
+		//点击事件QQ登陆
+		var subWebview = null,
+			template = null;
+
+		//		document.getElementById("qq_login").addEventListener('tap', function(e) {
+		//			//获取id
+		//			var title = this.getAttribute("title");
+		//			//获取id
+		//			var urlinfo = this.getAttribute("url");
+		//						//				  			  //获取id
+		////				mui.openWindow({
+		////				url: 'guodu.html',
+		////				id: 'QQ_LOGIN.html',
+		////				extras: {
+		////					title: title,
+		////					urlinfo: urlinfo,
+		////					ftop: '36'
+		////				}
+		////			});
+		//						if (subWebview == null) {
+		//							//获取共用父窗体
+		//							template = plus.webview.getWebviewById("default-main");
+		//						}   
+		//						if (template) {
+		//							subWebview = template.children()[0];
+		//							subWebview.loadURL('QQ_LOGIN.html');
+		//							//修改共用父模板的标题
+		//							mui.fire(template, 'updateHeader', {
+		//								title: title,
+		//								showMenu: false
+		//								
+		//							});
+		//							template.show('slide-in-right', 150);
+		//						}
+		//					timer1 = setInterval("getCookie()", 1000); //定时器启动
+		//			
+		//		});
+		//点击更多设置
+		document.getElementById("gengduoshezhi").addEventListener('tap', function(e) {
+			//获取id
+			var title = this.getAttribute("title");
+			//获取id
+			var urlinfo = this.getAttribute("url");
+			mui.openWindow({
+				url: '../setting.html',
+				id: 'gengduoshezhi',
+				styles: {
+					//bounce: 'all', //窗口遇到边框是否有反弹效果
+					//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+					render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+					decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+					background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+				},
+				show: {
+					aniShow: 'none'
+				}
+			});
+		});
+		//点击事件退出
+		//				//退出操作******************
+
+		document.getElementById('user_out1').addEventListener('tap', function() {
+			var btnArray = [{
+				title: "确定"
+			}];
+			plus.nativeUI.actionSheet({
+				cancel: "取消",
+				buttons: btnArray
+			}, function(event) {
+				var index = event.index;
+				switch(index) {
+					case 1:
+						user_out();
+						break;
+				}
+			});
+		}, false);
+
+		//		document.getElementById("user_out1").addEventListener('tap', function(e) {
+		//			user_out();
+		//		});
+		//		//点击事件我
+		document.getElementById("uname_logined").addEventListener('tap', function(e) {
+
+			mui.openWindow({
+				url: 'user_data.html',
+				id: 'user_data',
+				styles: {
+					//bounce: 'all', //窗口遇到边框是否有反弹效果
+					//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+					render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+					decelerationRate: 1 //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						//							background:'transparent'// (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+				},
+			});
+		});
+		//		//处理点击列表；
+		//		mui(".mys").on('tap', '.mui-table-view-cell', function() {
+		//			//获取id
+		//			var title = this.getAttribute("title");
+		//			//获取id
+		//			var urlinfo = this.getAttribute("url");
+		//			mui.openWindow({
+		//				url: 'guodu.html',
+		//				id: 'guodu.html',
+		//						styles: {
+		//							//bounce: 'all',//窗口遇到边框是否有反弹效果
+		////							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+		//							render: "onscreen",//窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+		//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+		//							background:'transparent'// (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+		//						},
+		//				extras: {
+		//					title: title,
+		//					urlinfo: urlinfo
+		//				}
+		//			});
+		//		});
+		var subWebview = null,
+			template = null;
+		//		//		点击事件 个人设置
+		//		var user_setting = document.getElementById("user_setting");
+		//		//监听点击事件
+		//		user_setting.addEventListener("tap", function() {
+		//			//获取id
+		//			var title = this.getAttribute("title");
+		//			//获取id
+		//			var url = this.getAttribute("url");
+		//			//	mui.alert(url, "标题", "OK", null);
+		//			if (subWebview == null) {
+		//				//获取共用父窗体
+		//				template = plus.webview.getWebviewById("default-main");
+		//			}
+		//			if (template) {
+		//				subWebview = template.children()[0];
+		//				subWebview.loadURL(url);
+		//				//修改共用父模板的标题
+		//				mui.fire(template, 'updateHeader', {
+		//					title: title,
+		//					showMenu: false
+		//				});
+		//				template.show('slide-in-right', 150);
+		//			}
+		//		});
+		//点击发布
+		document.getElementById('fabu').addEventListener('tap', function() {
+			if(localStorage.getItem("uid")) { //查看本地储存
+				mui.openWindow({
+					id: 'fabu',
+					url: 'fabu.html',
+					styles: {
+						scrollIndicator: 'none', //窗口是否显示滚动条				
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					},
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right' //,//页面显示动画，默认为”slide-in-right“；
+							//   duration:animationTime//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					waiting: {
+						autoShow: false //自动显示等待框，默认为true			
+					}
+				});
+			} else {
+				mui.toast('请先登录');
+				mui.openWindow({
+					url: 'denglu.html',
+					id: 'denglu',
+					styles: {
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					}
+				});
+			}
+
+		});
+		//点击我的收藏
+		document.getElementById('my_love').addEventListener('tap', function() {
+			if(localStorage.getItem("uid")) { //查看本地储存
+				mui.openWindow({
+					id: 'my_love',
+					url: 'my_love.html',
+					styles: {
+						scrollIndicator: 'none', //窗口是否显示滚动条				
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					},
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right' //,//页面显示动画，默认为”slide-in-right“；
+							//   duration:animationTime//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					waiting: {
+						autoShow: false //自动显示等待框，默认为true			
+					}
+				});
+			} else {
+				mui.toast('请先登录');
+				mui.openWindow({
+					url: 'denglu.html',
+					id: 'denglu',
+					styles: {
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					}
+				});
+			}
+
+		});
+
+		//点击我的发布
+		document.getElementById('my_fabu').addEventListener('tap', function() {
+			if(localStorage.getItem("uid")) { //查看本地储存
+				mui.openWindow({
+					id: 'my_fabu',
+					url: 'my_fabu.html',
+					styles: {
+						scrollIndicator: 'none', //窗口是否显示滚动条				
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					},
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right' //,//页面显示动画，默认为”slide-in-right“；
+							//   duration:animationTime//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					waiting: {
+						autoShow: false //自动显示等待框，默认为true			
+					}
+				});
+			} else {
+				mui.toast('请先登录');
+				mui.openWindow({
+					url: 'denglu.html',
+					id: 'denglu',
+					styles: {
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					}
+				});
+			}
+
+		});
+		//点击我的评论
+		document.getElementById('my_comment').addEventListener('tap', function() {
+			if(localStorage.getItem("uid")) { //查看本地储存
+				mui.openWindow({
+					id: 'my_comment',
+					url: 'my_comment.html',
+					styles: {
+						scrollIndicator: 'none', //窗口是否显示滚动条				
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					},
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right' //,//页面显示动画，默认为”slide-in-right“；
+							//   duration:animationTime//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					waiting: {
+						autoShow: false //自动显示等待框，默认为true			
+					}
+				});
+			} else {
+				mui.toast('请先登录');
+				mui.openWindow({
+					url: 'denglu.html',
+					id: 'denglu',
+					styles: {
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					}
+				});
+			}
+
+		});
+		//点击我的订单
+		document.getElementById('wddd').addEventListener('tap', function() {
+			if(localStorage.getItem("uid")) { //查看本地储存
+				mui.openWindow({
+					id: 'my_order',
+					url: 'my_order.html',
+					styles: {
+						top: '0',
+						bottom: '0',
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						hardwareAccelerated: localStorage.getItem("yjjs"), //开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染
+						decelerationRate: 1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						errorPage: 'ajax/error.html', //窗口加载错误时跳转的页面地址
+						scrollIndicator: 'none', //窗口是否显示滚动条				
+					},
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: 'slide-in-right' //,//页面显示动画，默认为”slide-in-right“；
+							//   duration:animationTime//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					waiting: {
+						autoShow: false //自动显示等待框，默认为true			
+					}
+				});
+			} else {
+				mui.toast('请先登录');
+				mui.openWindow({
+					url: 'denglu.html',
+					id: 'denglu',
+					styles: {
+						//bounce: 'all', //窗口遇到边框是否有反弹效果
+						//							hardwareAccelerated:localStorage.getItem("yjjs"),//开启硬件加速
+						render: "onscreen", //窗口渲染模式"onscreen" 可见时渲染 "always" 在任何时候都渲染					
+						//							decelerationRate:1, //(Number 类型 )窗口内容停止.滑动的减速度设置值越大,手指松开后的滑动速度越快（滑动距离越长），其值域范围为0.0-1.0，默认值为0.989。
+						background: 'transparent' // (String 类型 )窗口的背景颜色设置background为“transparent”，则表示窗口背景透明，						
+					}
+				});
+			}
+
+		});
+	</script>
+
+</html>

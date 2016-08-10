@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			/*#close {
+				position: absolute;
+				width: 160px;
+				left: 50%;
+				margin-left: -80px;
+				bottom: 15%;
+				padding: 10px;
+				color: #529fff;
+				border-color: #529fff; 
+				font-size: 18px;
+			}*/
+			.item-logo {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			.item-logo a {
+				width: 200px;
+				height: 200px;
+				display: block;
+				border: 1px solid #FFFFFF;
+				border-color: rgba(255, 255, 255, 0.5);
+				text-align: center;
+				line-height: 200px;
+				border-radius: 50%;
+				font-size: 40px;
+				color: #fff;
+				position: absolute;
+				top: 15%;
+				left: 50%;
+				margin-left: -100px;
+			}
+			.animate {
+				position: absolute;
+				left: 0;
+				bottom: 15%;
+				width: 100%;
+				color: #fff;
+				display: -moz-box;
+			}
+			.animate h2 {
+				text-align: center;
+				margin-bottom: 20px;
+			}
+			.animate li {
+				width: 50%;
+				height: 30px;
+				line-height: 30px;
+				list-style: none;
+				font-size: 16px;
+				text-align: right;
+			}
+			.animate li:nth-child(3) {
+				text-align: left;
+				float: right;
+			}
+			.animated {
+				-webkit-animation-duration: 1s;
+				-webkit-animation-play-state: paused;
+				-webkit-animation-fill-mode: both;
+			}
+			.guide-show .bounceInDown {
+				-webkit-animation-name: bounceInDown;
+				-webkit-animation-play-state: running;
+				-webkit-animation-delay: 1s;
+				display: block;
+			}
+			.guide-show .bounceInLeft {
+				-webkit-animation-name: bounceInLeft;
+				display: block;
+				-webkit-animation-play-state: running;
+			}
+			.guide-show .bounceInRight {
+				-webkit-animation-name: bounceInRight;
+				display: block;
+				-webkit-animation-play-state: running;
+				-webkit-animation-delay: 0.5s;
+			}
+			@-webkit-keyframes bounceInDown {
+				0%, 60%, 75%, 90%, 100% {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+					animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+				}
+				0% {
+					opacity: 0;
+					-webkit-transform: translate3d(0, -3000px, 0);
+					transform: translate3d(0, -3000px, 0);
+				}
+				60% {
+					opacity: 1;
+					-webkit-transform: translate3d(0, 25px, 0);
+					transform: translate3d(0, 25px, 0);
+				}
+				75% {
+					-webkit-transform: translate3d(0, -5px, 0);
+					transform: translate3d(0, -5px, 0);
+				}
+				90% {
+					-webkit-transform: translate3d(0, 3px, 0);
+					transform: translate3d(0, 3px, 0);
+				}
+				100% {
+					-webkit-transform: none;
+					transform: none;
+				}
+			}
+			@-webkit-keyframes bounceInLeft {
+				0%, 60%, 75%, 90%, 100% {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+					animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+				}
+				0% {
+					opacity: 0;
+					-webkit-transform: translate3d(-3000px, 0, 0);
+					transform: translate3d(-3000px, 0, 0);
+				}
+				60% {
+					opacity: 1;
+					-webkit-transform: translate3d(25px, 0, 0);
+					transform: translate3d(25px, 0, 0);
+				}
+				75% {
+					-webkit-transform: translate3d(-10px, 0, 0);
+					transform: translate3d(-10px, 0, 0);
+				}
+				90% {
+					-webkit-transform: translate3d(5px, 0, 0);
+					transform: translate3d(5px, 0, 0);
+				}
+				100% {
+					-webkit-transform: none;
+					transform: none;
+				}
+			}
+			@-webkit-keyframes bounceInRight {
+				0%, 60%, 75%, 90%, 100% {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+					animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+				}
+				0% {
+					opacity: 0;
+					-webkit-transform: translate3d(3000px, 0, 0);
+					transform: translate3d(3000px, 0, 0);
+				}
+				60% {
+					opacity: 1;
+					-webkit-transform: translate3d(-25px, 0, 0);
+					transform: translate3d(-25px, 0, 0);
+				}
+				75% {
+					-webkit-transform: translate3d(10px, 0, 0);
+					transform: translate3d(10px, 0, 0);
+				}
+				90% {
+					-webkit-transform: translate3d(-5px, 0, 0);
+					transform: translate3d(-5px, 0, 0);
+				}
+				100% {
+					-webkit-transform: none;
+					transform: none;
+				}
+			}
+			.item-logo img{
+				width: 100%;
+				
+			}
+
+		.mui-slider-indicator	.mui-indicator{
+    background: #FFFFFF;
+    color: none;
+    box-shadow:none;
+    	filter:alpha(opacity=30); /*IE滤镜，透明度50%*/
+				-moz-opacity:0.3; /*Firefox私有，透明度50%*/
+				opacity:0.3;/*其他，透明度50%*/
+			}
+					.mui-slider-indicator .mui-active{
+    			filter:alpha(opacity=100); /*IE滤镜，透明度50%*/
+				-moz-opacity:1; /*Firefox私有，透明度50%*/
+				opacity:1;/*其他，透明度50%*/
+
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="slider" class="mui-slider mui-fullscreen" style="background-color: black;">
+			<div class="mui-slider-group">
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo" >
+						<img src="../images/1.png"/>
+						<!--<a href="#">同城活动
+						</a>
+						<div class="animate guide-show">
+							<h2 class="animated bounceInDown">北京信息网</h2> 
+							<li class="animated bounceInLeft">立足北京,服务大众</li>
+							<li class="animated bounceInRight">方便你我他</li>
+						</div>-->
+					</div>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo">
+						<img src="../images/2.png"/>
+						<!--<a href="#">同城活动
+						</a>
+						<div id="tips-2" class="animate mui-hidden">
+							<h2 class="animated bounceInDown">北京信息网</h2>
+							<li class="animated bounceInLeft">以iOS原生UI为基础</li>
+							<li class="animated bounceInRight">补充Android特有样式</li>
+						</div>-->
+					</div>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+						<div class="item-logo" >
+							<img src="../images/3.png"/>
+						<!--<a href="#">同城活动
+						</a>
+						<div id="tips-3" class="animate mui-hidden">
+							<h2 class="animated bounceInDown">北京信息网</h2>
+							<li class="animated bounceInLeft">玩转活动、转场生活</li>
+							<li class="animated bounceInRight">整个世界都愉悦了</li>
+						</div>-->
+					</div>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<div class="item-logo">
+						<img src="../images/4.png" id="close"/>
+						<!--<a href="#">同城活动
+						</a>-->
+						<!--<div class="animate">-->
+							<!--<button id='close' class="mui-btn mui-btn-warning mui-btn-outlined" >立即进入</button>-->
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script>
+			mui.back = function() {};
+			mui.plusReady(function() {
+				if(mui.os.ios){
+					plus.navigator.setFullscreen(true);
+				}
+				plus.navigator.closeSplashscreen();
+			});
+			//立即体验按钮点击事件
+			document.getElementById("close").addEventListener('tap', function(event) {
+				plus.storage.setItem("lauchFlag", "true");
+				plus.navigator.setFullscreen(false);
+				plus.webview.currentWebview().close();
+			}, false);
+			//图片切换时，触发动画
+//			document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+//			 	//注意slideNumber是从0开始的；
+//			 	var index = event.detail.slideNumber+1;
+//			 	if(index==2||index==3){
+//			 		var item = document.getElementById("tips-"+index);
+//			 		if(item.classList.contains("mui-hidden")){
+//			 			item.classList.remove("mui-hidden");
+//			 			item.classList.add("guide-show");
+//			 		}
+//			 	}
+//			});
+		
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<style>
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-loader {
+				position: absolute;
+				top: 25%;
+				width: 100%;
+				height: 60%;
+				color: #888;
+				font-size: 14px;
+				text-align: center;
+			}
+			
+			.mui-backdrop {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				height: 45px;
+				width: 100%;
+				background-color: #FFFF00;
+			}
+		</style>
+		<link rel="stylesheet" href="../css/mui.min.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav ">
+			<!--<p  class=" mui-backdrop">
+			</p>-->
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ff5400;	" id="mui_back"></a>
+			<!--<a class=" mui-icon  mui-pull-right" id="join" style="color: #ff5400;display: block; font-size: 18px ;line-height: 34px;height: 45px;z-index: 999;"> 参加</a>-->
+			<h1 class="mui-title" id="title"></h1>
+
+		</header>
+		<div class="mui-content" id="comments">
+
+			<div class="mui-loader">加载中...</div>
+
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script>
+			mui.init({
+				//敲点击返回时，内容区回到顶部
+				//		beforeback: function(){
+				// 	   window.scroll(0, 0);
+				//		return true;
+				//		}
+			});
+			var w = document.documentElement.clientWidth;
+			var h = document.documentElement.clientHeight;
+			h = h + 1026;
+			var h1title = document.getElementById("title");
+			var comments = document.getElementById("comments");
+
+			//
+			function callback() {
+				mui.back();
+				window.scroll(0, 0);
+				var mask = mui.createMask(callback); //callback为用户点击蒙版时自动执行的回调；
+				mask.show(); //显示遮罩
+			}
+			mui.plusReady(function() {
+				//				document.getElementById('mui_back').add
+				//		document.getElementById('mui_back').addEventListener('tap', function() {
+				//mui.back();alert(1111);
+				//		});
+				//
+				//				var mask = mui.createMask(callback); //callback为用户点击蒙版时自动执行的回调；
+				//				mask.show(); //显示遮罩					
+				var self = plus.webview.currentWebview();
+				// 窗口是否显示滚动条
+				self.setStyle({
+					'scrollIndicator': 'none'
+				});
+				var title = self.title;
+				var urlinfo = self.urlinfo;
+				var ftop = self.ftop;
+				//					mui.toast(title+urlinfo);
+				h1title.innerHTML = title;
+				var ifr = document.createElement("div");
+				ifr.setAttribute("id", "public_box");
+				ifr.innerHTML = '<iframe name="static_frame" id="static_frame" src="' + urlinfo + '" frameborder="0"  width="' + w + '" height="' + h + '" style=" overflow: hidden; position: absolute; top:' + ftop + 'px; left: 0px;"  onLoad="iFrameHeight()"  ></iframe>';
+				document.body.appendChild(ifr);
+
+			});
+			//
+			function iFrameHeight() {
+				var ifm = document.getElementById("static_frame");
+				var subWeb = document.frames ? document.frames["static_frame"].document :
+					ifm.contentDocument;
+				if(ifm != null && subWeb != null) {
+					ifm.height = subWeb.body.scrollHeight + 0;
+				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,1957 @@
+<html class=" ios6">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>北京信息网</title>
+
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no">
+		<meta name="format-detection" content="telephone=no,email=no">
+		<meta name="apple-mobile-web-app-status-bar-style">
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script async="" src="http://img.baidu.com/hunter/alog/dp.mobile.min.js?v=-16977"></script>
+		<script async="" src="http://img.baidu.com/hunter/alog/alog.mobile.min.js"></script>
+		<script>
+			void
+			function(g, f, j, c, h, d, b) {
+				g.alogObjectName = h, g[h] = g[h] || function() {
+					(g[h].q = g[h].q || []).push(arguments)
+				}, g[h].l = g[h].l || +new Date, d = f.createElement(j), d.async = !0, d.src = c, b = f.getElementsByTagName(j)[0], b.parentNode.insertBefore(d, b)
+			}(window, document, "script", "http://img.baidu.com/hunter/alog/alog.mobile.min.js", "alog");
+			void
+			function() {
+				function c() {
+					return;
+				}
+				window.PDC = {
+					mark: function(a, b) {
+						alog("speed.set", a, b || +new Date);
+						alog.fire && alog.fire("mark")
+					},
+					init: function(a) {
+						alog("speed.set", "options", a)
+					},
+					view_start: c,
+					tti: c,
+					page_ready: c
+				}
+			}();
+			void
+			function(n) {
+				var o = !1;
+				n.onerror = function(n, e, t, c) {
+					var i = !0;
+					return !e && /^script error/i.test(n) && (o ? i = !1 : o = !0), i && alog("exception.send", "exception", {
+						msg: n,
+						js: e,
+						ln: t,
+						col: c
+					}), !1
+				}, alog("exception.on", "catch", function(n) {
+					alog("exception.send", "exception", {
+						msg: n.msg,
+						js: n.path,
+						ln: n.ln,
+						method: n.method,
+						flag: "catch"
+					})
+				})
+			}(window);
+		</script>
+
+		<script type="text/javascript">
+			sWidth = document.documentElement.clientWidth;
+			// sHeight = window.screen.height;
+			/*获取实际图片路径，设置图片宽高及margin位置
+			 **参数：src 原始图片路径
+			 **      w 原始图片宽
+			 **      h 原始图片高
+			 **      mW 图片最大宽
+			 **      mH 图片最大高
+			 **      img 图片节点*/
+			function getImgSrcAndSetStyle(src, w, h, fW, fH, imgContainer) {
+				var reg = new RegExp('size=\\w*&');
+				//横图
+				if(w / h > fW / fH) {
+					if(w > fW * 2) {
+						src = src.replace(reg, 'size=b' + fW * 2 + '_' + Math.round(fW * 2 * h / w) + '&');
+						imgContainer.style.width = fW + 'px';
+						imgContainer.style.height = Math.round(fW * h / w) + 'px';
+					} else {
+						imgContainer.style.width = Math.round(w / 2) + 'px';
+						imgContainer.style.height = Math.round(h / 2) + 'px';
+					}
+					// var ml = Math.round((Math.round(fH * 2 * w / h) - fW * 2) * 0.25);
+					// img.style.marginLeft = '-' + ml + 'px';
+					// img.style.height = fH + 'px';
+				}
+				//竖图
+				else {
+					if(h > fH * 2) {
+						src = src.replace(reg, 'size=b' + Math.round(fH * 2 * w / h) + '_' + fH * 2 + '&');
+						imgContainer.style.width = Math.round(fH * w / h) + 'px';
+						imgContainer.style.height = fH + 'px';
+					} else {
+						imgContainer.style.width = Math.round(w / 2) + 'px';
+						imgContainer.style.height = Math.round(h / 2) + 'px';
+					}
+					// var mt = Math.round((Math.round(fW * 2 * h / w) - fH * 2) * 0.1);
+					// img.style.marginTop = '-' + mt + 'px';
+					// img.style.width = fW + 'px';
+				}
+				return src;
+			}
+
+			function getAlbumSrcAndSetStyle(src, w, h, fW, fH, imgContainer, container) {
+				var reg = new RegExp('size=\\w*&');
+				//横图
+				if(w / h > fW / fH) {
+					src = src.replace(reg, 'size=b' + fW * 2 + '_' + Math.round(fW * 2 * h / w) + '&');
+					imgContainer.style.width = fW + 'px';
+					container.style.width = fW + 'px';
+					imgContainer.style.height = Math.round(fW * h / w) + 'px';
+				} else {
+					src = src.replace(reg, 'size=b' + Math.round(fH * 2 * w / h) + '_' + fH * 2 + '&');
+					imgContainer.style.width = Math.round(fH * w / h) + 'px';
+					container.style.width = Math.round(fH * w / h) + 'px';
+					imgContainer.style.height = fH + 'px';
+					if(fH * w / h < 100) {
+						imgContainer.style.width = '100px';
+						container.style.width = '100px';
+						imgContainer.style.height = Math.round(100 * h / w) + 'px';
+					}
+				}
+				return src;
+			}
+		</script>
+
+		<script type="text/javascript">
+			fW = (sWidth > 480 ? 480 : sWidth) - 30;
+			fH = Math.round(fW * 0.78);
+			// 初始化图片的宽高
+			function initImgBorder() {
+				var imgs = document.getElementsByName('img-pre');
+				for(var i = 0; i < imgs.length; i++) {
+					var width = imgs[i].getAttribute('data-width');
+					var height = imgs[i].getAttribute('data-height');
+					var src = imgs[i].getAttribute('data-src');
+					var imgContainer = imgs[i].getElementsByTagName('a')[0];
+					var url;
+					// 表格里的图片特殊处理，缩小0.8倍显示
+					if(imgs[i].parentNode.tagName.toLowerCase() == 'td' || imgs[i].parentNode.parentNode.tagName.toLowerCase() == 'td') {
+						url = getImgSrcAndSetStyle(src, width, height, fW * 0.8, fH * 0.8, imgContainer);
+					} else {
+						url = getImgSrcAndSetStyle(src, width, height, fW, fH, imgContainer);
+					}
+					imgs[i].getElementsByTagName('span')[0].setAttribute('data-url', url);
+					imgs[i].setAttribute('name', 'img');
+				}
+			}
+			// 初始化相册的宽高
+			function initAlbumBorder() {
+				var albums = document.getElementsByName('album-pre');
+				for(var i = 0; i < albums.length; i++) {
+					var albumWidth = albums[i].getAttribute('data-width');
+					var albumHeight = albums[i].getAttribute('data-height');
+					var albumSrc = albums[i].getAttribute('data-src');
+					var albumContainer = albums[i].getElementsByTagName('a')[0];
+					var albumUrl;
+					// 表格里的图册特殊处理，缩小0.8倍显示
+					if(albums[i].parentNode.tagName.toLowerCase() == 'td' || albums[i].parentNode.parentNode.tagName.toLowerCase() == 'td') {
+						albumUrl = getAlbumSrcAndSetStyle(albumSrc, albumWidth, albumHeight, fW * 0.8, fH * 0.8, albumContainer, albums[i]);
+					} else {
+						albumUrl = getAlbumSrcAndSetStyle(albumSrc, albumWidth, albumHeight, fW, fH, albumContainer, albums[i]);
+					}
+					albums[i].getElementsByTagName('span')[0].setAttribute('data-url', albumUrl);
+					albums[i].setAttribute('name', 'album');
+				}
+			}
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-common/css/base_6144881.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-common/widget/component/share/floatShare_c847016.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-common/pkg/lemma-top_ba3ee27.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-other_323ddee.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/declare/declare_d613d80.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/lemmaAudio/lemmaAudio_96951e2.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/summaryImg/summaryImg_e8c238f.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/component/synonym/synonym_9c23a39.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/basicInfo/basicInfo_cad96ea.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/serviceDirect/serviceDirect_bd2c8ad.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/yiche/yiche_d41d8cd.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-lemma_74ca0dc.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-lemma-wifi_a3f53af.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/loadMoreContent/youxuan/youxuan_cb5e46d.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/loadMoreContent/relativeShop/relativeShop_45eb0af.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/catalog/catalog_22831dc.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-common/widget/component/inlink/inlink_9aa3158.css">
+		<link rel="stylesheet" type="text/css" href="http://baike.bdimg.com/static/wiki-mobile-lemma/layout/layout_bff6536.css">
+		<script>
+			alog('speed.set', 'ht', +new Date);
+		</script>
+		<script type="text/javascript" src="//m.baidu.com/static/searchbox/openjs/share.js?v=1.2"></script>
+		<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/promotion/promotion_8930b36.js"></script>
+		<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/component/testElem/testElem_1fda9e3.js"></script>
+		<style>
+			.jpJElAo0 {
+				position: relative;
+				overflow: hidden;
+				transition: height 0.5s linear;
+				;
+				-webkit-transition: height 0.5s linear;
+				;
+				height: 0;
+				max-height: 0.8rem;
+				margin-bottom: 0.15rem;
+			}
+			
+			.jpJElAo0 img {
+				width: 100%;
+			}
+			
+			.jpJElAo0 .LxKlisWPq1 {
+				width: 0.4rem;
+				height: 0.4rem;
+				position: absolute;
+				top: 50%;
+				margin-top: -0.2rem;
+				right: 4px;
+				display: block;
+				text-align: center;
+			}
+			
+			.jpJElAo0 .GuOycFpWugQHPReKO2 {
+				font-size: 0.12rem;
+				color: rgba(0, 0, 0, 0.6);
+				margin-right: 0.06rem;
+				font-family: baikeFont_layout;
+				font-weight: normal;
+				font-style: normal;
+				width: 0.24rem;
+				height: 0.24rem;
+				margin: 0.08rem;
+				line-height: 0.24rem;
+				background: rgba(255, 255, 255, 0.4);
+				border-radius: 50%;
+			}
+			
+			.jpJElAo0 .GuOycFpWugQHPReKO2:before {
+				content: '\e603';
+			}
+			
+			.rfRmMKLKSUZ3 {
+				height: 100%;
+				overflow: hidden;
+				margin-bottom: -0.25rem;
+			}
+			
+			.rfRmMKLKSUZ3 li {
+				line-height: 0.45rem;
+				position: relative;
+				height: 0.45rem;
+				background-color: #fafafa;
+				border: 1px solid #dedede;
+				margin-top: 0.25rem;
+				font-size: 0.12rem;
+			}
+			
+			.rfRmMKLKSUZ3 li:last-child {
+				border-bottom: 0px;
+			}
+			
+			.rfRmMKLKSUZ3 li a {
+				width: 100%;
+				height: 0.45rem;
+				line-height: 0.45rem;
+				display: none;
+				text-align: center;
+				-webkit-transition: -webkit-transform 3s ease-out;
+			}
+			
+			.rfRmMKLKSUZ3 li a .pygA4 {
+				width: 0.35rem;
+				height: 0.2rem;
+				line-height: 0.2rem;
+				display: inline-block;
+				color: #459DF5;
+				font-size: 11px;
+				text-align: center;
+				overflow: hidden;
+				border: 1px solid #459DF5;
+				border-radius: 2px;
+				margin-top: 0.12rem;
+			}
+			
+			.rfRmMKLKSUZ3 li a:first-child {
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			.rfRmMKLKSUZ3 li a .auDb5 {
+				margin-left: 0.08rem;
+				font-size: 0.13rem;
+				margin-top: 0.12rem;
+				color: #333333;
+				height: 0.2rem;
+				line-height: 0.2rem;
+				display: inline-block;
+				text-align: center;
+				overflow: hidden;
+				border-radius: 2px;
+			}
+			
+			#yPqVAWkAU6 {
+				display: -webkit-box;
+				display: -moz-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-align-items: center;
+				-moz-align-items: center;
+				-webkit-box-align: center;
+				align-items: center;
+				position: fixed;
+				bottom: 0;
+				z-index: 999;
+				width: 100%;
+				height: 0.5rem;
+				background: rgba(0, 0, 0, 0.7);
+			}
+			
+			#yPqVAWkAU6 img {
+				margin-left: 0.2rem;
+				display: block;
+				width: 0.32rem;
+				height: 0.32rem;
+			}
+			
+			#yPqVAWkAU6 .wrAPL7 {
+				-webkit-box-flex: 1;
+				-moz-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				font-size: 0.15rem;
+				color: #fff;
+				line-height: 0.2rem;
+				max-height: 0.4rem;
+				overflow: hidden;
+				margin-left: 0.1rem;
+			}
+			
+			#yPqVAWkAU6 .GLt8 {
+				width: 0.75rem;
+				height: 0.28rem;
+				border-radius: 2px;
+				line-height: 0.28rem;
+				text-align: center;
+				font-size: 0.13rem;
+				color: #fff;
+				display: block;
+				background: #459DF5;
+				margin-right: 0.01rem;
+			}
+			
+			#yPqVAWkAU6 .MxErtIp9 {
+				background: #2c74ea;
+			}
+			
+			#yPqVAWkAU6 .LxKlisWPq1 {
+				width: 0.4rem;
+				height: 0.4rem;
+				line-height: 0.4rem;
+				top: 4px;
+				right: 4px;
+				display: block;
+				text-align: center;
+			}
+			
+			#yPqVAWkAU6 .GuOycFpWugQHPReKO2 {
+				font-size: 0.12rem;
+				color: #a6a6a6;
+				margin-right: 0.06rem;
+				font-family: baikeFont_layout;
+				font-weight: normal;
+				font-style: normal;
+			}
+			
+			#yPqVAWkAU6 .GuOycFpWugQHPReKO2:before {
+				content: '\e603';
+			}
+			
+			.hnheNxZICN10 {
+				margin-top: 0.25rem;
+				padding: 0.15rem 0;
+				border-top: 1px solid #dedede;
+				color: #7f7f7f;
+				font-size: 0.14rem;
+				background: #fafafa;
+				margin-bottom: -25px;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 {
+				overflow: hidden;
+				margin: 0 auto;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .kqKfWDNQ12 {
+				display: block;
+				color: #7f7f7f;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+				float: left;
+				text-align: center;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13:last-child {
+				margin-right: 0;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .wyYTmOdH14 {
+				width: 0.5rem;
+				border-radius: 12px;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .TkOUCuXxF15 {
+				text-align: center;
+				margin-top: 0.1rem;
+				font-size: 0.12rem;
+				width: 0.61rem;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 {
+					width: 2.71rem;
+				}
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+					margin-right: 0.09rem;
+				}
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 {
+					width: 2.31rem;
+				}
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 .qcRBXOlE13 {
+					margin-right: 0.19rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 {
+					width: 3.01rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+					margin-right: 0.19rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 {
+					width: 2.51rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 .qcRBXOlE13 {
+					margin-right: 0.34rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .YyIPAnt11 {
+					width: 3.31rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+					margin-right: 0.29rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 {
+					width: 2.81rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 .qcRBXOlE13 {
+					margin-right: 0.49rem;
+				}
+			}
+			
+			.jpJElAo0 a {
+				display: block;
+				background-image: url(http://imgsrc.baidu.com/baike/pic/item/b999a9014c086e065988d96b0a087bf40ad1cbea.jpg);
+				background-size: cover;
+				background-repeat: no-repeat;
+				padding-top: 13.88888888888889%;
+			}
+		</style>
+		<style>
+			.jpJElAo0 {
+				position: relative;
+				overflow: hidden;
+				transition: height 0.5s linear;
+				;
+				-webkit-transition: height 0.5s linear;
+				;
+				height: 0;
+				max-height: 0.8rem;
+				margin-bottom: 0.15rem;
+			}
+			
+			.jpJElAo0 img {
+				width: 100%;
+			}
+			
+			.jpJElAo0 .LxKlisWPq1 {
+				width: 0.4rem;
+				height: 0.4rem;
+				position: absolute;
+				top: 50%;
+				margin-top: -0.2rem;
+				right: 4px;
+				display: block;
+				text-align: center;
+			}
+			
+			.jpJElAo0 .GuOycFpWugQHPReKO2 {
+				font-size: 0.12rem;
+				color: rgba(0, 0, 0, 0.6);
+				margin-right: 0.06rem;
+				font-family: baikeFont_layout;
+				font-weight: normal;
+				font-style: normal;
+				width: 0.24rem;
+				height: 0.24rem;
+				margin: 0.08rem;
+				line-height: 0.24rem;
+				background: rgba(255, 255, 255, 0.4);
+				border-radius: 50%;
+			}
+			
+			.jpJElAo0 .GuOycFpWugQHPReKO2:before {
+				content: '\e603';
+			}
+			
+			.rfRmMKLKSUZ3 {
+				height: 100%;
+				overflow: hidden;
+				margin-bottom: -0.25rem;
+			}
+			
+			.rfRmMKLKSUZ3 li {
+				line-height: 0.45rem;
+				position: relative;
+				height: 0.45rem;
+				background-color: #fafafa;
+				border: 1px solid #dedede;
+				margin-top: 0.25rem;
+				font-size: 0.12rem;
+			}
+			
+			.rfRmMKLKSUZ3 li:last-child {
+				border-bottom: 0px;
+			}
+			
+			.rfRmMKLKSUZ3 li a {
+				width: 100%;
+				height: 0.45rem;
+				line-height: 0.45rem;
+				display: none;
+				text-align: center;
+				-webkit-transition: -webkit-transform 3s ease-out;
+			}
+			
+			.rfRmMKLKSUZ3 li a .pygA4 {
+				width: 0.35rem;
+				height: 0.2rem;
+				line-height: 0.2rem;
+				display: inline-block;
+				color: #459DF5;
+				font-size: 11px;
+				text-align: center;
+				overflow: hidden;
+				border: 1px solid #459DF5;
+				border-radius: 2px;
+				margin-top: 0.12rem;
+			}
+			
+			.rfRmMKLKSUZ3 li a:first-child {
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			.rfRmMKLKSUZ3 li a .auDb5 {
+				margin-left: 0.08rem;
+				font-size: 0.13rem;
+				margin-top: 0.12rem;
+				color: #333333;
+				height: 0.2rem;
+				line-height: 0.2rem;
+				display: inline-block;
+				text-align: center;
+				overflow: hidden;
+				border-radius: 2px;
+			}
+			
+			#yPqVAWkAU6 {
+				display: -webkit-box;
+				display: -moz-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-align-items: center;
+				-moz-align-items: center;
+				-webkit-box-align: center;
+				align-items: center;
+				position: fixed;
+				bottom: 0;
+				z-index: 999;
+				width: 100%;
+				height: 0.5rem;
+				background: rgba(0, 0, 0, 0.7);
+			}
+			
+			#yPqVAWkAU6 img {
+				margin-left: 0.2rem;
+				display: block;
+				width: 0.32rem;
+				height: 0.32rem;
+			}
+			
+			#yPqVAWkAU6 .wrAPL7 {
+				-webkit-box-flex: 1;
+				-moz-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				font-size: 0.15rem;
+				color: #fff;
+				line-height: 0.2rem;
+				max-height: 0.4rem;
+				overflow: hidden;
+				margin-left: 0.1rem;
+			}
+			
+			#yPqVAWkAU6 .GLt8 {
+				width: 0.75rem;
+				height: 0.28rem;
+				border-radius: 2px;
+				line-height: 0.28rem;
+				text-align: center;
+				font-size: 0.13rem;
+				color: #fff;
+				display: block;
+				background: #459DF5;
+				margin-right: 0.01rem;
+			}
+			
+			#yPqVAWkAU6 .MxErtIp9 {
+				background: #2c74ea;
+			}
+			
+			#yPqVAWkAU6 .LxKlisWPq1 {
+				width: 0.4rem;
+				height: 0.4rem;
+				line-height: 0.4rem;
+				top: 4px;
+				right: 4px;
+				display: block;
+				text-align: center;
+			}
+			
+			#yPqVAWkAU6 .GuOycFpWugQHPReKO2 {
+				font-size: 0.12rem;
+				color: #a6a6a6;
+				margin-right: 0.06rem;
+				font-family: baikeFont_layout;
+				font-weight: normal;
+				font-style: normal;
+			}
+			
+			#yPqVAWkAU6 .GuOycFpWugQHPReKO2:before {
+				content: '\e603';
+			}
+			
+			.hnheNxZICN10 {
+				margin-top: 0.25rem;
+				padding: 0.15rem 0;
+				border-top: 1px solid #dedede;
+				color: #7f7f7f;
+				font-size: 0.14rem;
+				background: #fafafa;
+				margin-bottom: -25px;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 {
+				overflow: hidden;
+				margin: 0 auto;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .kqKfWDNQ12 {
+				display: block;
+				color: #7f7f7f;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+				float: left;
+				text-align: center;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13:last-child {
+				margin-right: 0;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .wyYTmOdH14 {
+				width: 0.5rem;
+				border-radius: 12px;
+			}
+			
+			.hnheNxZICN10 .YyIPAnt11 .TkOUCuXxF15 {
+				text-align: center;
+				margin-top: 0.1rem;
+				font-size: 0.12rem;
+				width: 0.61rem;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 {
+					width: 2.71rem;
+				}
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+					margin-right: 0.09rem;
+				}
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 {
+					width: 2.31rem;
+				}
+			}
+			
+			@media (max-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 .qcRBXOlE13 {
+					margin-right: 0.19rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 {
+					width: 3.01rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+					margin-right: 0.19rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 {
+					width: 2.51rem;
+				}
+			}
+			
+			@media (min-width: 359px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 .qcRBXOlE13 {
+					margin-right: 0.34rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .YyIPAnt11 {
+					width: 3.31rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .YyIPAnt11 .qcRBXOlE13 {
+					margin-right: 0.29rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 {
+					width: 2.81rem;
+				}
+			}
+			
+			@media (min-width: 413px) {
+				.hnheNxZICN10 .dNKvNGlFWmiCuE16 .qcRBXOlE13 {
+					margin-right: 0.49rem;
+				}
+			}
+			
+			.jpJElAo0 a {
+				display: block;
+				background-image: url(http://imgsrc.baidu.com/baike/pic/item/b999a9014c086e065988d96b0a087bf40ad1cbea.jpg);
+				background-size: cover;
+				background-repeat: no-repeat;
+				padding-top: 13.88888888888889%;
+			}
+		</style>
+	</head>
+
+	<style>
+		.declare,
+		.jpJElAo0,
+		.summary-img,
+		.ec_ad {
+			display: none;
+		}
+		
+		body {
+			background: #FFFFFF;
+		}
+		
+		a {
+			pointer-events: none;
+		}
+		
+		.content-wrapper .table-container td,
+		.content-wrapper .college-table-container td {
+			min-width: 70px;
+		}
+	</style>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ff5400;	" ></a>-->
+			<h1 class="mui-title" id="title">关于我们</h1>
+
+		</header>
+
+		<div id="J-pre-lemma">
+		</div>
+		<div id="J-lemma">
+			<div style="display:none;" id="J-vars" data-net="0" data-token="cc246fe6c2621d582b69a5de1ce0a0da" data-sublemmas="0" data-newlemmaid="5848039" data-imgsrcid="a71ea8d3fd1f41342067cce4241f95cad0c85edc" data-time="1466747016"></div>
+			<img src="http://h.hiphotos.baidu.com/baike/whfpf%3D373%2C373%2C50/sign=5ca94bef42a98226b8947867ecbf8a36/a71ea8d3fd1f41342067cce4241f95cad0c85edc.jpg" alt="" style="width:0;height:0;position:absolute">
+			<div class="header-wrapper">
+				<div class="topbar">
+					<div class="tips" id="J-tips">
+						<span></span>
+					</div>
+					<div class="baike-icon" id="J-baike-icon">
+						<a id="J-logo" href="/"><em class="layout-icons layout-icons_baike-logo"></em></a>
+					</div>
+					<div class="more-icon top-icon" id="J-more-icon">
+						<em class="layout-icons layout-icons_more"></em>
+					</div>
+					<div class="share-icon top-icon" id="J-share-icon">
+						<em class="layout-icons layout-icons_share"></em>
+					</div>
+					<div class="search-icon top-icon" id="J-search-icon">
+						<em class="layout-icons layout-icons_search"></em>
+					</div>
+					<div class="more">
+						<ul>
+							<li class="more-arrow"></li>
+							<li class="more-login" id="J-more-login"><em class="user-img"><img src="http://himg.baidu.com/sys/portrait/item/1f8b6a696a696e64756f64756f331739" alt="用户头像"></em><label class="user-name">jijinduoduo3</label></li>
+							<li class="more-setting" id="J-more-setting">
+								<a href="javascript:;" class="active">
+									<em class="layout-icons layout-icons_setting"></em>
+									<label>图片模式</label>
+								</a>
+							</li>
+							<li class="more-computer-version" id="J-computer-version">
+								<a href="http://baike.baidu.com/view/2481578.htm?noadapt=1" class="active" id="J-gotoPC-top">
+									<em class="layout-icons layout-icons_pc-icon"></em>
+									<label>电脑版</label>
+								</a>
+							</li>
+							<li class="more-logout" id="J-more-logout">
+								<a href="javascript:;" class="active"><em class="layout-icons layout-icons_logout"></em><label>退出</label></a>
+							</li>
+						</ul>
+					</div>
+					<div class="layer" id="J-layer"></div>
+					<div class="setting">
+						<ul>
+							<li class="setting-title">设置图片模式</li>
+							<li class="setting-con">
+								<span class="cfg-btn btn-read" data-mode="config-flow">
+<em id="J-net1" class="current">大图</em>
+<em id="J-net3">小图</em>
+<em id="J-net2">无图</em>
+</span>
+							</li>
+							<li class="setting-btn"><span class="setting-cancel btn" id="J-setting-cancel">取消</span><span class="setting-confirm btn" id="J-setting-confirm">确定</span></li>
+						</ul>
+					</div>
+					<div class="search-con" id="searchCon" style="display: none;">
+						<form class="search-con-form" name="topForm" method="GET" action="/search" id="search-form">
+							<div class="search-con-div" id="searchConDiv">
+								<div class="search-con-input-div">
+									<div class="search-con-mask">
+
+										<div id="ui-input-mask-1466747020745" class="ui-input-mask" data-gmu-widgetquickdelete="[object Object]" style="height: 0px;"><input class="search-con-input" placeholder="请输入关键词" type="text" name="word" data-widget="quickdelete" value="" id="J-ipt-search" autocomplete="off" data-gmu-widgetsuggestion="[object Object]" style="position: absolute; top: 0px; left: 0px; width: auto;">
+											<div id="ui-suggestion-2" class="ui-suggestion" style="position: absolute; left: -20px; width: 84px;">
+												<div class="ui-suggestion-content">
+													<div class="ui-suggestion-scroller"></div>
+												</div>
+												<div class="ui-suggestion-button"></div>
+											</div>
+											<div id="ui-quickdelete-delete-1466747020749" class="ui-quickdelete-button" style="height: 14px; width: 14px; padding: 0px; top: 7px; right: 8px;"></div>
+										</div>
+									</div>
+								</div>
+								<div class="search-cancel" id="J-search-cancel">取消</div>
+								<input type="hidden" name="bk_fr" value="lemma">
+							</div>
+						</form>
+						<div class="voice-search-icon" id="J-voice-search">
+							<em class="layout-icons layout-icons_voice-search"></em>
+						</div>
+					</div>
+				</div>
+				<div class="top-place">
+				</div>
+				<div class="share-layer" id="J-share-layer"></div>
+				<div class="float-share">
+					<ul>
+						<li class="share-title">分享到</li>
+						<li class="share-con">
+							<div class="share-way wechat" id="J-float-wechat">
+								<em class="wikiMobileCommon-layout-icons wikiMobileCommon-layout-icons_wechat"></em>
+								<div class="txt">微信</div>
+							</div>
+							<div class="share-way Qzone share-link">
+								<em class="wikiMobileCommon-layout-icons wikiMobileCommon-layout-icons_tencent"></em>
+								<div class="txt">QQ空间</div>
+							</div>
+							<div class="share-way weibo share-link">
+								<em class="wikiMobileCommon-layout-icons wikiMobileCommon-layout-icons_weibo"></em>
+								<div class="txt">新浪微博</div>
+							</div>
+						</li>
+						<li class="share-btn" id="J-float-share-btn">取消</li>
+					</ul>
+				</div>
+				<div class="float-wechat-qrcode" id="J-float-wechat-qrcode">
+					<div class="wechat-qrcode-close" id="J-float-wechat-qrcode-close">
+						<em class="wikiMobileCommon-layout-icons wikiMobileCommon-layout-icons_close"></em>
+					</div>
+					<div class="wechat-qrcode-title">扫码或保存</div>
+					<div class="wechat-qrcode-img" id="J-float-wechat-qrcode-img"></div>
+					<div class="wechat-qrcode-txt">
+						邀请好友扫一扫分享给TA<br>或者<br>
+						<p class="left-txt">
+							<font class="font">长按上图保存二维码</font>，使用微信扫一扫右上角的"相册"扫码，再分享好友或朋友圈</p>
+					</div>
+				</div>
+				<div class="wechat-share-tip" id="J-wechat-share-tip">
+					<img src="http://baike.bdimg.com/static/wiki-mobile-common/widget/component/share/img/wechat-share_3a9ae2a.png" alt="" class="wechat-share">
+				</div>
+				<script src="http://jsapi.qq.com/get?api=app.share" type="text/javascript"></script>
+				<script src="http://res.imtt.qq.com/syneed/x5share.min.js?v=201511161600" type="text/javascript"></script>
+				<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+				<script>
+					// QQ浏览器logo显示不全问题
+					if(navigator.userAgent.search(/MQQBrowser/) > -1) {
+						var baikeIcon = document.getElementById('J-baike-icon');
+						baikeIcon.style.marginLeft = '17px';
+					}
+				</script>
+			</div>
+
+			<div class="body-wrapper">
+				<div class="before-content-wrapper">
+					<div class="declare" id="J-declare">【声明】百度百科无收费代编服务
+						<a class="declare-details" href="/common/declaration">详情&gt;&gt;</a>
+						<div class="close-btn" id="J-declare-close">
+							<em class="layout-icons layout-icons_close"></em>
+						</div>
+					</div>
+					<div class="jpJElAo0" id="ZLowuZB17" style="height: 58px;">
+						<a data-bklog="300001133102" data-type="2" onclick="Mixedor.mixedOpen(this,0)" target="_blank"></a><span class="LxKlisWPq1"><em class="GuOycFpWugQHPReKO2" style="display:block"></em></span></div>
+					<div class="audio-control-container" id="J-audio-control">
+						<div class="audio-control">
+							<div class="audio-icon">
+								<em class="layout-icons layout-icons_sound1"></em>
+							</div>
+							正在收听 :
+							<div class="audio-name" id="J-audio-name">
+								<span class="scroll-begin"></span>
+								<span class="scroll-end"></span>
+							</div>
+							<div class="audio-play-icons">
+								<em class="layout-icons layout-icons_play-prev" id="J-audio-prev"></em>
+								<em class="layout-icons layout-icons_audio-stop" id="J-audio-stop"></em>
+								<em class="layout-icons layout-icons_play-next" id="J-audio-next"></em>
+							</div>
+							<div class="audio-close" id="J-audio-close">
+								<em class="layout-icons layout-icons_close"></em>
+							</div>
+						</div>
+						<audio class="audio-sound" id="J-audio-sound" preload="auto"></audio>
+						<audio class="audio-sound" id="J-next-sound" preload="auto"></audio>
+						<ul style="display:none" data-soundtitle="百科名片" class="sound-list" id="J-card-sound">
+							<li>北京信息网。北京信息网成立于2005年7月。</li>
+							<li>是北京最大的活动信息门户网站。北京信息网为用户提供时尚的北京社区生活服务。房屋出租买卖。二手市场交易置换。同城活动召集。旅游结伴。出行拼购等众多本地时尚生活信息。北京信息网总部位于北京东三环顺迈金钻国际商务中心。服务北京社区居民。引领北漂一族。</li>
+							<li>公司名称,北京信息网。外文名称,bjxxw。经营范围,网络服务。公司性质,有限责任公司。</li>
+						</ul>
+						<ul style="display:none" data-soundtitle="网站简介" class="sound-list content-sound">
+							<li>网站简介,北京信息网。北京生活。我们更懂你！ 北京信息网是一家立足北京本地生活信息发布。
+							</li>
+							<li>倡导城市生活时尚。本地信息资讯导航。同城活动发布。出游活动召集。拼车拼租等综合门类信息网站。网站于2005年7月18日创办。我们坚信我们在做一件正确的事。一个承载北京人生活理想的网站。一个以诚信为己任以方便北京生活为灵魂的网站。致力于服务北京大众。引导城市生活时尚人群。做北京最专业最懂生活的网站是我们不变的目标。</li>
+							<li>
+								。</li>
+						</ul>
+						<ul style="display:none" data-soundtitle="公司概述" class="sound-list content-sound">
+							<li>公司概述,北京信息网成立一来。一直致力于成为北京最大最全的活动信息门户网站。</li>
+							<li>为用户提供生活方便。为城市生活提供免费的活动召集平台。公司自2005年成立以来每天有几十万人次点击。每日发贴量达15万。有600万人成为注册用户。除了为北京居民提供免费的信息发布之外。北京信息网也是时尚北京生活的倡导者。一成不变的生活中。日日如是的工作。使绝大多数都市人陷于压抑中不能自拔。寻找新的娱乐活动。寻找心灵上的慰藉与洗礼。</li>
+							<li>远离城市的喧嚣。寻一处精神的家园。短暂的出行会是最好的选择。有时候。在工作中我们都是一个人独来独往。有时候。我们需要一个人陪伴远行。即使不是同事。也能成为朋友。北京信息网为用户提供活动发布。寻找或者结伴出游。同城生活或是拼租车。拼租房。上下班有个顺风车。周末一起喝个咖啡。寻个同伴一起聊天逛商场等等。我们不是专业的交友网站。我们只是想懂你的生活。 北京信息网与新华网、千龙网等北京市各大新闻媒体网络媒体长期合作。
+							</li>
+							<li>与96156北京社区服务中心合作。拥有全市数千社区资源。覆盖北京16区县。针对分众传媒“北京市各写字楼电梯框架媒体”北京信息网以100栋写字楼为最低投放数量进行不定期推广。并与智联招聘。中华英才网等专业网站互动。 2013年1月。北京信息网全新改版上线。2013年8月。北京信息网与北京市民政局。北京商务委。北京社区服务中心等单位主办2014年北京市第一届社区网络春晚。
+							</li>
+						</ul>
+						<ul style="display:none" data-soundtitle="领导者" class="sound-list content-sound">
+							<li>领导者,徐斌。北京信息网总裁。 在《解放军报》工作8年。
+							</li>
+							<li>北京资深广告精英。曾任《解放军报》广告部负责人。北京信息网创始人。</li>
+						</ul>
+						<ul style="display:none" data-soundtitle="网站大事纪" class="sound-list content-sound">
+							<li>网站大事纪,2005年7月18日北京信息网成立。</li>
+							<li>
+								2006年1月。网站访问量突破5万人次。 2007年1月。网站日发贴量突破5万条。 2009年12月。北京信息网网站注册用户突破百万。 2010年5月。被评为都市白领最喜爱的网站之一。 2011年10月。北京信息网网站日发贴量达15万条。注册用户突破500万。 2012年1月。网站全新改版。蓄势待发。日均访问量突破百万。 2013年5月。
+							</li>
+							<li>被评为北京生活类网站：最受生活追捧的门户类网站。 2013年7月。网站推出商家展示系统“网页精灵”。 2013年7月。北京信息网在北京市16区县已建立6000块96156北京市社区服务宣传栏。覆盖北京16区县90%的小区大门口。真正为商家实现线上线下全方位宣传活动。 2014年6月。北京信息网在2014中国新媒体门户大会上荣获2014年度“中国百强地方门户”奖项。 2014年10月。“北京信息网杯”第一届象棋大赛在芳古园社区活动中心隆重举行。
+							</li>
+							<li>
+								2015年7月。北京信息网在北京市16区县2766个社区已建立6000块96156北京市社区服务宣传栏。覆盖北京16区县几乎所有的小区大门口。 2015年10月03日。由北京信息网主办的“庆反法西斯战争胜利70周年。世界冠军蒋川象棋盲棋巡演赛1vs10”日前举行。 2015年11月。由北京信息网主办“北京信息网杯”第二届象棋公开赛隆重举行。 2015年12月。由北京信息网协办北京市中小学奥林匹克体质健康大课堂如期开展。
+							</li>
+							<li>
+								2015年12月。由北京市中小学体育运动协会、北京信息网共同举办的北京市中小学智力运动会在北京电子科技职业学院体育馆隆重举行。 2015年12月。由北京市中小学体育运动协会、北京信息网共同主办的北京市中小学生中国象棋教育推广活动如期开展！ 2016年1月。北京信息网11周年庆典暨2016年会隆重召开。 2016年3月。北京信息网将在北京高端社区建立1500块高清灯箱。 公司使命：为北京生活者提供专业、优秀的活动召集平台、提供全面的生活服务信息。
+							</li>
+							<li>
+								公司愿景：成为最懂北京都市生活的互联网企业。 公司文化：正直诚信 团队协作 开拓创新 勇于坚持 品牌定位：北京生活。我们更懂你!。
+							</li>
+						</ul>
+						<ul style="display:none" data-soundtitle="网站规则" class="sound-list content-sound">
+							<li>网站规则,1、用户在申请使用北京信息网网络服务时。</li>
+							<li>必须向北京信息网提供准确的个人资料。如个人资料有任何变动。必须及时更新。 2、用户不应将其帐号、密码转让或出借予他人使用。如用户发现其帐号遭他人非法使用。应立即通知北京信息网。因黑客行为或用户的保管疏忽导致帐号、密码遭他人非法使用。北京信息网不承担任何责任。 3、对于用户通过北京信息网网络服务上传到北京信息网上可公开获取区域的任何内容。用户同意北京信息网在全世界范围内具有免费的、永久性的、不可撤销的、非独家的和完全再许可的权利和许可。
+							</li>
+							<li>
+								4、用户在使用北京信息网网络服务过程中。必须遵循以下原则： 1)、遵守中国有关的法律和法规； 2)、遵守所有与网络服务有关的网络协议、规定和程序； 3)、不得为任何非法目的而使用网络服务系统； 4)、不得利用北京信息网网络服务系统进行任何可能对互联网或移动网正常运转造成不利影响的行为； 5)、不得利用北京信息网提供的网络服务上传、展示或传播任何虚假的、骚扰性的、中伤他人的、辱骂性的、恐吓性的、庸俗淫秽的或其他任何非法的信息资料； 6)、不得侵犯其他任何第三方的专利权、著作权、商标权、名誉权或其他任何合法权益； 7)、不得利用北京信息网网络服务系统进行任何不利于北京信息网的行为； 8)、如发现任何非法使用用户帐号或帐号出现安全漏洞的情况。
+							</li>
+							<li>应立即通告北京信息网。如用户在使用北京信息网网络服务时违反任何上述规定。北京信息网或其授权的人有权要求用户改正或直接采取一切必要的措施以减轻用户不当行为造成的影响。您只有无条件接受以上所有服务条款。才能继续申请。 。
+							</li>
+						</ul>
+					</div>
+					<div class="summary-img" id="J-summary-img" data-src="http://cdn00.baidu-img.cn/timg?wapbaike&amp;quality=80&amp;size=b973_373&amp;sec=1349839550&amp;di=a69fff054a057c960919cc414f0e6f59&amp;src=http://imgsrc.baidu.com/baike/pic/item/a71ea8d3fd1f41342067cce4241f95cad0c85edc.jpg" data-width="973" data-height="373" style="height: 246px;">
+						<a class="summary-link" data-href="/pic/%E5%8C%97%E4%BA%AC%E4%BF%A1%E6%81%AF%E7%BD%91/5848039/0/a71ea8d3fd1f41342067cce4241f95cad0c85edc?bk_fr=view_summary">
+							<img src="http://cdn00.baidu-img.cn/timg?wapbaike&amp;quality=80&amp;size=b1283_492&amp;sec=1349839550&amp;di=a69fff054a057c960919cc414f0e6f59&amp;src=http://imgsrc.baidu.com/baike/pic/item/a71ea8d3fd1f41342067cce4241f95cad0c85edc.jpg" style="margin-left: -129px; height: 246px;">
+							<div class="more-images"><em class="layout-icons layout-icons_summary-img item"></em><span class="item">1张</span></div>
+						</a>
+					</div>
+
+					<script type="text/javascript">
+						// /*获取实际图片路径，设置图片宽高及margin位置
+						// **参数：src 原始图片路径
+						// **      w 原始图片宽
+						// **      h 原始图片高
+						// **      fW 最终图片宽
+						// **      fH 最终图片高
+						// **      img 图片节点*/
+						// function getSummaryImgSrcAndSetStyle(src,w,h,fW,fH,img) {
+						//     var reg = new RegExp('size=\\w*&');
+						//     //横图
+						//     if (w / h > fW / fH) {
+						//         if (w > fW * 2) {
+						//             src = src.replace(reg, 'size=b' + Math.round(fH * 2 * w / h) + '_' + fH * 2 + '&');
+						//         }
+						//         var ml = Math.round((Math.round(fH * 2 * w / h) - fW * 2) * 0.25);
+						//         img.style.marginLeft = '-' + ml + 'px';
+						//         img.style.height = fH + 'px';
+						//     }
+						//     //竖图
+						//     else {
+						//         if(h > fH * 2) {
+						//             src = src.replace(reg, 'size=b' + fW * 2 + '_' + Math.round(fW * 2 * h / w) + '&');
+						//         }
+						//         var mt = Math.round((Math.round(fW * 2 * h / w) - fH * 2) * 0.1);
+						//         img.style.marginTop = '-' + mt + 'px';
+						//         img.style.width = fW + 'px';
+						//     }
+						//     return src;
+						// }
+						// var summaryimgContainer = document.getElementById('J-summary-img');
+						// var summaryWidth = summaryimgContainer.getAttribute('data-width');
+						// var summaryHeight = summaryimgContainer.getAttribute('data-height');
+						// var summarySrc = summaryimgContainer.getAttribute('data-src');
+						// var summaryfWidth = sWidth > 480? 480 : sWidth;
+						// var summaryfHeight = Math.round(summaryfWidth * 0.64);
+						// var summaryimg = summaryimgContainer.getElementsByTagName('img')[0];
+						// //设置容器style
+						// summaryimgContainer.style.height = summaryfHeight + 'px';
+						// var summaryUrl = getSummaryImgSrcAndSetStyle(summarySrc,summaryWidth,summaryHeight,summaryfWidth,summaryfHeight,summaryimg);
+						// summaryimg.setAttribute('src', summaryUrl);
+
+						/*获取实际图片路径，设置图片宽高及margin位置
+						**参数：src 原始图片路径
+						**      w 原始图片宽
+						**      h 原始图片高
+						**      max 最终宽高最大值
+						**      min 最终宽高最小值
+						**      img 图片节点
+						        container 图片容器节点*/
+						//function getSummaryImgSrcAndSetStyle(src,w,h,max,min,img,container) {
+						//  var reg = new RegExp('size=\\w*&');
+						//  //横图
+						//  if (w / h > 1) {
+						//      src = src.replace(reg, 'size=b' + Math.round(min * 2 * w / h) + '_' + min * 2 + '&');
+						//      if (w / h > max / min) {
+						//          var ml = Math.round((Math.round(min * 2 * w / h) - max * 2) * 0.25);
+						//          img.style.marginLeft = '-' + ml + 'px';
+						//      }
+						//      img.style.height = min + 'px';
+						//      container.style.height = min + 'px';
+						//  }
+						//  //竖图
+						//  else {
+						//      src = src.replace(reg, 'size=b' + min * 2 + '_' + Math.round(min * 2 * h / w) + '&');
+						//      if (h / w > max * 0.84 / min) {
+						//          container.style.height = max * 0.84 + 'px';
+						//      }
+						//      else {
+						//          container.style.height = min * h / w + 'px';
+						//      }
+						//      img.style.width = min + 'px';
+						//  }
+						//  return src;
+						//}
+						//var summaryimgContainer = document.getElementById('J-summary-img');
+						//var summaryWidth = summaryimgContainer.getAttribute('data-width');
+						//var summaryHeight = summaryimgContainer.getAttribute('data-height');
+						//var summarySrc = summaryimgContainer.getAttribute('data-src');
+						////最大值
+						//var summaryMax = sWidth > 480? 480 : sWidth;
+						//summaryMax -= 30;
+						////最小值
+						//var summaryMin = Math.round(summaryMax * 0.64);
+						//var summaryimg = summaryimgContainer.getElementsByTagName('img')[0];
+						//var summaryUrl = getSummaryImgSrcAndSetStyle(summarySrc,summaryWidth,summaryHeight,summaryMax,summaryMin,summaryimg,summaryimgContainer);
+						//summaryimg.setAttribute('src', summaryUrl);
+					</script>
+					<div class="card-part">
+						<div class="title-part">
+							<div class="title">
+								<span class="lemma-title">北京信息网</span>
+								<div class="lemma-audio-play audio-play">
+									<em class="layout-icons layout-icons_sound1"></em>
+									<span class="audio-text">听语音</span>
+								</div>
+							</div>
+							<div class="synonym" id="J-synonym">
+								<span class="synonym-icon">同义词</span><span class="synonym-content" id="J-synonym-content"></span>一般指北京信息网
+							</div>
+						</div>
+						<div class="summary-content">
+							<p>
+								<a href="/view/2481578.htm?">北京信息网</a>成立于2005年7月，是北京最大的活动信息门户网站。北京信息网为用户提供时尚的北京社区生活服务。房屋出租买卖，二手市场交易置换，同城活动召集，旅游结伴，出行拼购等众多本地时尚生活信息。北京信息网总部位于北京东三环顺迈金钻国际商务中心，服务北京社区居民，引领北漂一族。</p>
+						</div>
+					</div>
+					<div class="basicInfo" id="J-basicInfo">
+						<ul>
+							<li>
+								<div class="info-title">公司名称</div>
+								<div class="info-content" style="margin-left:0.84rem">
+									北京信息网
+								</div>
+							</li>
+							<li>
+								<div class="info-title">外文名称</div>
+								<div class="info-content" style="margin-left:0.84rem">
+									bjxxw
+								</div>
+							</li>
+							<li>
+								<div class="info-title">经营范围</div>
+								<div class="info-content" style="margin-left:0.84rem">
+									网络服务
+								</div>
+							</li>
+							<li>
+								<div class="info-title">公司性质</div>
+								<div class="info-content" style="margin-left:0.84rem">
+									有限责任公司
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="serviceDirect-el" id="serviceDirect_el" style="margin: 0.25rem 0">
+						<div class="serviceDirect-split-item"></div>
+						<div class="serviceDirect">
+							<div class="main-information">
+								<div class="name J-name"></div>
+								<div class="supply J-company"></div>
+							</div>
+							<a href="javascript:void(0);" class="ticket J-go" target="_blank"></a>
+						</div>
+						<div class="serviceDirect-split-item J-bottom-split"></div>
+						<div class="serviceDirect-split-line J-line"></div>
+					</div>
+					<div class="trip-ticket-el" id="trip_ticket_el">
+					</div>
+					<div id="J-yiche"></div>
+					<div class="car-margin yiche-margin" style="display: none"></div>
+				</div>
+				<div class="content-wrapper">
+					<div class="main-content">
+						<a name="u0"></a>
+						<a name="1" id="anchor-1"></a>
+						<h2 class="title-level-2">
+网站简介
+<div class="part-audio-play audio-play" data-title="网站简介">
+<em class="layout-icons layout-icons_sound1"></em>
+<span class="audio-text">听语音</span>
+</div>
+</h2>
+						<div class="para">北京信息网，北京生活，我们更懂你！</div>
+						<div class="para">北京信息网是一家立足北京本地生活信息发布，倡导城市生活时尚，本地信息资讯导航，同城活动发布，出游活动召集，拼车拼租等综合门类信息网站。网站于2005年7月18日创办，我们坚信我们在做一件正确的事，一个承载北京人生活理想的网站，一个以诚信为己任以方便北京生活为灵魂的网站，致力于服务北京大众，引导城市生活时尚人群。做北京最专业最懂生活的网站是我们不变的目标。</div>
+						<div class="table-container tableScroll" id="table1">
+							<table style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); -webkit-transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; -webkit-transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+								<tbody>
+									<tr>
+										<td>
+											<div class="para"><b>总部地点:</b></div>
+										</td>
+										<td>
+											<div class="para">中国北京</div>
+										</td>
+										<td>
+											<div class="para"><b>公司口号:</b></div>
+										</td>
+										<td>
+											<div class="para">北京生活我们更懂你！</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="para"><b>成立时间:</b></div>
+										</td>
+										<td>
+											<div class="para">2005年</div>
+										</td>
+										<td>
+											<div class="para"><b>自身优势:</b></div>
+										</td>
+										<td>
+											<div class="para">创新生活，构造北京活动平台</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<a name="2" id="anchor-2"></a>
+						<h2 class="title-level-2">
+公司概述
+<div class="part-audio-play audio-play" data-title="公司概述">
+<em class="layout-icons layout-icons_sound1"></em>
+<span class="audio-text">听语音</span>
+</div>
+</h2>
+						<div class="para">北京信息网成立一来，一直致力于成为北京最大最全的活动信息门户网站。为用户提供生活方便，为城市生活提供免费的活动召集
+							<a href="/view/58664.htm?">平台</a>。公司自2005年成立以来每天有几十万人次点击，每日发贴量达15万。有600万人成为注册用户。除了为北京居民提供免费的信息发布之外，
+							<a href="/view/2481578.htm?">北京信息网</a>也是时尚北京生活的倡导者。一成不变的生活中，日日如是的工作，使绝大多数都市人陷于压抑中不能自拔，寻找新的娱乐活动，寻找心灵上的慰藉与洗礼，远离城市的喧嚣，寻一处精神的家园，短暂的出行会是最好的选择，有时候，在工作中我们都是一个人独来独往，有时候，我们需要一个人陪伴远行，即使不是同事，也能成为朋友。北京信息网为用户提供活动发布，寻找或者结伴出游，同城生活或是拼租车，拼租房，上下班有个顺风车，周末一起喝个咖啡，寻个同伴一起聊天逛商场等等。我们不是专业的交友网站，我们只是想懂你的生活。</div>
+
+						<a name="u0"></a>
+						<div class="para">北京信息网与新华网、千龙网等北京市各大新闻媒体网络媒体长期合作。与96156北京社区服务中心合作，拥有全市数千社区资源，覆盖北京16区县。针对
+							<a href="/view/54913.htm?">分众传媒</a>“北京市各写字楼电梯框架媒体”北京信息网以100栋写字楼为最低投放数量进行不定期推广。并与智联招聘，中华英才网等专业网站互动。</div>
+						<div class="para">2013年1月，
+							<a target="_blank" href="/subview/2621/13223029.htm">北京</a>信息网全新改版上线。2013年8月，北京信息网与北京市民政局，北京商务委，北京社区服务中心等单位主办2014年北京市第一届社区网络春晚。</div>
+						<a name="3" id="anchor-3"></a>
+						<h2 class="title-level-2">
+领导者
+<div class="part-audio-play audio-play" data-title="领导者">
+<em class="layout-icons layout-icons_sound1"></em>
+<span class="audio-text">听语音</span>
+</div>
+</h2>
+						<div class="para">徐斌。北京信息网总裁。</div>
+						<div class="para">在《解放军报》工作8年，北京资深广告精英，曾任《解放军报》广告部负责人。北京信息网创始人。</div>
+						<a name="4" id="anchor-4"></a>
+						<h2 class="title-level-2">
+网站大事纪
+<div class="part-audio-play audio-play" data-title="网站大事纪">
+<em class="layout-icons layout-icons_sound1"></em>
+<span class="audio-text">听语音</span>
+</div>
+</h2>
+						<div class="para">2005年7月18日北京信息网成立。</div>
+						<div class="para">2006年1月，网站访问量突破5万人次。</div>
+						<div class="para">2007年1月，网站日发贴量突破5万条。</div>
+						<div class="para">2009年12月，北京信息网网站注册用户突破百万。</div>
+						<div class="para">2010年5月，被评为都市
+							<a target="_blank" href="/subview/1696/11083804.htm">白领</a>最喜爱的网站之一。</div>
+						<div class="para">2011年10月，北京信息网网站日发贴量达15万条，注册用户突破500万。</div>
+						<div class="para">2012年1月，网站全新改版，蓄势待发，日均访问量突破百万。</div>
+						<div class="para">2013年5月，被评为北京生活类网站：最受生活追捧的门户类网站。</div>
+						<div class="para">2013年7月，网站推出商家展示系统“网页精灵”。</div>
+						<div class="para">2013年7月，北京信息网在北京市16区县已建立6000块96156北京市社区服务宣传栏，覆盖北京16区县90%的小区大门口，真正为商家实现线上线下全方位宣传活动。</div>
+						<div class="para">2014年6月，北京信息网在2014中国新媒体门户大会上荣获2014年度“中国百强地方门户”奖项。</div>
+						<div class="para">2014年10月，“北京信息网杯”第一届象棋大赛在芳古园社区活动中心隆重举行。</div>
+						<div class="para">2015年7月，北京信息网在北京市16区县2766个社区已建立6000块96156北京市社区服务宣传栏，覆盖北京16区县几乎所有的小区大门口。</div>
+
+						<a name="u0"></a>
+						<div class="para">2015年10月03日，由北京信息网主办的“庆反法西斯战争胜利70周年，世界冠军蒋川象棋盲棋巡演赛1vs10”日前举行。</div>
+						<div class="para">2015年11月，由北京信息网主办“北京信息网杯”第二届象棋公开赛隆重举行。</div>
+						<div class="para">2015年12月，由北京信息网协办北京市中小学奥林匹克体质健康大课堂如期开展。</div>
+						<div class="para">2015年12月，由北京市中小学体育运动协会、北京信息网共同举办的北京市中小学智力运动会(第五届)在北京电子科技职业学院体育馆隆重举行。</div>
+						<div class="para">2015年12月，由北京市中小学体育运动协会、北京信息网共同主办的北京市中小学生中国象棋教育推广活动如期开展！</div>
+						<div class="para">2016年1月，北京信息网11周年庆典暨2016年会隆重召开。</div>
+						<div class="para">2016年3月，北京信息网将在北京高端社区建立1500块高清灯箱。</div>
+						<div class="para"><b>公司使命：</b>为北京生活者提供专业、优秀的活动召集平台、提供全面的生活服务信息。</div>
+						<div class="para"><b>公司愿景：</b>成为最懂北京都市生活的互联网企业。</div>
+						<div class="para"><b>公司文化：</b>正直诚信 团队协作 开拓创新 勇于坚持</div>
+						<div class="para"><b>品牌定位：</b>北京生活，我们更懂你!</div>
+						<a name="5" id="anchor-5"></a>
+						<h2 class="title-level-2">
+网站规则
+<div class="part-audio-play audio-play" data-title="网站规则">
+<em class="layout-icons layout-icons_sound1"></em>
+<span class="audio-text">听语音</span>
+</div>
+</h2>
+						<div class="para">1、用户在申请使用北京信息网网络服务时，必须向北京信息网提供准确的个人资料，如个人资料有任何变动，必须及时更新。</div>
+						<div class="para">2、用户不应将其帐号、密码转让或出借予他人使用。如用户发现其帐号遭他人非法使用，应立即通知北京信息网。因黑客行为或用户的保管疏忽导致帐号、密码遭他人非法使用，北京信息网不承担任何责任。</div>
+						<div class="para">3、对于用户通过北京信息网网络服务上传到北京信息网上可公开获取区域的任何内容，用户同意北京信息网在全世界范围内具有免费的、永久性的、不可撤销的、非独家的和完全再许可的权利和许可。</div>
+						<div class="para">4、用户在使用北京信息网网络服务过程中，必须遵循以下原则：</div>
+						<div class="para">1)、遵守中国有关的法律和法规；</div>
+
+						<a name="u0"></a>
+						<div class="para">2)、遵守所有与网络服务有关的网络协议、规定和程序；</div>
+						<div class="para">3)、不得为任何非法目的而使用网络服务系统；</div>
+						<div class="para">4)、不得利用北京信息网网络服务系统进行任何可能对互联网或移动网正常运转造成不利影响的行为；</div>
+						<div class="para">5)、不得利用北京信息网提供的网络服务上传、展示或传播任何虚假的、骚扰性的、中伤他人的、辱骂性的、恐吓性的、庸俗淫秽的或其他任何非法的信息资料；</div>
+						<div class="para">6)、不得侵犯其他任何第三方的专利权、著作权、商标权、名誉权或其他任何合法权益；</div>
+						<div class="para">7)、不得利用北京信息网
+							<a href="/view/1279152.htm?">网络服务</a>系统进行任何不利于北京信息网的行为；</div>
+						<div class="para">8)、如发现任何非法使用用户帐号或帐号出现安全漏洞的情况，应立即通告北京信息网。如用户在使用北京信息网网络服务时违反任何上述规定，北京信息网或其授权的人有权要求用户改正或直接采取一切必要的措施(包括但不限于更改或撤消用户张贴的内容等、暂停或终止用户使用网络服务的权利)以减轻用户不当行为造成的影响。您只有无条件接受以上所有服务条款，才能继续申请。</div>
+					</div>
+					<div class="other-content" id="J-other-content" style="-webkit-transform-origin: 0px 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);"></div>
+				</div>
+				<div class="content-load">
+					<div class="ui-refresh-down show-normal" data-page="0" data-total="4" data-newlemmaid="5848039" style="display: none;"><span class="ui-loading"></span><span class="ui-refresh-label loadmore-off">点击加载更多</span><span class="ui-refresh-label loadmore-on">正在加载</span><span class="ui-refresh-label loadmore-error">加载失败, 请稍候<span class="retry">重试</span></span><span class="ui-refresh-label loadmore-offline">网络出错,请检查后<span class="retry">重试</span></span>
+					</div>
+					<div class="yx-load-more" style="display: none;">
+						<span class="yx-load-moreContenting">
+<span class="ui-loading"></span>
+						<span>正在加载</span>
+						</span>
+						<span class="yx-load-moreContent">加载更多</span>
+					</div>
+					<div class="yx-container" style="display: block; -webkit-transform-origin: 0px 0px 0px; opacity: 1; -webkit-transform: scale(1, 1);">
+						<style>
+							.ec_ad {
+								margin: 12px 10px;
+								position: relative;
+								border: 1px solid #d9dde2;
+								padding: 12px 10px;
+								background: white;
+							}
+							
+							.ec-desc {
+								color: #778089;
+								margin: 12px 0 0 0;
+								font-size: 14px;
+								line-height: 14px;
+							}
+							
+							.ec-sublink {
+								margin: 12px 0 0 0;
+								font-size: 14px;
+								line-height: 14px;
+								white-space: nowrap;
+								overflow: hidden;
+								width: 50%;
+								float: left;
+							}
+							
+							.ec_title {
+								color: #778089;
+								font-size: 17px;
+								line-height: 17px;
+								height: 17px;
+							}
+							
+							.ec_title a {
+								display: inline-block;
+								height: 17px;
+							}
+							
+							.ec_aditem a {
+								color: #3a7fde;
+								text-decoration: none;
+							}
+							
+							a.ec_tuiguang {
+								position: absolute;
+								top: 6px;
+								right: 0;
+								padding: 1px 4px 0 2px;
+								text-decoration: none;
+								font-size: 12px;
+								line-height: 14px;
+								color: #778089;
+							}
+						</style>
+						<div class="ec_ad">
+							<div class="ec_aditem">
+								<div class="ec_title">猜你喜欢</div>
+								<div class="ec-sublink-container">
+									<div class="ec-sublink ec-sublink-left">
+										<a href="http://youxuan.baidu.com/s?type=new&amp;p=query%3D%B1%B1%BE%A9%D0%C5%CF%A2%CD%F8%26ppim%3D0%26im%3D0%26rs%3D0%26from%3Dwise_baike_qb%26flowsrc%3D0%26qid%3D50e7ddd999bc01b2%26cookie%3DD6603194616FCA35CD14109869987958%26ip%3D211.167.232.158%26chargename%3DSE_baikewise_upy1v395%26req_print%3Dwosid%3A1%3Bwpt%3A2%3Bwbwsid%3A5%3Bwbwsver%3A600%3Bwosver%3A8.0%3Bwos%3Aiphone%3Bwspeed%3A%3Bwnettype%3A%3Bwhost%3A%3Bua%3A%3Bgps%3A%3Bcuid%3A%3Bwgtag%3A0%3Bwatype%3A%3Bprefix%3A%3Bscreenwidth%3A1501%3Bscreenheight%3A2001%3BinnerWidth%3A-1%3BinnerHeight%3A-1%3B%26tag%3Duy-b5Hcsnf">北京信息网</a>
+									</div>
+									<div style="clear: both"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="catalog-button" id="J-catalog-button">
+					<em class="layout-icons layout-icons_catalog"></em>
+				</div>
+				<dl class="catalog hide">
+					<dt class="catalog-title">词条目录</dt>
+					<dd class="catalog-content" id="J-catalog-content">
+						<ol class="catalog-list" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); -webkit-transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 1ms; -webkit-transition-duration: 1ms; transform: translate(0px, 0px) translateZ(0px);">
+							<li class="catalog-item level1" data-anchor="0" data-page="0">百科名片</li>
+							<li class="catalog-item level1" data-anchor="1" data-page="0">网站简介</li>
+							<li class="catalog-item level1 current" data-anchor="2" data-page="0">公司概述</li>
+							<li class="catalog-item level1" data-anchor="3" data-page="1">领导者</li>
+							<li class="catalog-item level1" data-anchor="4" data-page="1">网站大事纪</li>
+							<li class="catalog-item level1" data-anchor="5" data-page="2">网站规则</li>
+						</ol>
+					</dd>
+				</dl>
+				<div class="model"></div>
+				<div class="catalog-tip" id="J-catalog-tip">
+					<p class="catalog-tip-txt">轻触这里</p>
+					<p class="catalog-tip-txt">关闭目录</p>
+					<em class="layout-icons layout-icons_hand"></em>
+				</div>
+				<div id="J-gotop" class="gotop fixed" style="-webkit-transform-origin: 0px 0px 0px; opacity: 1; -webkit-transform: scale(1, 1); display: block;">
+					<em class="layout-icons layout-icons_go-top"></em>
+				</div>
+				<div id="chain" class="chain">
+					<div class="container">
+						<div class="chain-mask"></div>
+						<div class="chain-con"></div>
+						<div class="chain-arrow"></div>
+					</div>
+				</div>
+				<div id="J-attach-float"></div>
+			</div>
+			<script src="../js/mui.min.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/js/mod_e56bbba.js"></script>
+			<script type="text/javascript">
+				require.resourceMap({
+					"res": {
+						"wiki-mobile-common:widget/lib/zepto/zepto_base.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_base_645c138.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_detect.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_detect_f892362.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_event.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_event_fa28b6a.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_ajax.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_ajax_19e8382.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_form.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_form_9bf4fbd.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_fx.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_fx_830510f.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_fx_methods.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_fx_methods_3b88ae9.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_touch.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_touch_8e23164.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto_imglazyload.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_imglazyload_35f1354.js",
+							"pkg": "wiki-mobile-common:p0"
+						},
+						"wiki-mobile-common:widget/lib/zepto/zepto.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/zepto/zepto_976eb37.js",
+							"pkg": "wiki-mobile-common:p0",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto_base.js", "wiki-mobile-common:widget/lib/zepto/zepto_detect.js", "wiki-mobile-common:widget/lib/zepto/zepto_event.js", "wiki-mobile-common:widget/lib/zepto/zepto_ajax.js", "wiki-mobile-common:widget/lib/zepto/zepto_form.js", "wiki-mobile-common:widget/lib/zepto/zepto_fx.js", "wiki-mobile-common:widget/lib/zepto/zepto_fx_methods.js", "wiki-mobile-common:widget/lib/zepto/zepto_touch.js", "wiki-mobile-common:widget/lib/zepto/zepto_imglazyload.js"]
+						},
+						"wiki-mobile-common:widget/util/nslog.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/util/nslog_5df2672.js"
+						},
+						"wiki-mobile-common:widget/component/share/share.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/component/share/share_35eeff1.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-common:widget/lib/qrcode/qrcode.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/qrcode/qrcode_ebcca05.js"
+						},
+						"wiki-mobile-common:widget/util/baidubox.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/util/baidubox_2e56571.js"
+						},
+						"wiki-mobile-common:widget/component/share/floatShare.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/component/share/floatShare_42dbeff.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/component/share/share.js", "wiki-mobile-common:widget/lib/qrcode/qrcode.js", "wiki-mobile-common:widget/util/nslog.js", "wiki-mobile-common:widget/util/baidubox.js"]
+						},
+						"wiki-mobile-common:widget/lib/extend/extend.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/extend/extend_3aee5db.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js"]
+						},
+						"wiki-mobile-common:widget/lib/ui/ui.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/ui/ui_1c3d8f3.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/lib/extend/extend.js"]
+						},
+						"wiki-mobile-common:widget/lib/highlight/highlight.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/highlight/highlight_4f4f08a.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js"]
+						},
+						"wiki-mobile-common:widget/lib/sug/suggestion.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/sug/suggestion_01b464a.js",
+							"pkg": "wiki-mobile-common:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/lib/extend/extend.js", "wiki-mobile-common:widget/lib/ui/ui.js", "wiki-mobile-common:widget/lib/highlight/highlight.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-common:widget/lib/quickdel/quickdelete.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/quickdel/quickdelete_ba02943.js",
+							"pkg": "wiki-mobile-common:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/lib/ui/ui.js"]
+						},
+						"wiki-mobile-common:widget/util/cookie.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/util/cookie_9ccb23a.js",
+							"pkg": "wiki-mobile-common:p1"
+						},
+						"wiki-mobile-common:widget/lib/iscroll/iscroll.min.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/iscroll/iscroll.min_123a16b.js",
+							"pkg": "wiki-mobile-common:p1"
+						},
+						"wiki-mobile-lemma:widget/additionalContent/promotion/mix.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/promotion/mix_461f619.js"
+						},
+						"wiki-mobile-lemma:widget/header/topbar/topbar.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/header/topbar/topbar_e6d92af.js",
+							"pkg": "wiki-mobile-lemma:p7",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/lib/sug/suggestion.js", "wiki-mobile-common:widget/lib/quickdel/quickdelete.js", "wiki-mobile-lemma:widget/additionalContent/promotion/mix.js", "wiki-mobile-common:widget/util/cookie.js", "wiki-mobile-common:widget/lib/iscroll/iscroll.min.js", "wiki-mobile-common:widget/util/nslog.js", "wiki-mobile-common:widget/util/baidubox.js"]
+						},
+						"wiki-mobile-lemma:widget/beforeContent/card/card.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/card/card_cc6b644.js",
+							"pkg": "wiki-mobile-lemma:p7",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/lib/iscroll/iscroll.min.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/beforeContent/lemmaAudio/lemmaAudio.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/lemmaAudio/lemmaAudio_bc7f8de.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/component/synonym/synonym.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/component/synonym/synonym_fd5ae60.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/beforeContent/basicInfo/basicInfo.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/basicInfo/basicInfo_57cba08.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/beforeContent/serviceDirect/serviceDirect.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/serviceDirect/serviceDirect_902c4b0.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/beforeContent/yiche/yiche.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/yiche/yiche_803a40f.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/additionalContent/promotion/style.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/promotion/style_ca59a23.js"
+						},
+						"wiki-mobile-lemma:widget/content/content/content.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/content/content_1286510.js",
+							"pkg": "wiki-mobile-lemma:p3",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/lib/iscroll/iscroll.min.js", "wiki-mobile-common:widget/util/nslog.js", "wiki-mobile-lemma:widget/additionalContent/promotion/style.js", "wiki-mobile-lemma:widget/additionalContent/promotion/mix.js"]
+						},
+						"wiki-mobile-lemma:widget/content/moduleContent/movie/movie.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/moduleContent/movie/movie_b4bacbe.js",
+							"pkg": "wiki-mobile-lemma:p3",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js"]
+						},
+						"wiki-mobile-common:widget/lib/jsmart/PHPJS.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/jsmart/PHPJS_65df909.js"
+						},
+						"wiki-mobile-common:widget/lib/jsmart/jsmart.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/jsmart/jsmart_5149e32.js",
+							"deps": ["wiki-mobile-common:widget/lib/jsmart/PHPJS.js"]
+						},
+						"wiki-mobile-lemma:widget/loadMoreContent/relativeShop/relativeShop.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/loadMoreContent/relativeShop/relativeShop_adcbf2b.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/cookie.js", "wiki-mobile-common:widget/lib/jsmart/jsmart.js"]
+						},
+						"wiki-mobile-lemma:widget/afterContent/zhidao/zhidao.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/afterContent/zhidao/zhidao_c434e54.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js"]
+						},
+						"wiki-mobile-lemma:widget/additionalContent/goTop/goTop.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/goTop/goTop_6c7b866.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/content/moduleCommonContent/music/album/album.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/moduleCommonContent/music/album/album_b71cebc.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/content/moduleCommonContent/music/createSong/createSong.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/moduleCommonContent/music/createSong/createSong_2a45caa.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/content/moduleCommonContent/music/music.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/moduleCommonContent/music/music_3116370.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/content/moduleCommonContent/music/single/single.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/moduleCommonContent/music/single/single_3365c52.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/content/moduleCommonContent/role/role.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/moduleCommonContent/role/role_356838e.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/content/moduleCommonContent/series/series.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/content/moduleCommonContent/series/series_0e83b3c.js",
+							"pkg": "wiki-mobile-lemma:p1",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-common:widget/component/inlink/inlink.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/component/inlink/inlink_5c994cd.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-common:widget/component/testElem/testElem.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/widget/component/testElem/testElem_1fda9e3.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-common:widget/util/nslog.js"]
+						},
+						"wiki-mobile-lemma:widget/additionalContent/promotion/promotion.js": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/promotion/promotion_8930b36.js",
+							"deps": ["wiki-mobile-common:widget/lib/zepto/zepto.js", "wiki-mobile-lemma:widget/additionalContent/promotion/style.js", "wiki-mobile-common:widget/util/nslog.js", "wiki-mobile-lemma:widget/additionalContent/promotion/mix.js", "wiki-mobile-common:widget/component/testElem/testElem.js"]
+						}
+					},
+					"pkg": {
+						"wiki-mobile-common:p0": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/pkg/zepto_052dd8a.js"
+						},
+						"wiki-mobile-common:p1": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-common/pkg/lemma-top_fb8cc1d.js"
+						},
+						"wiki-mobile-lemma:p7": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-other_d700ce4.js"
+						},
+						"wiki-mobile-lemma:p3": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-lemma-wifi_d2514d6.js"
+						},
+						"wiki-mobile-lemma:p1": {
+							"url": "http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-lemma_7ae92c9.js"
+						}
+					}
+				});
+			</script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/pkg/zepto_052dd8a.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/util/nslog_5df2672.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/component/share/share_35eeff1.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/qrcode/qrcode_ebcca05.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/util/baidubox_2e56571.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/component/share/floatShare_42dbeff.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/extend/extend_3aee5db.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/ui/ui_1c3d8f3.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/highlight/highlight_4f4f08a.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/pkg/lemma-top_fb8cc1d.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/promotion/mix_461f619.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-other_d700ce4.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/lemmaAudio/lemmaAudio_bc7f8de.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/component/synonym/synonym_fd5ae60.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/basicInfo/basicInfo_57cba08.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/serviceDirect/serviceDirect_902c4b0.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/beforeContent/yiche/yiche_803a40f.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/additionalContent/promotion/style_ca59a23.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-lemma-wifi_d2514d6.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/jsmart/PHPJS_65df909.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/lib/jsmart/jsmart_5149e32.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/widget/loadMoreContent/relativeShop/relativeShop_adcbf2b.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/pkg/wiki-mobile-lemma_7ae92c9.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-common/widget/component/inlink/inlink_5c994cd.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/layout-wifi/layout-wifi_fc28fe3.js"></script>
+			<script type="text/javascript" src="http://baike.bdimg.com/static/wiki-mobile-lemma/view-wifi/view-wifi_cc4eff6.js"></script>
+			<script>
+				mui.init({
+					swipeBack: true //启用右滑关闭功能
+				});
+				//B页面onload从服务器获取列表数据；
+				window.onload = function() {
+					//从服务器获取数据
+					// ....
+					//业务数据获取完毕，并已插入当前页面DOM；
+					//注意：若为ajax请求，则需将如下代码放在处理完ajax响应数据之后；
+					mui.plusReady(function() {
+						//关闭等待框
+						plus.nativeUI.closeWaiting();
+						//显示当前页面
+						mui.currentWebview.show();
+					});
+				}
+			</script>
+
+			<script type="text/javascript">
+				! function() {
+					require.async("wiki-mobile-common:widget/component/share/floatShare.js", function(floatshare) {
+						floatshare.init({
+							title: '【北京信息网_百度百科】',
+							desc: '  北京信息网 成立于2005年7月，是北京最大的活动信息门户网站。北京信息网为用户提供时尚的北京社区生活服务。房屋出租买卖，二手市场交易置换，同城活动召集，旅游结伴，出行拼购等众多本地时尚生活信息。北京信息网总部位于北京东三环顺迈金钻国际商务中心，服务北京社区居民，引领北漂一族。 ',
+							pic: 'http:\/\/h.hiphotos.baidu.com\/baike\/whfpf%3D373%2C373%2C50\/sign=5ca94bef42a98226b8947867ecbf8a36\/a71ea8d3fd1f41342067cce4241f95cad0c85edc.jpg',
+							url: '',
+							sinaLog: 'shareWeibo',
+							qqLog: 'shareQQ',
+							weixinLog: 'shareWeixin',
+							shareBtnId: 'J-share-icon,#J-h5-share,#J-timeline-share,#J-second-share',
+							otherLog: {
+								shoubai: '4000010101',
+								baidu: '4000010201',
+								uc: '4000010301',
+								qq: '4000010401',
+								weixin: '4000010501'
+							},
+							shareFrom: 'lemma',
+							isImgShare: '',
+							isShijiDrawShare: ''
+						});
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/header/topbar/topbar.js");
+				}();
+				! function() {
+					var $ = require('wiki-mobile-common:widget/lib/zepto/zepto.js');
+					var cookie = require('wiki-mobile-common:widget/util/cookie.js');
+					$('#J-declare-close').on('tap', function() {
+						// 用户关闭后，72小时后再显示
+						cookie.write('wapbaikedeclare', 'showed', 80, '.baidu.com');
+						$('#J-declare').css('display', 'none');
+					}).on('touchstart', function(e) {
+						e.preventDefault();
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/beforeContent/lemmaAudio/lemmaAudio.js", function(lemmaAudio) {
+						lemmaAudio.init();
+					});
+				}();
+				! function() {
+					var $ = require('wiki-mobile-common:widget/lib/zepto/zepto.js');
+					var nslog = require('wiki-mobile-common:widget/util/nslog.js');
+					// 词条名边上播放按钮展现量
+					nslog.qAll('20004406');
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/component/synonym/synonym.js", function(synonym) {
+						synonym.init();
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/beforeContent/card/card.js", function(card) {
+						card.init();
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/beforeContent/basicInfo/basicInfo.js", function(basicInfo) {
+						basicInfo.init();
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/beforeContent/serviceDirect/serviceDirect.js", function(app) {
+						app.init({
+							lemmaTitle: "\u5317\u4eac\u4fe1\u606f\u7f51",
+							adManager: null,
+							lvyouWap: null,
+							lvyouWapTicket: null,
+							foreignTrip: null,
+							foreignTripTicket: null
+						});
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/beforeContent/yiche/yiche.js", function(init) {
+						init({
+							newLemmaId: '5848039'
+						});
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/content/content/content.js", function(content) {
+						content.init({
+							lemmaTitle: '北京信息网',
+							adManager: null
+						});
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/loadMoreContent/relativeShop/relativeShop.js", function(relativeShop) {
+						relativeShop.init({
+							lemmaTitle: "\u5317\u4eac\u4fe1\u606f\u7f51",
+							adManager: null
+						});
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/afterContent/zhidao/zhidao.js");
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/additionalContent/goTop/goTop.js");
+				}();
+				! function() {
+					require.async("wiki-mobile-common:widget/component/inlink/inlink.js", function(init) {
+						init();
+					});
+				}();
+				! function() {
+					require.async("wiki-mobile-lemma:widget/additionalContent/promotion/promotion.js", function(init) {
+						init({
+							newLemmaId: '5848039'
+						});
+					});
+				}();
+			</script>
+			<script type="text/javascript">
+				(new Image()).src = "http://static.tieba.baidu.com/tb/pms/img/st.gif?pid=242&v=2&fs=1d18b88,13b54d5,55c724f,84af959,aa75f5a,baa4a07,74dd76b,1c82913,1748faf,c3dd3fa,90653d7,33ec991,3e8f184,98800d6,eed0aac,f10a13b,2bddef0,33962f8,ca4fdc9,1f7c971,cfb9ae2,2922ab0,12efb27,ac02c1e,08af0d4,91bd6e0,8b37240,78dfc6a,f298fc6,76ca88c,668c9a4,79778dc,7b0b27f,fe194d6,d6c6be9,db46944,0b24436,e15481a,99c8387,693eecb,6dd28d6&otherStr=&page=wiki-mobile-lemma/page/view-wifi.tpl&sid=1466747016&hash=21ec8b55fd&fid=baike";
+			</script>
+			<script type="text/javascript">
+				// DOM Ready时，统计用户可操作时间。
+				alog('speed.set', 'drt', +new Date);
+
+				// 配置 PD 监控。
+				window.alogObjectConfig = {
+					product: '103', // 必须, DP平台产品线id
+					page: '103_501', // 必须, DP平台页面id
+					monkey_page: '', // 如果页面已经有hunter平台的monkey，则为monkey的pageId, 否侧无需该字段
+					speed_page: '', // 如果页面已经有webspeed平台的性能监控，则为性能的page_id,否侧无需该字段
+					// 性能
+					speed: {
+						sample: '0.0133333333333' // 抽样率, 0~1，建议使采样的pv控制在100万以内，必须要设定，否则统计不会生效
+					},
+					// 访问和点击
+					monkey: {
+						sample: '0.00666666666667' // 抽样率, 0~1  建议使采样的pv控制在50万以内，必须要设定，否则统计不会生效
+					},
+					// js异常，配合FIS插件还可以自动加try/catch监控，详见‘帮助文档’
+					exception: {
+						sample: '0.00666666666667' // 抽样率, 0~1  建议使采样的pv控制在50万以内，必须要设定，否则统计不会生效
+					},
+					// 浏览器新特性(H5/CSS3
+					feature: {
+						sample: '0.00666666666667' // 抽样率, 0~1  建议使采样的pv控制在50万以内，必须要设定，否则统计不会生效
+					},
+					csp: {
+						sample: '0.0133333333333', // 抽样率, 0~1  建议使采样的pv控制在100万以内，必须要设定，否则统计不会生效
+						'default-src': [{
+							match: '*.baidu.com,*.bdimg.com,*.baidu-img.cn,localhost',
+							target: 'Accept'
+						}, {
+							match: '*',
+							target: 'Accept,Warn'
+						}]
+					}
+				};
+
+				void
+				function(a, b, c, d, e, f) {
+					function g(b) {
+						a.attachEvent ? a.attachEvent("onload", b, !1) : a.addEventListener && a.addEventListener("load", b)
+					}
+
+					function h(a, c, d) {
+						d = d || 15;
+						var e = new Date;
+						e.setTime((new Date).getTime() + 1e3 * d), b.cookie = a + "=" + escape(c) + ";path=/;expires=" + e.toGMTString()
+					}
+
+					function i(a) {
+						var c = b.cookie.match(new RegExp("(^| )" + a + "=([^;]*)(;|$)"));
+						return null != c ? unescape(c[2]) : null
+					}
+
+					function j() {
+						var a = i("PMS_JT");
+						if(a) {
+							h("PMS_JT", "", -1);
+							try {
+								a = a.match(/{["']s["']:(\d+),["']r["']:["']([\s\S]+)["']}/), a = a && a[1] && a[2] ? {
+									s: parseInt(a[1]),
+									r: a[2]
+								} : {}
+							} catch(c) {
+								a = {}
+							}
+							a.r && b.referrer.replace(/#.*/, "") != a.r || alog("speed.set", "wt", a.s)
+						}
+					}
+					if(a.alogObjectConfig) {
+						var k = a.alogObjectConfig.sample,
+							l = a.alogObjectConfig.rand;
+						if("https:" === a.location.protocol) {
+							if(d = "https://gss2.bdstatic.com/70cFsjip0QIZ8tyhnq" + d, !k || !l) return
+						} else d = "http://img.baidu.com" + d;
+						k && l && l > k || (g(function() {
+							alog("speed.set", "lt", +new Date), e = b.createElement(c), e.async = !0, e.src = d + "?v=" + ~(new Date / 864e5), f = b.getElementsByTagName(c)[0], f.parentNode.insertBefore(e, f)
+						}), j())
+					}
+				}(window, document, "script", "/hunter/alog/dp.mobile.min.js");
+			</script>
+			<div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;">
+				<div id="trans-tooltip">
+					<div id="tip-left-top" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-top.png);"></div>
+					<div id="tip-top" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-top.png) repeat-x;"></div>
+					<div id="tip-right-top" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-top.png);"></div>
+					<div id="tip-right" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right.png) repeat-y;"></div>
+					<div id="tip-right-bottom" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-right-bottom.png);"></div>
+					<div id="tip-bottom" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-bottom.png) repeat-x;"></div>
+					<div id="tip-left-bottom" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left-bottom.png);"></div>
+					<div id="tip-left" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-left.png);"></div>
+					<div id="trans-content"></div>
+				</div>
+				<div id="tip-arrow-bottom" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-bottom.png);"></div>
+				<div id="tip-arrow-top" style="background: url(chrome-extension://ikkbfngojljohpekonpldkamedehakni/imgs/map/tip-arrow-top.png);"></div>
+			</div><embed id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd" type="application/thunder_download_plugin" height="0" width="0"></body>
+
+</html>

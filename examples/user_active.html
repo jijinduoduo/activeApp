@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+		<!--下拉刷新上拉加载-->
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+		</style>
+		<style>
+			.mui-control-content {
+				min-height: 480px;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			.mui-segmented-control-juhuang {
+				border: 1px solid #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item {
+				color: #FF5500;
+				border-color: inherit;
+			}
+			
+			.mui-segmented-control-juhuang .mui-control-item.mui-active {
+				color: #FFFFFF;
+				background-color: #FF5500;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #FF5500;
+				border-bottom: 2px solid #FF5500;
+				background: none;
+			}
+			
+			.mui-segmented-control-juhuang.mui-segmented-control-inverted ~ .mui-slider-progress-bar {
+				background-color: #FF5500;
+			}
+			/*列表获取*/
+			
+			.botton-visit {
+				padding: 8px;
+				background: #F0EFF5;
+			}
+			
+			.botton-visit a img {
+				width: 100%;
+				height: 160px;
+				background: #FFFFFF;
+				display: block;
+			}
+			
+			.botton-visit a .con_right {
+				width: 100%;
+				display: block;
+				height: 80px;
+				background: #FFFFFF;
+				padding: 8px;
+			}
+			
+			.botton-visit a .con_right .title {
+				width: 100%;
+				font-size: 16px;
+				display: inline-block;
+				float: left;
+				color: #343434;
+			}
+			
+			.botton-visit a .con_right .start_time {
+				width: 100%;
+				font-size: 12px;
+				display: inline-block;
+				float: left;
+				color: #CCCCCC;
+				margin-top: 4px;
+			}
+			
+			.botton-visit a .con_right .address {
+				width: 100%;
+				font-size: 12px;
+				display: inline-block;
+				float: left;
+				color: #CCCCCC;
+			}
+			/*下拉框*/
+			/*设置主题背景*/
+			
+			body {
+				background: #F0EFF5;
+				height: 520px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav" style="background: #ff5500;">
+			<a id="search" class="mui-icon mui-icon-search mui-pull-right app_icon" style="color: #FFFFFF;"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">用户活动</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted  mui-segmented-control-juhuang">
+					<a class="mui-control-item" href="#item1mobile">
+				即将开始
+			</a>
+					<a class="mui-control-item" href="#item2mobile">
+				进行中
+			</a>
+					<a class="mui-control-item" href="#item3mobile">
+				历史活动
+			</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div class="mui-scroll-wrapper" id="scroll1">
+
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="1">
+
+								</ul>
+
+							</div>
+						</div>
+					</div>
+					<!--第二页-->
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="2">
+
+								</ul>
+							</div>
+						</div>
+
+					</div>
+					<!--第三页-->
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view" id="3">
+
+								</ul>
+							</div>
+
+							<!--end-->
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		</div>
+	<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>
+		<script>
+			mui.init();
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios?0.003:0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration:deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.mui-table-view');
+										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							},
+							up: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										var ul = self.element.querySelector('.mui-table-view');
+										ul.appendChild(createFragment(ul, index, 5));
+										self.endPullUpToRefresh();
+									}, 1000);
+								}
+							}
+						});
+					});
+					var createFragment = function(ul, index, count, reverse) {
+						var length = ul.querySelectorAll('li').length;
+						var fragment = document.createDocumentFragment();
+						var li;
+						for (var i = 0; i < count; i++) {
+							li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
+							fragment.appendChild(li);
+						}
+						return fragment;
+					};
+				});
+			})(mui);
+		</script>
+
+	</body>
+
+</html>

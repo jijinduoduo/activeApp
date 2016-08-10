@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/mui.min.css">
+	</head>
+
+	<body>
+
+		<div class="mui-content">
+			<ul id="list" class="mui-table-view mui-table-view-chevron">
+
+				<li class="mui-table-view-cell" title="基本资料" url="http://www.bjxxw.com/index.php?m=profile">
+					<a class="mui-navigate-right" open-type="common" href="">
+						基本资料
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="联系方式" url="http://www.bjxxw.com/index.php?m=profile&a=contact&_tab=contact">
+					<a class="mui-navigate-right" href="">
+						联系方式
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="空间隐私" url="http://www.bjxxw.com/index.php?m=profile&c=secret&_left=secret">
+					<a class="mui-navigate-right" open-type="common" href="">
+						空间隐私
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="黑名单" url="http://www.bjxxw.com/index.php?m=profile&c=secret&a=black&_left=secret">
+					<a class="mui-navigate-right" href="">
+						黑名单
+					</a>
+				</li>
+
+				<li class="mui-table-view-cell" title="修改密码" url="http://www.bjxxw.com/index.php?m=profile&c=password&_left=password">
+					<a class="mui-navigate-right" open-type="common" href="">
+						修改密码
+					</a>
+				</li>
+
+				<li class="mui-table-view-cell" title="我的权限" url="http://www.bjxxw.com/index.php?m=profile&c=right&_left=right">
+					<a class="mui-navigate-right" href="">
+						我的权限
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="我的积分" url="http://www.bjxxw.com/index.php?m=profile&c=credit&_left=credit">
+					<a class="mui-navigate-right" href="">
+						我的积分
+					</a>
+				</li>
+
+			</ul>
+
+		</div>
+		<script src="../js/mui.min.js"></script>
+
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			//处理点击列表；
+			mui("#list").on('tap', '.mui-table-view-cell', function() {
+				//获取id
+				var title = this.getAttribute("title");
+				//获取id
+				var urlinfo = this.getAttribute("url");
+				mui.openWindow({
+					url: 'guodu.html',
+					id: 'guodu.html',
+					extras: {
+						title: title,
+						urlinfo: urlinfo,
+						ftop: '-100'
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>
